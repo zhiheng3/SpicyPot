@@ -1,10 +1,12 @@
 <?php
 /**
-  * wechat php test
+  * Spicy Pot Index
+  * Author: Zhao Zhiheng
+  * Date: 2014.11.7
   */
 
 //define your token
-define("TOKEN", "weixin");
+define("TOKEN", "SpicyPot");
 $wechatObj = new wechatCallbackapiTest();
 $wechatObj->valid();
 

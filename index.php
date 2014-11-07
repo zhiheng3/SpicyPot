@@ -9,6 +9,7 @@
 define("TOKEN", "SpicyPot");
 $wechatObj = new wechatCallbackapiTest();
 $wechatObj->valid();
+$wechatObj->responseMsg();
 
 class wechatCallbackapiTest
 {
