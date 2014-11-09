@@ -16,7 +16,7 @@ class RequestResponse{
     public function response($data){
         $toUserName = $data->toUserName;
         $fromUserName = $data->fromUserName;
-        $createTime = time();
+        $createTime = $data->createTime;
         $msgType = $data->msgType;
         $result = "<xml>
                         <ToUserName><![CDATA[$toUserName]]></ToUserName>

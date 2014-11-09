@@ -8,7 +8,7 @@
 require_once "./php/parse.php";
 require_once "./php/process.php";
 require_once "./php/response.php";
-  
+
 //define your token
 define("TOKEN", "SpicyPot");
 $wechatObj = new WechatCallbackAPI();
@@ -54,6 +54,10 @@ class WechatCallbackAPI
 
     public function processMsg()
     {
+        if (!$this->checkSignature()){
+            echo "";
+            exit;
+        }
 		//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
@@ -62,15 +66,12 @@ class WechatCallbackAPI
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                    the best way is to check the validity of xml by yourself */
                 libxml_disable_entity_loader(true);
-              	$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-                $test = new ResponseData();
-                $test->toUserName = $postObj->FromUserName;
-                $test->fromUserName = $postObj->ToUserName;
-                $test->content = "hi";
-                $test->createtime = time();
-                $test->msgType = "text";
+                $parseObj = new RequestParse();
+                $requestData = $parseObj->parse($postStr);
+                $processObj  = new RequestProcess();
+                $responseData = $processObj->process($requestData);
                 $responseObj = new RequestResponse();
-                echo $responseObj->response($test);
+                echo $responseObj->response($responseData);
 
         }else {
         	echo "";
