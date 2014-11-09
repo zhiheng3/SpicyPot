@@ -64,13 +64,13 @@ class WechatCallbackAPI
                 libxml_disable_entity_loader(true);
               	$postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $test = new ResponseData();
-                $test->toUsername = $postObj->FromUserName;
-                $test->fromUsername = $postObj->ToUserName;
-                $test->content = trim($postObj->Content);
+                $test->toUserName = $postObj->FromUserName;
+                $test->fromUserName = $postObj->ToUserName;
+                $test->content = "hi";
                 $test->createtime = time();
                 $test->msgType = "text";
                 $responseObj = new RequestResponse();
-                echo $response->response($test);
+                echo $responseObj->response($test);
 
         }else {
         	echo "";
