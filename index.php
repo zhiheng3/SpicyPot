@@ -1,17 +1,18 @@
 <?php
 /**
-  * Spicy Pot Index
+  * Wechat Index
   * Author: Zhao Zhiheng
-  * Date: 2014.11.7
+  * Last modified: 2014.11.9
   */
 
+require_once "./php/parse.php"  
+  
 //define your token
 define("TOKEN", "SpicyPot");
-$wechatObj = new wechatCallbackapiTest();
-$wechatObj->valid();
+$wechatObj = new WechatCallbackAPI();
 $wechatObj->responseMsg();
 
-class wechatCallbackapiTest
+class WechatCallbackAPI
 {
 	public function valid()
     {
@@ -23,6 +24,31 @@ class wechatCallbackapiTest
         	exit;
         }
     }
+    
+    private function checkSignature()
+	{
+        // you must define TOKEN by yourself
+        if (!defined("TOKEN")) {
+            throw new Exception('TOKEN is not defined!');
+        }
+        
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+        		
+		$token = TOKEN;
+		$tmpArr = array($token, $timestamp, $nonce);
+        // use SORT_STRING rule
+		sort($tmpArr, SORT_STRING);
+		$tmpStr = implode( $tmpArr );
+		$tmpStr = sha1( $tmpStr );
+		
+		if( $tmpStr == $signature ){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
     public function responseMsg()
     {
@@ -63,30 +89,7 @@ class wechatCallbackapiTest
         }
     }
 		
-	private function checkSignature()
-	{
-        // you must define TOKEN by yourself
-        if (!defined("TOKEN")) {
-            throw new Exception('TOKEN is not defined!');
-        }
-        
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-        		
-		$token = TOKEN;
-		$tmpArr = array($token, $timestamp, $nonce);
-        // use SORT_STRING rule
-		sort($tmpArr, SORT_STRING);
-		$tmpStr = implode( $tmpArr );
-		$tmpStr = sha1( $tmpStr );
-		
-		if( $tmpStr == $signature ){
-			return true;
-		}else{
-			return false;
-		}
-	}
+
 }
 
 ?>
