@@ -5,12 +5,14 @@
   * Last modified: 2014.11.9
   */
 
-require_once "./php/parse.php"  
+require_once "./php/parse.php";
+require_once "./php/process.php";
+require_once "./php/response.php";
   
 //define your token
 define("TOKEN", "SpicyPot");
 $wechatObj = new WechatCallbackAPI();
-$wechatObj->responseMsg();
+$wechatObj->processMsg();
 
 class WechatCallbackAPI
 {
@@ -50,13 +52,16 @@ class WechatCallbackAPI
 		}
 	}
 
-    public function responseMsg()
+    public function processMsg()
     {
 		//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
       	//extract post data
 		if (!empty($postStr)){
+            $parseObj = new RequestParse();
+            $parseObj->parseXML($postStr);
+            
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                    the best way is to check the validity of xml by yourself */
                 libxml_disable_entity_loader(true);

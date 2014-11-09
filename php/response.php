@@ -44,14 +44,4 @@ class RequestResponse{
     }
 }
 
-$tmp = new ResponseData();
-$tmp->toUserName = "aaa";
-$tmp->fromUserName = "bbb";
-$tmp->createTime = time();
-$tmp->msgType = "text";
-$tmp->content = "test";
-
-$test = new RequestResponse();
-var_dump($test->response($tmp));
-
 ?>
