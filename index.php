@@ -74,8 +74,5 @@ class WechatCallbackAPI
         	exit;
         }
     }
-		
-
 }
-
 ?>
