@@ -54,10 +54,6 @@ class WechatCallbackAPI
 
     public function processMsg()
     {
-        if (!$this->checkSignature()){
-            echo "";
-            exit;
-        }
 		//get post data, May be due to the different environments
 		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
