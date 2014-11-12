@@ -5,15 +5,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <meta name="viewport" content="width=device-width"/>
 <meta http-equiv="Access-Control-Allow-Origin" content="*">  
-<link rel="stylesheet" type="text/css" href="../css/Verify.css">
-<script src="../js/jquery-1.11.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/RSA.js"></script>
+<link rel="stylesheet" type="text/css" href="./css/Verify.css">
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/RSA.js"></script>
 <title>用户验证</title>  
 </head>  
 <body>  
 <div id = "ImgTop">
-	<img src="../img/31.png">
+	<img src="./img/31.png">
 </div>
 <div id = "Confirm-Title">
 	<p>用户验证</p>
@@ -34,13 +34,19 @@
             e.preventDefault();
             $("#results").text("正在认证，请稍候……");
             $.ajax({
-                url: "http://auth.igeek.asia/v1/time",
-                type: "GET",
+                url: "./php/verify.php",
+                type: "POST",
+                data: {
+                    "type":"time"
+                },
                 success: function(time) {
+                    test = encryptedString(key, time + "|" + $("#Username").val() + "|" + $("#Password").val());
+                    console.log(test);
                     $.ajax({
-                        url: "http://auth.igeek.asia/v1",
+                        url: "./php/verify.php",
                         type: "POST",
                         data: {
+                            "type":"verify",
                             secret: encryptedString(key, time + "|" + $("#Username").val() + "|" + $("#Password").val())
                         },
                         dataType: "json",
