@@ -19,12 +19,12 @@ class RequestResponse{
         $createTime = $data->createTime;
         $msgType = $data->msgType;
         $result = "<xml>
-                        <ToUserName><![CDATA[$toUserName]]></ToUserName>
-						<FromUserName><![CDATA[$fromUserName]]></FromUserName>
-						<CreateTime>$createTime</CreateTime>
-						<MsgType><![CDATA[$msgType]]></MsgType>
-						%s
-					</xml>";
+<ToUserName><![CDATA[$toUserName]]></ToUserName>
+<FromUserName><![CDATA[$fromUserName]]></FromUserName>
+<CreateTime>$createTime</CreateTime>
+<MsgType><![CDATA[$msgType]]></MsgType>
+%s
+</xml>";
         $xml = $this->getTypeXML($data);
         $result = sprintf($result, $xml);
         return $result;
@@ -41,6 +41,68 @@ class RequestResponse{
             $result = "<Content><![CDATA[$content]]></Content>";
             return $result;
         }
+	else if ($data->msgType == "image"){
+	    $mediaId = $data->mediaId;
+	    $result = "<Image>
+<MediaId><![CDATA[$mediaId]]></MediaId>
+</Image>";
+	    return $result;
+	}
+	else if ($data->msgType == "voice"){
+	    $mediaId = $data->mediaId;
+	    $result = "<Voice>
+<MediaId><![CDATA[$mediaId]]></MediaId>
+</Voice>";	
+	}
+	else if ($data->msgType == "video"){
+	    $mediaId = $data->mediaId;
+	    $title = $data->title;
+	    $description = $data->description;
+	    $result = "<Video>
+<MediaId><![CDATA[$mediaId]]></MediaId>
+<Title><![CDATA[$title]]></Title>
+<Description><![CDATA[$description]]></Description>
+</Video>";
+	    return $result;
+	}
+	else if ($data->msgType == "music"){
+	    $mediaId = $data->mediaId;
+	    $title = $data->title;
+	    $description = $data->description;
+	    $musicURL = $data->musicURL;
+	    $hQMusicUrl = $data->hQMusicUrl;
+	    $thumbMediaId = $data->thumbMediaId;
+	    $result = "<Music>
+<Title><![CDATA[$title]]></Title>
+<Description><![CDATA[$description]]></Description>
+<MusicUrl><![CDATA[$musicURL]]></MusicUrl>
+<HQMusicUrl><![CDATA[$hQMusicUrl]]></HQMusicUrl>
+<ThumbMediaId><![CDATA[$thumbMediaId]]></ThumbMediaId>
+</Music>";
+	    return $result;
+	}
+	else if ($data->msgType == "news"){
+	    $articleCount = $data->articleCount;
+	    $articles = $data->articles;
+	    $item = $articles->item;
+	    $result = "<Articles>
+<ArticleCount>$articleCount</ArticleCount>";
+	    for ($i = 0; $i < $articleCount; $i++){
+		$title = $item[$i]->Title;
+		$description = $item[$i]->Description;
+		$picUrl = $item[$i]->PicUrl;
+		$url = $item[$i]->Url;
+		$result .= "<item>
+<Title><![CDATA[$title]></Title>
+<Description><![CDATA[$description]]></Description>
+<PicUrl><![CDATA[$picUrl]]></PicUrl>
+<Url><![CDATA[$url]]></Url>
+</item>";
+	    }
+	    $result .= "
+</Articles>";
+	    return $result;
+	}
     }
 }
 
