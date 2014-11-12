@@ -27,6 +27,33 @@ class RequestParse{
             $result->content = trim($postObj->Content);
             return $result;
         }
+	else if ($result->msgType == "image"){
+            $result->picurl = trim($postObj->PicUrl);
+            $result->mediaId = trim($postObj->MediaId);
+            return $result;
+        }
+        else if ($result->msgType == "voice"){
+            $result->MediaId = trim($postObj->MediaId);
+            $result->format = trim($postObj->Format);
+            return $result;
+        }
+        else if ($result->msgType == "video"){
+            $result->MediaId = trim($postObj->MediaId);
+            $result->thumbMediaId = trim($postObj->ThumbMediaId);
+            return $result;	
+        }
+        else if ($result->msgType == "location"){
+            $result->location_x = trim($postObj->Location_X);
+            $result->location_y = trim($postObj->Location_Y);
+            $result->scale = trim($postObj->Scale);
+            return $result;
+        }
+        else if ($result->msgType == "link"){
+            $result->title = trim($postObj->Title);
+            $result->description = trim($postObj->Description);
+            $result->url = trim($postObj->Url);
+            return $result;
+        }
     }
 }
 ?>
