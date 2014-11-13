@@ -82,7 +82,7 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $result->content = $dataapi->binding($openId, $studentId, "ubbinding");
+        $result->content = $dataapi->binding($openId, $studentId, "unbinding");
         return $result;
     }
 }
