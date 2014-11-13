@@ -43,9 +43,8 @@ class RequestProcess{
     public function help($data){
         $result = new ResponseData();
         $result->msgType = "text";
-        $result->content = "目前此平台有两个功能，点击下方菜单可以进入验证界面，
-                            输入绑定+学号（忽略空格）可以绑定微信号到学号，输入解绑可以解绑微信号。
-                            目前两个功能是独立的。";
+        $result->content = "目前此平台有两个功能，点击下方菜单可以进入验证界面，输入绑定+学号可以绑定微信号到学号，输入解绑+学号可以解绑微信号。
+                            目前两个功能是独立的。所有的输入忽略空格。";
         return $result;
     }
     
@@ -56,7 +55,7 @@ class RequestProcess{
     //Test: No
     public function bind($data){
         $result = new ResponseData();
-        $resull->msgType = "text";
+        $result->msgType = "text";
         $openId = $data->fromUserName;
         $studentId = trim(substr(trim($data->content), 6));
         if (!is_numeric($studentId) || strlen($studentId) != 10){
@@ -65,6 +64,25 @@ class RequestProcess{
         }
         $dataapi = new dataAPI();
         $result->content = $dataapi->binding($openId, $studentId, "binding");
+        return $result;
+    }
+    
+    //Author: Zhao Zhiheng
+    //Process the unbind operation
+    //params: RequestData $data
+    //return: ResponseData $result
+    //Test: No
+    public function unbind($data){
+        $result = new ResponseData();
+        $result->msgType = "text";
+        $openId = $data->fromUserName;
+        $studentId = trim(substr(trim($data->content), 6));
+        if (!is_numeric($studentId) || strlen($studentId) != 10){
+            $result->content = "学号输入错误";
+            return $result;
+        }
+        $dataapi = new dataAPI();
+        $result->content = $dataapi->binding($openId, $studentId, "ubbinding");
         return $result;
     }
 }
