@@ -56,7 +56,7 @@ class RequestProcess{
     //Test: No
     public function bind($data){
         $result = new ResponseData();
-        $resull->msgType = "text";
+        $result->msgType = "text";
         $openId = $data->fromUserName;
         $studentId = trim(substr(trim($data->content), 6));
         if (!is_numeric($studentId) || strlen($studentId) != 10){
