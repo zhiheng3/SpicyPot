@@ -55,16 +55,7 @@ class WechatCallbackAPI
     public function processMsg()
     {
 		//get post data, May be due to the different environments
-		$postStr = " <xml>
-<ToUserName><![CDATA[toUser]]></ToUserName>
-<FromUserName><![CDATA[fromUser]]></FromUserName>
-<CreateTime>1351776360</CreateTime>
-<MsgType><![CDATA[link]]></MsgType>
-<Title><![CDATA[公众平台官网链接]]></Title>
-<Description><![CDATA[公众平台官网链接]]></Description>
-<Url><![CDATA[url]]></Url>
-<MsgId>1234567890123456</MsgId>
-</xml> ";
+		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
       	//extract post data
 		if (!empty($postStr)){
@@ -73,8 +64,6 @@ class WechatCallbackAPI
                 libxml_disable_entity_loader(true);
                 $parseObj = new RequestParse();
                 $requestData = $parseObj->parse($postStr);
-                //print_r($requestData);
-                //exit;
                 $processObj  = new RequestProcess();
                 $responseData = $processObj->process($requestData);
                 $responseObj = new RequestResponse();

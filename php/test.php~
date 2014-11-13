@@ -1,5 +1,0 @@
-<?php
-$result = $_POST["secret"];
-$data = array('a' => $result);
-echo json_encode($data);
-?>
