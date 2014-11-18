@@ -1,7 +1,0 @@
-<xml>
-<ToUserName><![CDATA[fromUserName]]></ToUserName>
-<FromUserName><![CDATA[toUserName]]></FromUserName>
-<CreateTime>1416305030</CreateTime>
-<MsgType><![CDATA[news]]></MsgType>
-<Articles><ArticleCount>1</ArticleCount><item><Title><![CDATA[抢票成功！]></Title><Description><![CDATA[抢票成功！]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/31.png]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/php/ActivityInfo.php]]></Url></item></Articles>
-</xml>
