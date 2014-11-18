@@ -57,6 +57,7 @@ class RequestParse{
         else if ($result->msgType == "event"){
             $result->event = trim($postObj->Event);
             $result->eventKey = trim($postObj->EventKey);
+            return $result;
         }
     }
 }
