@@ -49,7 +49,7 @@ class ticketHandler{
             $result->articles[0]->title = "抢票成功！";
             $result->articles[0]->description = "抢票成功！";
             $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/31.png";
-            $result->articles[0]->url = "http://wx9.igeek.asia/php/ActivityInfo.php";
+            $result->articles[0]->url = "http://wx9.igeek.asia/ActivityInfo.html";
         }
         else{
             $result->MsgType = "text";
