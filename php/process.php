@@ -26,9 +26,9 @@ class RequestProcess{
         else if (substr($content, 0, 6) == "解绑"){
             $result = $this->unbind($data);
         }
-		else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-			$result = ticketHandle($data);
-		}
+	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+		    $result = ticketHandle($data);
+	    }
         else{
             $result->msgType = "text";
             $result->content = "请输入帮助查看应用说明";

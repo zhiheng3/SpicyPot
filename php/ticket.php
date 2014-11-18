@@ -5,8 +5,8 @@
   * Last modified: 2014.11.17
   */
 
-require_once "dataFormat.php";
-require_once "mysql_2.php";
+require_once "dataformat.php";
+require_once "dataAPI.php";
 
 Class ticketHandler{
     //Author: Feng Zhibin
