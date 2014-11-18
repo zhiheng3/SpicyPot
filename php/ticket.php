@@ -37,13 +37,12 @@ class ticketHandler{
     //return: ResponseData $result
     public function takeTicket($data){
         $result = new ResponseData();
-        //$result->MsgType = "text";
         $openId = $data->fromUserName;
         $eventId = substr($content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == true){
-            //$result->content = "抢票成功！";
+			echo "抢票成功！";
             $result->MsgType = "news";
             $result->articleCount = 1;
             $result->article[0]->title = "抢票成功！";
@@ -52,6 +51,7 @@ class ticketHandler{
             $result->article[0]->url = "http://wx9.igeek.asia/php/ActivityInfo.php";
         }
         else{
+			echo "抢票失败！";
             $result->MsgType = "text";
             $result->content = "抢票失败：" . $ticketResult['message'];
         }
