@@ -37,22 +37,22 @@ class ticketHandler{
     //return: ResponseData $result
     public function takeTicket($data){
         $result = new ResponseData();
-        //$result->MsgType = "text";
         $openId = $data->fromUserName;
-        $eventId = substr($content, 7);
+        $eventId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
-        if($ticketResult['state'] == true){
-            //$result->content = "抢票成功！";
-            $result->MsgType = "news";
+        if($ticketResult['state'] == "true"){
+            $result->msgType = "news";
             $result->articleCount = 1;
-            $result->article[0]->title = "抢票成功！";
-            $result->article[0]->description = "抢票成功！";
-            $result->article[0]->picUrl = "http://wx9.igeek.asia/img/31.png";
-            $result->article[0]->url = "http://wx9.igeek.asia/php/ActivityInfo.php";
+	        $result->articles = array();
+			$result->articles[0] = new Article();
+            $result->articles[0]->title = "抢票成功！";
+            $result->articles[0]->description = "抢票成功！";
+            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/31.png";
+            $result->articles[0]->url = "http://wx9.igeek.asia/ActivityInfo.html";
         }
         else{
-            $result->MsgType = "text";
+            $result->msgType = "text";
             $result->content = "抢票失败：" . $ticketResult['message'];
         }
         return $result;
@@ -66,10 +66,10 @@ class ticketHandler{
         $result = new ResponseData();
         $result->MsgType = "text";
         $openId = $data->fromUserName;
-        $ticketId = substr($content, 7);
+        $ticketId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->refundTicket($openId, $ticketId);
-        if($ticketResult['state'] == true){
+        if($ticketResult['state'] == "true"){
             $result->content = "退票成功！";
         }
         else{
@@ -84,12 +84,12 @@ class ticketHandler{
     //return ResponseData $result
     public function getTicket($data){
         $result = new ResponseData();
-        $result->MsgType = "text";
+        $result->msgType = "text";
         $openId = $data->fromUserName;
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->getTicket($openId);
         $result->content = "";
-        if($ticketResult['state'] == true){
+        if($ticketResult['state'] == "true"){
             for($i = 0; $i < count($ticketResult['message']); $i++){
                 $j = $i + 1;
                 $result->content .= "$j: ";
