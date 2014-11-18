@@ -16,6 +16,8 @@ class RequestProcess{
     //return: ResponseData $result
     //Test: No
     public function process($data){
+	$result = new ResponseData();
+	$ticketHandler = new ticketHandler();
         $content = trim($data->content);
         if ($content == "帮助"){
             $result = $this->help($data);
@@ -26,9 +28,9 @@ class RequestProcess{
         else if (substr($content, 0, 6) == "解绑"){
             $result = $this->unbind($data);
         }
-	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-		    $result = ticketHandle($data);
-	    }
+	else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+	    $result = $ticketHandler->ticketHandle($data);
+	}
         else{
             $result->msgType = "text";
             $result->content = "请输入帮助查看应用说明";
@@ -67,7 +69,13 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $result->content = $dataapi->binding($openId, intval($studentId), "binding");
+        $bindResult = $dataapi->binding($openId, intval($studentId), "binding");
+	if($bindResult['state'] == "true"){
+		$result->content = "绑定成功";
+	}
+	else{
+		$result->content = "绑定失败：" . $bindResult['message'];
+	}
         return $result;
     }
     
@@ -86,7 +94,13 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $result->content = $dataapi->binding($openId, intval($studentId), "unbinding");
+        $unbindResult = $dataapi->binding($openId, intval($studentId), "unbinding");
+	if($unbindResult['state'] == "true"){
+		$result->content = "解绑成功";
+	}
+	else{
+		$result->content = "解绑失败：" . $unbindResult['message'];
+	}
         return $result;
     }
 }
