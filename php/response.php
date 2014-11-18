@@ -71,7 +71,8 @@ class RequestResponse{
 	else if ($data->msgType == "news"){
 	    $articleCount = $data->articleCount;
 	    $articles = $data->articles;
-	    $result = "<Articles><ArticleCount>$articleCount</ArticleCount>";
+	    $result = "<ArticleCount>$articleCount</ArticleCount>
+<Articles>";
 	    for ($i = 0; $i < $articleCount; $i++){
 		$title = $articles[$i]->title;
 		$description = $articles[$i]->description;
