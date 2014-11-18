@@ -41,7 +41,7 @@ class ticketHandler{
         $eventId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
-        if($ticketResult['state'] == true){
+        if($ticketResult['state'] == "true"){
             $result->msgType = "news";
             $result->articleCount = 1;
 			$result->articles = array();
