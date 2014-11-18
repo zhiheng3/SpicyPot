@@ -5,8 +5,7 @@
   * Last modified: 2014.11.12
   */
 class DataAPI{
-
-    //初始化某项活动
+    //create某项活动
 	//参数：char location
 	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
     //！！！信息不完善
