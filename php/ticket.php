@@ -44,7 +44,7 @@ class ticketHandler{
         if($ticketResult['state'] == "true"){
             $result->msgType = "news";
             $result->articleCount = 1;
-			$result->articles = array();
+	        $result->articles = array();
 			$result->articles[0] = new Article();
             $result->articles[0]->title = "抢票成功！";
             $result->articles[0]->description = "抢票成功！";
