@@ -68,9 +68,10 @@ class WechatCallbackAPI
                 $processObj  = new RequestProcess();
                 $responseData = $processObj->process($requestData);
                 $responseObj = new RequestResponse();
-                echo $responseObj->response($responseData);
+                //echo $responseObj->response($responseData);
+		$teststr = $responseObj->response($responseData);
 		$logfile = fopen("log.txt", "w");
-		fwrite($logfile, response($responseData));
+		fwrite($logfile, $teststr);
 		fclose($logfile);
 
         }else {
