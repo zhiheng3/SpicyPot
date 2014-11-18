@@ -71,13 +71,12 @@ class RequestResponse{
 	else if ($data->msgType == "news"){
 	    $articleCount = $data->articleCount;
 	    $articles = $data->articles;
-	    $item = $articles->item;
 	    $result = "<Articles><ArticleCount>$articleCount</ArticleCount>";
 	    for ($i = 0; $i < $articleCount; $i++){
-		$title = $item[$i]->Title;
-		$description = $item[$i]->Description;
-		$picUrl = $item[$i]->PicUrl;
-		$url = $item[$i]->Url;
+		$title = $articles[$i]->title;
+		$description = $articles[$i]->description;
+		$picUrl = $articles[$i]->picUrl;
+		$url = $articles[$i]->url;
 		$result .= "<item><Title><![CDATA[$title]></Title><Description><![CDATA[$description]]></Description><PicUrl><![CDATA[$picUrl]]></PicUrl><Url><![CDATA[$url]]></Url></item>";
 	    }
 	    $result .= "</Articles>";

@@ -38,16 +38,18 @@ class ticketHandler{
     public function takeTicket($data){
         $result = new ResponseData();
         $openId = $data->fromUserName;
-        $eventId = substr($content, 7);
+        $eventId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == true){
-            $result->MsgType = "news";
+            $result->msgType = "news";
             $result->articleCount = 1;
-            $result->article[0]->title = "抢票成功！";
-            $result->article[0]->description = "抢票成功！";
-            $result->article[0]->picUrl = "http://wx9.igeek.asia/img/31.png";
-            $result->article[0]->url = "http://wx9.igeek.asia/php/ActivityInfo.php";
+			$result->articles = array();
+			$result->articles[0] = new Article();
+            $result->articles[0]->title = "抢票成功！";
+            $result->articles[0]->description = "抢票成功！";
+            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/31.png";
+            $result->articles[0]->url = "http://wx9.igeek.asia/php/ActivityInfo.php";
         }
         else{
             $result->MsgType = "text";
@@ -64,7 +66,7 @@ class ticketHandler{
         $result = new ResponseData();
         $result->MsgType = "text";
         $openId = $data->fromUserName;
-        $ticketId = substr($content, 7);
+        $ticketId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->refundTicket($openId, $ticketId);
         if($ticketResult['state'] == true){
