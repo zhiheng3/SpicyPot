@@ -69,7 +69,13 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $result->content = $dataapi->binding($openId, intval($studentId), "binding");
+        $bindResult = $dataapi->binding($openId, intval($studentId), "binding");
+	if($bindResult['state'] == "true"){
+		$result->content = "绑定成功";
+	}
+	else{
+		$result->content = "绑定失败：" . $bindResult['message'];
+	}
         return $result;
     }
     
@@ -88,7 +94,13 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $result->content = $dataapi->binding($openId, intval($studentId), "unbinding");
+        $unbindResult = $dataapi->binding($openId, intval($studentId), "unbinding");
+	if($unbindResult['state'] == "true"){
+		$result->content = "解绑成功";
+	}
+	else{
+		$result->content = "解绑失败：" . $unbindResult['message'];
+	}
         return $result;
     }
 }
