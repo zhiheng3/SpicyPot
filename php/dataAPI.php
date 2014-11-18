@@ -5,7 +5,63 @@
   * Last modified: 2014.11.12
   */
 class DataAPI{
-    
+
+    //初始化某项活动
+	//参数：char location
+	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
+    //！！！信息不完善
+	public function createActivity($location){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+        
+        //插入活动    
+        if (!mysql_query("INSERT INTO activity (location) VALUES ('".$location."')")){
+             return(array("state" =>"false", "message" => "插入活动出错"));           
+        }
+
+        //查询此次活动分配的id
+        $result_set = mysql_query("SELECT id FROM activity WHERE location='".$location."'");
+        if (!$result_set){
+			return(array("state" =>"false", "message" => "返回活动id出错"));			
+		}
+        while($result =  mysql_fetch_array($result_set)){
+            $activity_id = $result[0];
+        }
+        return(array("state" => "true", "message" => $activity_id));
+    }
+
+
+    //建立座位
+	//参数：char location
+	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
+    //！！！信息不完善
+	public function createSeat($location, $capability = 1){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+        
+        //插入座位    
+        if (!mysql_query("INSERT INTO seat (location, capability) VALUES ('".$location."',".$capability.")")){
+             return(array("state" =>"false", "message" => "插入座位出错"));           
+        }
+
+        //查询此次座位分配的id
+        $result_set = mysql_query("SELECT id FROM seat WHERE location='".$location."'");
+        if (!$result_set){
+			return(array("state" =>"false", "message" => "返回座位id出错"));			
+		}
+        while($result =  mysql_fetch_array($result_set)){
+            $seat_id = $result[0];
+        }
+        return(array("state" => "true", "message" => $seat_id));
+    }
     
     //绑定或解绑
 	//参数：int ticket_num(票的总数), int activity_id
@@ -187,6 +243,115 @@ class DataAPI{
 		return(array("state" =>"true", "message" => $result));			
 	}
 
+
+    //选座
+	//参数：int ticket_id；int seat_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	//!!尚未考虑票是否已使用;未考虑openid
+	public function takeSeat($ticket_id, $seat_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+    
+        //验证票是否存在
+        $result_set = mysql_query("SELECT id FROM ticket WHERE id=".$ticketid);
+        //验证票是否为绑定座位
+        
+    }
+
+
+
+    //获取单个座位信息
+	//参数：int activity_id, int seat_id
+	//返回: ["state", "message"]: ["true", ["seat_id", "capability", "num_seated"]] or ["false", 错误信息] 
+    //    其中"seat_id", "capability", "num_seated"都是int。"capability"为座位容量，"num_seated"为此座位已选的票数
+    //尚未考虑票是否已使用、取消等
+	public function getSingleSeatInfo($activity_id, $seat_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+        
+        //获取座位容量
+        $result_set = mysql_query("SELECT capability FROM seat WHERE id=".$seat_id);
+        if (!$result_set){
+			return(array("state" =>"false", "message" => "查询座位容量出错"));			
+		}
+        $capability = mysql_fetch_array($result_set)[0];
+        
+        //获取已选票数
+        $result_set = mysql_query("SELECT id FROM ticket WHERE seat_id=".$seat_id." AND activity_id =".$activity_id);
+        if (!$result_set){
+			return(array("state" =>"false", "message" => "查询已选票数出错"));			
+		}
+        $num_seated = 0;
+        while( mysql_fetch_array($result_set)){
+            $num_seated++;
+        }
+        
+
+        return(array("state" => "true", "message" => array("seat_id"=>$seat_id, "capability"=>$capability, "num_seated"=>$num_seated)));     
+    }
+    
+
+    //获取全部座位信息
+	//参数：int activity_id
+	//返回: ["state", "message"]: ["true", [["seat_id", "capability", "num_seated"]]] or ["false", 错误信息] 
+    //    其中"seat_id", "capability", "num_seated"都是int。"capability"为座位容量，"num_seated"为此座位已选的票数
+    //尚未考虑票是否已使用、取消等等
+//使用例子：
+/*
+$result = $test->getSeatInfo(1);
+$resultMessage = $result['message'];
+if ($result['state'] == "true"){
+	foreach($result['message'] as $a){
+		echo($a["seat_id"].$a["capability"].$a["num_seated"]."\n");
+	}
+}else{
+	echo($resultMessage."\n");
+}*/
+
+	public function getSeatInfo($activity_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+    
+        //获得活动地点
+        $result_set = mysql_query("SELECT location FROM activity WHERE id=".$activity_id);
+        if (!$result_set){
+				return(array("state" =>"false", "message" => "查询活动出错"));			
+		}
+        $location = mysql_fetch_array($result_set)[0];
+        
+        //根据地点取出seat列表
+        $result_set = mysql_query("SELECT id FROM seat WHERE location='".$location."'");
+        if (!$result_set){
+				return(array("state" =>"false", "message" => "获取座位列表出错"));			
+		}      
+        
+        $result = array();
+        //对每个seat查询capability 和 num_seated
+        while($result_row = mysql_fetch_array($result_set)){
+            $single_result = $this->getSingleSeatInfo($activity_id, $result_row[0]);
+            if ($single_result['state'] == "false"){
+                return(array("state" =>"false", "message" => $single_result['message']));
+            }else{
+                array_unshift($result, $single_result['message']);            
+            }
+		}
+        return(array("state" =>"true", "message" => $result));
+        
+       
+        
+    }
 	
 }
 ?> 
