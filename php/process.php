@@ -18,7 +18,6 @@ class RequestProcess{
     public function process($data){
 		$ticketHandler = new ticketHandler();
         $content = trim($data->content);
-		echo "process";
         if ($content == "帮助"){
             $result = $this->help($data);
         }
@@ -29,8 +28,6 @@ class RequestProcess{
             $result = $this->unbind($data);
         }
 	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-			echo substr($content, 0, 6) . "\n";
-			echo substr($content, 7) . "\n";
 		    $result = $ticketHandler->ticketHandle($data);
 	    }
         else{
