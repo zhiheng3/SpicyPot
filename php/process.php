@@ -23,9 +23,6 @@ class RequestProcess{
         if ($content == "帮助"){
             $result = $this->help($data);
         }
-        else if (substr($content, 0, 6) == "绑定"){
-            $result = $this->bind($data);
-        }
         else if (substr($content, 0, 6) == "解绑"){
             $result = $this->unbind($data);
         }
@@ -68,8 +65,8 @@ class RequestProcess{
     public function help($data){
         $result = new ResponseData();
         $result->msgType = "text";
-        $result->content = "目前此平台有两个功能，点击下方菜单可以进入验证界面，输入绑定+学号可以绑定微信号到学号，输入解绑+学号可以解绑微信号。
-                            目前两个功能是独立的。所有的输入忽略空格。";
+        $result->content = "目前此平台有两个功能，点击用户管理菜单可以进入绑定页面，输入解绑+学号可以解绑微信号。
+                            输入抢票X（X为活动编号）。所有的输入忽略空格。";
         return $result;
     }
     
