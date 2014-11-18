@@ -27,7 +27,7 @@ class RequestParse{
             $result->content = trim($postObj->Content);
             return $result;
         }
-	else if ($result->msgType == "image"){
+	    else if ($result->msgType == "image"){
             $result->picurl = trim($postObj->PicUrl);
             $result->mediaId = trim($postObj->MediaId);
             return $result;
@@ -53,6 +53,10 @@ class RequestParse{
             $result->description = trim($postObj->Description);
             $result->url = trim($postObj->Url);
             return $result;
+        }
+        else if ($result->msgType == "event"){
+            $result->event = trim($postObj->Event);
+            $result->eventKey = trim($postObj->EventKey);
         }
     }
 }
