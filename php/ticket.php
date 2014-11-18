@@ -38,7 +38,7 @@ class ticketHandler{
     public function takeTicket($data){
         $result = new ResponseData();
         $openId = $data->fromUserName;
-        $eventId = substr($data->content, 7);
+        $eventId = substr($data->content, 6);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == "true"){
@@ -66,7 +66,7 @@ class ticketHandler{
         $result = new ResponseData();
         $result->MsgType = "text";
         $openId = $data->fromUserName;
-        $ticketId = substr($data->content, 7);
+        $ticketId = substr($data->content, 6);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->refundTicket($openId, $ticketId);
         if($ticketResult['state'] == "true"){
