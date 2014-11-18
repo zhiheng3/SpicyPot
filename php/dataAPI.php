@@ -189,31 +189,5 @@ class DataAPI{
 
 	
 }
-$test = new DataAPI();
-//echo($test->getStudentId("openid000000000000000003")["message"]."\n");
-//echo($test->binding("openid000000000000000001", 2012010001, "binding")."\n");
-//echo($test->binding("openid000000000000000002", 2012010002, "binding")."\n");
-//echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-//echo($test->initTicket(3, 2)['state']."\n");
-//echo($test->takeTicket("openid000000000000000001", 1)['message']."\n");
-//echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
-//echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
-//echo($test->takeTicket("openid000000000000000002", 2)['message']."\n");
-//echo($test->refundTicket("openid000000000000000002", 3)['message']."\n");
-$result = $test->getTicketInfo("openid000000000000000002");
-$resultMessage = $result['message'];
-if ($result['state'] == "true"){
-	for ($i = 0; $i < count($resultMessage);$i++){
-		echo($resultMessage[$i]."\n");
-	}
-}else{
-	echo($resultMessage."\n");
-}
-
-
-//echo($test->refundTicket("openid000000000000000002", 6)['message']."\n");
-//echo($test->refundTicket("openid000000000000000002", 6)['message']."\n");
-//echo($test->refundTicket("openid000000000000000001", 6)['message']."\n");
-//echo($test->refundTicket("openid000000000000000001", 6)['message']."\n");
 ?> 
 
