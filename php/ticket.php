@@ -69,7 +69,7 @@ class ticketHandler{
         $ticketId = substr($data->content, 7);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->refundTicket($openId, $ticketId);
-        if($ticketResult['state'] == true){
+        if($ticketResult['state'] == "true"){
             $result->content = "退票成功！";
         }
         else{
@@ -89,7 +89,7 @@ class ticketHandler{
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->getTicket($openId);
         $result->content = "";
-        if($ticketResult['state'] == true){
+        if($ticketResult['state'] == "true"){
             for($i = 0; $i < count($ticketResult['message']); $i++){
                 $j = $i + 1;
                 $result->content .= "$j: ";
