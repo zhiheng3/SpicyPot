@@ -77,9 +77,15 @@ class RequestResponse{
 		$description = $articles[$i]->description;
 		$picUrl = $articles[$i]->picUrl;
 		$url = $articles[$i]->url;
-		$result .= "<item><Title><![CDATA[$title]></Title><Description><![CDATA[$description]]></Description><PicUrl><![CDATA[$picUrl]]></PicUrl><Url><![CDATA[$url]]></Url></item>";
+		$result .= "<item>
+<Title><![CDATA[$title]></Title>
+<Description><![CDATA[$description]]></Description>
+<PicUrl><![CDATA[$picUrl]]></PicUrl>
+<Url><![CDATA[$url]]></Url>
+</item>";
 	    }
-	    $result .= "</Articles>";
+	    $result .= "
+</Articles>";
 	    return $result;
 	}
     }
