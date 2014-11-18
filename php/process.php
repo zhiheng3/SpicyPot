@@ -16,6 +16,7 @@ class RequestProcess{
     //return: ResponseData $result
     //Test: No
     public function process($data){
+	$tickeHandler = new ticketHandler();
         $content = trim($data->content);
         if ($content == "帮助"){
             $result = $this->help($data);
@@ -27,7 +28,7 @@ class RequestProcess{
             $result = $this->unbind($data);
         }
 	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-		    $result = ticketHandle($data);
+		    $result = $ticketHandler->ticketHandle($data);
 	    }
         else{
             $result->msgType = "text";
