@@ -1,15 +1,16 @@
 <?php
 /**
   * Process the user's request
-  * Author: Zhao Zhiheng
-  * Last modified: 2014.11.13
+  * Author: Zhao Zhiheng, Feng Zhibin
+  * Last modified: 2014.11.17
   */
   
 require_once "dataformat.php";
 require_once "dataAPI.php";
+require_once "ticket.php";
   
 class RequestProcess{
-    //Author: Zhao Zhiheng
+    //Author: Zhao Zhiheng, Feng Zhibin
     //Process with the request data
     //params: RequestData $data
     //return: ResponseData $result
@@ -25,6 +26,9 @@ class RequestProcess{
         else if (substr($content, 0, 6) == "解绑"){
             $result = $this->unbind($data);
         }
+		else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+			$result = ticketHandle($data);
+		}
         else{
             $result->msgType = "text";
             $result->content = "请输入帮助查看应用说明";
