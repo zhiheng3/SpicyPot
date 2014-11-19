@@ -62,10 +62,11 @@ class DataAPI{
         return(array("state" => "true", "message" => $seat_id));
     }
     
-    //绑定或解绑
-	//参数：int ticket_num(票的总数), int activity_id
+
+	//绑定
+	//参数：String openid, int student_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
-    public function binding($openId, $studentId, $type){
+    public function bind($openId, $studentId){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
@@ -73,32 +74,60 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
-		
-        if ($type == "binding"){//绑定
-            $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."' AND state = 1");
-			if (!empty(mysql_fetch_array($result))){
-				return(array("state" => "false", "message" => "这个openId已经绑定"));			
-			}
-			$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1");
-			if (!empty(mysql_fetch_array($result))){
-				return(array("state" => "false", "message" => "这个studentId已经绑定"));			
-			}
-			mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."',1)");
-			return(array("state" => "true", "message" => ""));
-        }else{
-			if ($type == "unbinding"){//解除绑定
-				$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1 AND openid='".$openId."'");
-				if (empty(mysql_fetch_array($result))){
-					return(array("state" => "false", "message" => "没有找到绑定记录"));
-				}
-				mysql_query("UPDATE user_information SET state = 0 WHERE student_id=".$studentId ." AND openid='".$openId."'");
-				return(array("state" => "true", "message" => ""));
-			}else{
-				return(array("state" => "false", "message" => "错误的type值"));
-			}
+        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."' AND state = 1");
+		if (!empty(mysql_fetch_array($result))){
+			return(array("state" => "false", "message" => "这个openId已经绑定"));			
 		}
+		$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1");
+		if (!empty(mysql_fetch_array($result))){
+			return(array("state" => "false", "message" => "这个studentId已经绑定"));			
+		}
+		mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."',1)");
+		return(array("state" => "true", "message" => ""));
     }
 
+
+	//强制绑定
+	//参数：String openid, int student_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
+    public function forceBinding($openId, $studentId){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+
+        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."' AND state = 1");
+		if (!empty(mysql_fetch_array($result))){
+			return(array("state" => "false", "message" => "这个openId已经绑定"));			
+		}
+
+		$result = mysql_query("UPDATE user_information SET state = 0 WHERE student_id=".$studentId);
+
+		mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."',1)");
+		return(array("state" => "true", "message" => ""));
+    }
+
+
+    //解绑
+	//参数：String openid, int student_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
+    public function unbind($openId, $studentId){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+
+		$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1 AND openid='".$openId."'");
+		if (empty(mysql_fetch_array($result))){
+			return(array("state" => "false", "message" => "没有找到绑定记录"));
+		}
+		mysql_query("UPDATE user_information SET state = 0 WHERE student_id=".$studentId ." AND openid='".$openId."'");
+		return(array("state" => "true", "message" => ""));
+    }
 
 
 	//初始化某项活动的票
@@ -118,6 +147,7 @@ class DataAPI{
 		return (array("state" => "true", "message" => ""));
 	}
 
+
 	//根据openid获得student_id
 	//参数：int openId
 	//返回: ["state", "message"]: ["true", int student_id] or ["false", 错误信息] 
@@ -134,9 +164,11 @@ class DataAPI{
 		return(array("state" =>"true", "message" => $result[0]));
 	}
 
+
 	//抢票
 	//参数：int openId, int activity_id
 	//返回: ["state", "message"]: ["true", int ticket_id] or ["false", 错误信息] 
+	//！！未考虑活动是否存在、是否有效
 	public function takeTicket($openId, $activity_id){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
@@ -257,8 +289,7 @@ class DataAPI{
     
         //验证票是否存在
         $result_set = mysql_query("SELECT id FROM ticket WHERE id=".$ticketid);
-        //验证票是否为绑定座位
-        
+        //验证票是否未绑定座位   
     }
 
 
@@ -292,8 +323,6 @@ class DataAPI{
         while( mysql_fetch_array($result_set)){
             $num_seated++;
         }
-        
-
         return(array("state" => "true", "message" => array("seat_id"=>$seat_id, "capability"=>$capability, "num_seated"=>$num_seated)));     
     }
     
@@ -346,12 +375,8 @@ if ($result['state'] == "true"){
                 array_unshift($result, $single_result['message']);            
             }
 		}
-        return(array("state" =>"true", "message" => $result));
-        
-       
-        
-    }
-	
+        return(array("state" =>"true", "message" => $result));  
+    }	
 }
 ?> 
 

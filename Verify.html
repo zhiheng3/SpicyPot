@@ -9,6 +9,7 @@
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/RSA.js"></script>
+<script type="text/javascript" src = "./js/Verify.js"></script>
 <title>用户验证</title>  
 </head>  
 <body>  
@@ -27,8 +28,26 @@
     </form>
     <pre id="results" style="margin-top: 15px">请填写信息进行认证。</pre>
 </div>
+<<<<<<< HEAD
 <footer id = "footer">
 	<p>清华大学/校团委</p>
+=======
+<div id = "Confirm-Title">
+	<p>用户验证</p>
+</div>
+<form action="" method="get" id = "Confirm-List">
+  <p>学号 <input type="text"  id = "Username" class = "input-selfinformation"/></p>
+  <p>密码 <input type="password"  id = "Password" class = "input-selfinformation"/></p>
+  <input type="submit" value="认证" id = "Confirm-Button"/>
+</form>
+<img class = "Verify-Img" id = "VerifyOKIMG" src="./img/VerifySuccessImg.png">
+
+<img class = "Verify-Img" id = "VerifyNOIMG" src="./img/VerifyFailImg.png">
+<input id = "Cancel-Button" value = "返回" type = "button"/>
+<pre id="results" style="margin-top: 15px">请填写信息进行认证。</pre>
+<div id = "Confirm-Inc">
+	<p>清华大学/校团委<p>
+>>>>>>> 76e4fa06af1a939259e67993050403d385a49de2
 	<p>@2014</p>
 </footer>
 
@@ -65,14 +84,17 @@
                         dataType: "json",
                         success:function(data){
                                     if(data.code == 0){
+                                        VerifySuccess();
                                         $("#results").text("认证成功");
                                     }
                                     else{
+                                        VerifyFail();
                                         $("#results").text(data.message);
                                     }
 
                                 },
                         error: function(){
+                                VerifyFail();
                                 $('#results').text("认证服务出错，请重试……");
                         }                        	
                             
@@ -81,6 +103,7 @@
                     });
                 },
                 error: function() {
+                    VerifyFail();
                     $('#results').text("获取时间失败，请重试……")
                 }
             });
