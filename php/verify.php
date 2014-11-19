@@ -4,6 +4,8 @@
   * Author: Zhao Zhiheng
   * Last modified: 2014.11.12
   */
+  
+require_once "dataAPI.php";
 
 if ($_POST["type"] == "time"){
     //Get time
@@ -26,6 +28,7 @@ exit;
     echo $time;
 }
 else if ($_POST["type"] == "verify"){
+    $result = array('code' => 1, 'message' => "Invalid StudentID");
     $url = "http://auth.igeek.asia/v1";
     $post_data = "secret=" . $_POST["secret"];
 /*
@@ -39,15 +42,30 @@ else if ($_POST["type"] == "verify"){
     
     $result = curl_exec($ch_verify);
     curl_close($result);*/
-	$context = array(
-		'http' => array(
-			'method' => 'POST',
-			'header' => 'Content-type: application/x-www-form-urlencoded'.
+        $context = array(
+		    'http' => array(
+			    'method' => 'POST',
+			    'header' => 'Content-type: application/x-www-form-urlencoded'.
 						'\n'.'Content-length:' . strlen($post_data) + 1,
-			'content' => $post_data)
-	);
+			    'content' => $post_data)
+	    );
 	$stream_context = stream_context_create($context);
-	$result = file_get_contents($url, false, $stream_context);
-    echo $result;
+	$verify = file_get_contents($url, false, $stream_context);
+	$valid = json_decode($verify, true);
+	if ($valid['code'] == 0){ //Verify ok
+	    $dataapi = new dataAPI();
+	    $bindResult = $dataapi->binding($_POST["open_id"], intval($valid['data']['ID']), "binding");
+	    if($bindResult['state'] == "true"){
+	        $result['code'] = 0;
+		    $result['message'] = "绑定成功";
+	    }
+	    else{
+	        $result['code'] = 1;
+		    $result['message'] = "绑定失败：" . $bindResult['message'];
+	    }
+	    echo json_encode($result);
+    }
+    else
+        echo $verify;
 }
 ?>

@@ -16,28 +16,44 @@ class RequestProcess{
     //return: ResponseData $result
     //Test: No
     public function process($data){
-	$result = new ResponseData();
-	$ticketHandler = new ticketHandler();
+	    $result = new ResponseData();
+	    if ($data->msgType == "text"){
+	    $ticketHandler = new ticketHandler();
         $content = trim($data->content);
         if ($content == "帮助"){
             $result = $this->help($data);
         }
-        else if (substr($content, 0, 6) == "绑定"){
-            $result = $this->bind($data);
-        }
         else if (substr($content, 0, 6) == "解绑"){
             $result = $this->unbind($data);
         }
-	else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-	    $result = $ticketHandler->ticketHandle($data);
-	}
+	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+	        $result = $ticketHandler->ticketHandle($data);
+	    }
         else{
             $result->msgType = "text";
             $result->content = "请输入帮助查看应用说明";
         }
+        }
+        
+        else if ($data->msgType == "event"){
+            //Menu click
+            if ($data->event == "CLICK"){
+                if ($data->eventKey == "USER_BIND"){
+                    $result = $this->bindlink($data);
+                }
+            }
+        }
+        
         $result->toUserName = $data->fromUserName;
         $result->fromUserName = $data->toUserName;
         $result->createTime = time();
+        return $result;
+    }
+    
+    public function bindlink($data){
+        $result = new ResponseData();
+        $result->msgType = "text";
+        $result->content = "<a href=\"wx9.igeek.asia/Verify.html?id=$data->fromUserName\">请点击我进行绑定</a>";
         return $result;
     }
     
@@ -49,8 +65,8 @@ class RequestProcess{
     public function help($data){
         $result = new ResponseData();
         $result->msgType = "text";
-        $result->content = "目前此平台有两个功能，点击下方菜单可以进入验证界面，输入绑定+学号可以绑定微信号到学号，输入解绑+学号可以解绑微信号。
-                            目前两个功能是独立的。所有的输入忽略空格。";
+        $result->content = "目前此平台有两个功能，点击用户管理菜单可以进入绑定页面，输入解绑+学号可以解绑微信号。
+                            输入抢票X（X为活动编号）。所有的输入忽略空格。";
         return $result;
     }
     
