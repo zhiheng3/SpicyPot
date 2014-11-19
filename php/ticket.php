@@ -66,7 +66,7 @@ class ticketHandler{
     //return ResponseData $result
     public function refundTicket($data){
         $result = new ResponseData();
-        $result->MsgType = "text";
+        $result->msgType = "text";
         $openId = $data->fromUserName;
         $ticketId = substr($data->content, 6);
         $dataapi = new DataAPI();
