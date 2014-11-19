@@ -9,6 +9,7 @@
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/RSA.js"></script>
+<script type="text/javascript" src = "./js/Verify.js"></script>
 <title>用户验证</title>  
 </head>  
 <body>  
@@ -65,14 +66,17 @@
                         dataType: "json",
                         success:function(data){
                                     if(data.code == 0){
+                                        VerifySuccess();
                                         $("#results").text("认证成功");
                                     }
                                     else{
+                                        VerifyFail()
                                         $("#results").text(data.message);
                                     }
 
                                 },
                         error: function(){
+                                VerifyFail();
                                 $('#results').text("认证服务出错，请重试……");
                         }                        	
                             
@@ -81,6 +85,7 @@
                     });
                 },
                 error: function() {
+                    VerifyFail();
                     $('#results').text("获取时间失败，请重试……")
                 }
             });
