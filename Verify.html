@@ -9,6 +9,7 @@
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/RSA.js"></script>
+<script src="./js/Verify.js"></script>
 <title>用户验证</title>  
 </head>  
 <body>  
@@ -20,16 +21,22 @@
     	<p>用户验证</p>
     </div>
     <form action="" method="get" id = "Confirm-List">
-      <p>学号 <input type="text"  id = "Username" class = "input-selfinformation"/></p>
-      <p>密码 <input type="password"  id = "Password" class = "input-selfinformation"/></p>
+      <p><lable>学号</lable> <input type="text"  id = "Username" class = "input-selfinformation" placeholder="请输入您的学号"/></p>
+      <p><lable>密码</lable><input type="password"  id = "Password" class = "input-selfinformation" placeholder="使用info密码进行登录"/></p>
       <div><input id = "Forcebind" type="checkbox" value = "Forcebind" name="Forcebind">强制绑定
       <input type="submit" value="认证" id = "Confirm-Button"/></div>
     </form>
+    <img class = "Verify-Img" id = "VerifyOKIMG" src="./img/VerifySuccessImg.png">
+
+    <img class = "Verify-Img" id = "VerifyNOIMG" src="./img/VerifyFailImg.png">
+    <input id = "Cancel-Button" value = "返回" type = "button"/>
+
     <pre id="results" style="margin-top: 15px">请填写信息进行认证。</pre>
 </div>
-<footer id = "footer">
-	<p>清华大学/校团委</p>
-	<p>@2014</p>
+<footer id="footer">
+    <hr>
+    共青团清华大学委员会<br>
+    © 2013
 </footer>
 
 <script>
@@ -65,14 +72,17 @@
                         dataType: "json",
                         success:function(data){
                                     if(data.code == 0){
+                                        VerifySuccess();
                                         $("#results").text("认证成功");
                                     }
                                     else{
+                                        VerifyFail();
                                         $("#results").text(data.message);
                                     }
 
                                 },
                         error: function(){
+                                VerifyFail();
                                 $('#results').text("认证服务出错，请重试……");
                         }                        	
                             
@@ -81,6 +91,7 @@
                     });
                 },
                 error: function() {
+                    VerifyFail();
                     $('#results').text("获取时间失败，请重试……")
                 }
             });

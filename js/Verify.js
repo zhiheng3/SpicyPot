@@ -21,8 +21,8 @@ $(document).ready(function(){
 		$("#VerifyNOIMG").css("display","none");
 		$("#Cancel-Button").css("display","none");
 		$("#Confirm-List").css("display","block");
-		$("#Username").val("");
-		$("#Password").val("");
+		$("#Username").css("placeholder","请输入您的学号");
+		$("#Password").css("placeholder","使用info密码进行登录");
 		$("#results").text("请填写信息进行认证。");
 	});
 });

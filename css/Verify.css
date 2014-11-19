@@ -17,7 +17,7 @@ body{
 
 #ImgTop img{
 	width: 100%;
-	height: 100%;
+	
 	
 }
 
@@ -37,16 +37,24 @@ body{
 }
 
 #Confirm-List{
-	width: 300px;
+	width: 80%;
 	height: auto;
 	margin: auto;
 }
 
 #Confirm-List p{
 	font-size: 1.2em;
-	margin-left: 30px;
+	
 	color: #b94a48;
 	font-weight: bold;
+	margin-left: 2%;
+}
+
+#Confirm-List p lable{
+	margin-left: 2%;
+	margin-right: 3%;
+	margin-bottom: 2%;
+	display: inline-block;
 }
 
 .input-selfinformation{
@@ -62,6 +70,11 @@ body{
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    border-color:#b94a48;
+    width: 75%;
+    height: 30px;
+    display: block;
+    float: right;
 }
 
 .input-selfinformation:focus {
@@ -110,17 +123,32 @@ pre {
 }
 
 #footer {
-	position: relative;
-	margin-top: 0px;
-	height: 37px;
 	clear: both;
-	text-align: center;
-	position: absolute;  bottom: 0; /* 关键 */  
-    left:0; /* IE下一定要记得 */  
     display: block;
+    position: relative;
+    margin-top: -60px; /* minus footer height */
+    height: 37px; /* a little smaller than 50 to avoid scroll*/
+    clear:both;
+    text-align: center;
     
 }
 
 #main-content{  
    padding-bottom: 60px; /*重要！给footer预留的空间*/  
 }  
+
+.Verify-Img{
+	width: 128px;
+	height: 128px;
+	margin: auto;
+	display: none;
+	margin-top: 20px;
+	margin-bottom:10px;
+}
+
+#Cancel-Button{
+
+	width: 100px;
+	margin: auto;
+	display: none;
+}
