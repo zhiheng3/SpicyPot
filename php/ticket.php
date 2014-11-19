@@ -15,10 +15,7 @@ class ticketHandler{
     //return: ResponseData $result
     public function ticketHandle($data){
         $content = trim($data->content);
-        if(substr($content, 0, 6) == "抢票"){
-            $result = $this->takeTicket($data);
-        }
-        else if(substr($content, 0, 6) == "退票"){
+        if(substr($content, 0, 6) == "退票"){
             $result = $this->refundTicket($data);
         }
         else if(substr($content, 0, 6) == "查票"){
@@ -38,7 +35,7 @@ class ticketHandler{
     public function takeTicket($data){
         $result = new ResponseData();
         $openId = $data->fromUserName;
-        $eventId = substr($data->content, 6);
+        $eventId = intval(substr($data->eventKey, 5));
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == "true"){
@@ -53,7 +50,12 @@ class ticketHandler{
         }
         else{
             $result->msgType = "text";
-            $result->content = "抢票失败：" . $ticketResult['message'];
+			if($ticketResult['message'] == "票已抢光"){
+				$result->content = "胜败乃兵家常事，大侠请下次再来。（票已抢光）";
+			}
+            else{
+				$result->content = "抢票失败：" . $ticketResult['message'];
+			}
         }
         return $result;
     }
@@ -87,7 +89,7 @@ class ticketHandler{
         $result->msgType = "text";
         $openId = $data->fromUserName;
         $dataapi = new DataAPI();
-        $ticketResult = $dataapi->getTicket($openId);
+        $ticketResult = $dataapi->getTicketInfo($openId);
         $result->content = "";
         if($ticketResult['state'] == "true"){
             for($i = 0; $i < count($ticketResult['message']); $i++){
