@@ -59,6 +59,9 @@ class WechatCallbackAPI
 		/*$postStr = "<xml><ToUserName><![CDATA[toUserName]]></ToUserName><FromUserName><![CDATA[fromUserName]]></FromUserName><CreateTime>createTime</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[抢票 123]]></Content></xml>";*/
 
       	//extract post data
+      	$logfile = fopen("./log/request_log", "a");
+      	fwrite($logfile, $postStr);
+      	fclose($logfile);
 		if (!empty($postStr)){
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                    the best way is to check the validity of xml by yourself */
@@ -69,11 +72,11 @@ class WechatCallbackAPI
                 $responseData = $processObj->process($requestData);
                 $responseObj = new RequestResponse();
                 //echo $responseObj->response($responseData);
-		$teststr = $responseObj->response($responseData);
-		echo $teststr;
-		$logfile = fopen("log.txt", "w");
-		fwrite($logfile, $teststr);
-		fclose($logfile);
+		        $response = $responseObj->response($responseData);
+		        echo $response;
+		        $logfile = fopen("./log/response", "a");
+		        fwrite($logfile, $response);
+		        fclose($logfile);
 
         }else {
         	echo "";
