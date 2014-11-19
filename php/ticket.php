@@ -35,7 +35,7 @@ class ticketHandler{
     public function takeTicket($data){
         $result = new ResponseData();
         $openId = $data->fromUserName;
-        $eventId = substr($data->eventKey, 5);
+        $eventId = intval(substr($data->eventKey, 5));
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == "true"){

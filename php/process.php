@@ -17,8 +17,8 @@ class RequestProcess{
     //Test: No
     public function process($data){
 	    $result = new ResponseData();
+	    $ticketHandler = new ticketHandler();
 	    if ($data->msgType == "text"){
-	        $ticketHandler = new ticketHandler();
             $content = trim($data->content);
             if ($content == "帮助"){
                 $result = $this->help($data);
