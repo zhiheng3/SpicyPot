@@ -92,7 +92,12 @@ class ticketHandler{
         $ticketResult = $dataapi->getTicketInfo($openId);
         $result->content = "";
         if($ticketResult['state'] == "true"){
-            for($i = 0; $i < count($ticketResult['message']); $i++){
+            $tickets = count($ticketResult['message']);
+            if($tickets == 0){
+                $result->content = "您目前没有票哦~";
+                return $result;
+            }
+            for($i = 0; $i < $tickets; $i++){
                 $j = $i + 1;
                 $result->content .= "$j: ";
                 $result->content .= $ticketResult['message'][$i];
