@@ -14,14 +14,12 @@ body{
 }
 
 #Activity-Title{
-	margin-top: 15px;
+	margin-top: 5px;
 	width: 100%;
-	height: 40px;
+	height: 25px;
 	text-align: center;
-
-	font-size: 1.4em;
+	font-size: 1.1em;
 }
-
 
 
 
@@ -96,7 +94,7 @@ body{
 
 .General-Title{
 	margin-left: 0px;
-	font-size: 1.3em;
+	font-size: 0.9em;
 	margin-bottom: 3px;
 	margin-top: 7px;
 
@@ -104,15 +102,15 @@ body{
 
 .General-Box{
 	margin:auto;
-	height: 50px;
+	height: 25px;
 	border-radius: 5px;
 	background-color: #999999;
-	font-size: 1.2em;
+	font-size: 0.9em;
 	margin-bottom: 4px;
 }
 
 .General-Box p{
-	padding-top: 10px;
+	padding-top: 3px;
 	margin: 0px;
 	
 }
