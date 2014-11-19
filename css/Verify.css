@@ -154,8 +154,8 @@ pre {
 }  
 
 .Verify-Img{
-	width: 128px;
-	height: 128px;
+	width: 64px;
+	height: 64px;
 	margin: auto;
 	display: none;
 	margin-top: 20px;
