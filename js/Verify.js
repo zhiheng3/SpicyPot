@@ -19,6 +19,7 @@ function VerifyFail(){
 $(document).ready(function(){
 	var height =  document.body.scrollHeight;
 	$("#main-content").css("height",height);
+	$("body").css("height",height);
 
 	//alert(height);
 	$("#Cancel-Button").click(function(){
