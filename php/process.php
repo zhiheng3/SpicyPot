@@ -18,29 +18,31 @@ class RequestProcess{
     public function process($data){
 	    $result = new ResponseData();
 	    if ($data->msgType == "text"){
-	    $ticketHandler = new ticketHandler();
-        $content = trim($data->content);
-        if ($content == "帮助"){
-            $result = $this->help($data);
+	        $ticketHandler = new ticketHandler();
+            $content = trim($data->content);
+            if ($content == "帮助"){
+                $result = $this->help($data);
+            }
+            else if (substr($content, 0, 6) == "解绑"){
+                $result = $this->unbind($data);
+            }
+	        else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+	            $result = $ticketHandler->ticketHandle($data);
+	        }
+            else{
+                $result->msgType = "text";
+                $result->content = "请输入帮助查看应用说明";
+            }
         }
-        else if (substr($content, 0, 6) == "解绑"){
-            $result = $this->unbind($data);
-        }
-	    else if (substr($content, 0, 6) == "抢票" || substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
-	        $result = $ticketHandler->ticketHandle($data);
-	    }
-        else{
-            $result->msgType = "text";
-            $result->content = "请输入帮助查看应用说明";
-        }
-        }
-        
         else if ($data->msgType == "event"){
             //Menu click
             if ($data->event == "CLICK"){
                 if ($data->eventKey == "USER_BIND"){
                     $result = $this->bindlink($data);
                 }
+				else if(substr($data->eventKey, 0, 4) == "TAKE"){
+					$result = $ticketHandler->takeTicket($data);
+				}
             }
         }
         

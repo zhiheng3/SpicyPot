@@ -38,7 +38,7 @@ class ticketHandler{
     public function takeTicket($data){
         $result = new ResponseData();
         $openId = $data->fromUserName;
-        $eventId = substr($data->content, 6);
+        $eventId = substr($data->eventKey, 5);
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         if($ticketResult['state'] == "true"){
@@ -53,7 +53,12 @@ class ticketHandler{
         }
         else{
             $result->msgType = "text";
-            $result->content = "抢票失败：" . $ticketResult['message'];
+			if($ticketResult['message'] == "票已抢光"){
+				$result->content = "胜败乃兵家常事，大侠请下次再来。（票已抢光）";
+			}
+            else{
+				$result->content = "抢票失败：" . $ticketResult['message'];
+			}
         }
         return $result;
     }
