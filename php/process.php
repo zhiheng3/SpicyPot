@@ -52,10 +52,23 @@ class RequestProcess{
         return $result;
     }
     
+    //Author: Zhao Zhiheng
+    //Process the bind/unbind operation
+    //params: RequestData $data
+    //return: ResponseData $result
+    //Test: No
+    
     public function bindlink($data){
         $result = new ResponseData();
+        $dataapi = new dataAPI();
+        $studentid = $dataapi->getStudentId($data->fromUserName);
         $result->msgType = "text";
-        $result->content = "<a href=\"wx9.igeek.asia/Verify.html?id=$data->fromUserName\">请点击我进行绑定</a>";
+        if ($studentid['state'] == 'true'){
+            $result->content = "你目前绑定的学号是" . $studentid['message'];
+        }
+        else{
+            $result->content = "<a href=\"wx9.igeek.asia/Verify.html?id=$data->fromUserName\">请点击我进行绑定</a>";
+        }
         return $result;
     }
     
