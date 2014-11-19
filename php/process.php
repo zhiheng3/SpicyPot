@@ -84,7 +84,7 @@ class RequestProcess{
                             输入抢票X（X为活动编号）。所有的输入忽略空格。";
         return $result;
     }
-    
+    /*
     //Author: Zhao Zhiheng
     //Process the bind operation
     //params: RequestData $data
@@ -109,7 +109,7 @@ class RequestProcess{
 	}
         return $result;
     }
-    
+    */
     //Author: Zhao Zhiheng
     //Process the unbind operation
     //params: RequestData $data
@@ -125,7 +125,7 @@ class RequestProcess{
             return $result;
         }
         $dataapi = new dataAPI();
-        $unbindResult = $dataapi->binding($openId, intval($studentId), "unbinding");
+        $unbindResult = $dataapi->unbind($openId, intval($studentId));
 	if($unbindResult['state'] == "true"){
 		$result->content = "解绑成功";
 	}
