@@ -9,7 +9,7 @@ body{
 }
 #ImgTop{
 	width: 100%;
-	height: 20%;
+	
 	overflow: hidden;
 	border-radius: 10px;
 	
@@ -21,6 +21,14 @@ body{
 	
 }
 
+.Verify-Img{
+	width: 128px;
+	height: 128px;
+	margin: auto;
+	display: none;
+	margin-top: 20px;
+	margin-bottom:10px;
+}
 
 #Confirm-Title{
 	margin-top: 15px;
@@ -37,7 +45,7 @@ body{
 }
 
 #Confirm-List{
-	width: 80%;
+	width: 300px;
 	height: auto;
 	margin: auto;
 }
@@ -84,9 +92,14 @@ body{
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6)
 }
 
+#Button-Line{
+	width: 100%;
+	margin-left:75px;
+}
+
 #Confirm-Button{
 	width: 100px;
-	margin-left: 80px;
+	margin-left: 10px;
 }
 
 #Confirm-Inc{
@@ -126,15 +139,17 @@ pre {
 	clear: both;
     display: block;
     position: relative;
-    margin-top: -60px; /* minus footer height */
-    height: 37px; /* a little smaller than 50 to avoid scroll*/
-    clear:both;
-    text-align: center;
-    
+    top:-80px;
+    height: 37px; /* a little smaller than 50 to avoid scroll*/    
+    text-align: center;    
 }
 
 #main-content{  
-   padding-bottom: 60px; /*重要！给footer预留的空间*/  
+   
+   width: 100%;
+   position: relative;
+   float: left;
+   
 }  
 
 .Verify-Img{
