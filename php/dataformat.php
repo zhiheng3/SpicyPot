@@ -23,6 +23,8 @@ class RequestData{
     var $title; // 消息标题
     var $description; // 消息描述
     var $url; // 消息链接
+    var $event; // 事件类型，CLICK
+    var $eventKey; // 事件KEY值，与自定义菜单接口中KEY值对应
 }
   
 class ResponseData{

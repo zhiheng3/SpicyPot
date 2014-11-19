@@ -55,16 +55,8 @@ class WechatCallbackAPI
     public function processMsg()
     {
 		//get post data, May be due to the different environments
-		$postStr = " <xml>
-<ToUserName><![CDATA[toUser]]></ToUserName>
-<FromUserName><![CDATA[fromUser]]></FromUserName>
-<CreateTime>1351776360</CreateTime>
-<MsgType><![CDATA[link]]></MsgType>
-<Title><![CDATA[公众平台官网链接]]></Title>
-<Description><![CDATA[公众平台官网链接]]></Description>
-<Url><![CDATA[url]]></Url>
-<MsgId>1234567890123456</MsgId>
-</xml> ";
+		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+		/*$postStr = "<xml><ToUserName><![CDATA[toUserName]]></ToUserName><FromUserName><![CDATA[fromUserName]]></FromUserName><CreateTime>createTime</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[抢票 123]]></Content></xml>";*/
 
       	//extract post data
 		if (!empty($postStr)){
@@ -73,12 +65,15 @@ class WechatCallbackAPI
                 libxml_disable_entity_loader(true);
                 $parseObj = new RequestParse();
                 $requestData = $parseObj->parse($postStr);
-                //print_r($requestData);
-                //exit;
                 $processObj  = new RequestProcess();
                 $responseData = $processObj->process($requestData);
                 $responseObj = new RequestResponse();
-                echo $responseObj->response($responseData);
+                //echo $responseObj->response($responseData);
+		$teststr = $responseObj->response($responseData);
+		echo $teststr;
+		$logfile = fopen("log.txt", "w");
+		fwrite($logfile, $teststr);
+		fclose($logfile);
 
         }else {
         	echo "";
