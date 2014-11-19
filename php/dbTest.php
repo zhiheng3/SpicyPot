@@ -6,21 +6,29 @@ $test = new DataAPI();
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
 //echo($test->createActivity("DaLiTang"));
-echo($test->initTicket(30, 1)['state']."\n");
+
+echo($test->takeSeat(0,1)['message']."!\n");
+echo($test->takeSeat(1,1)['message']."!\n");
+echo($test->takeSeat(1,2)['message']."!\n");
+echo($test->takeSeat(2,1)['message']."!\n");
+echo($test->takeSeat(2,2)['message']."!\n");
+
+//echo($test->initTicket(30, 1)['state']."\n");
 //echo($test->takeTicket("openid000000000000000001", 1)['message']."\n");
 //echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
 //echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
 //echo($test->takeTicket("openid000000000000000002", 2)['message']."\n");
 //echo($test->refundTicket("openid000000000000000002", 3)['message']."\n");
+
 /*for ($x = 1;$x<=4;$x++){
 $result = $test->takeTicket("openid000000000000000001", 1 );
 $resultMessage = $result['message'];
 	echo($result['state']."\n");
-}*/
-
+}
+*/
 
 /*
-$result = $test->getSeatInfo(1);
+$result = $test->getInfo(1);
 $resultMessage = $result['message'];
 if ($result['state'] == "true"){
 	
@@ -70,13 +78,14 @@ if ($result['state'] == "true"){
 	echo($resultMessage."\n");
 }
 */
-$result = $test->bind("openid000000000000000003", 2012010002);
+
+/*$result = $test->bind("openid000000000000000003", 2012010002);
 $resultMessage = $result['message'];
 if ($result['state'] == "true"){
 	echo("true");
 }else{
 	echo($resultMessage."\n");
-}
+}*/
 
 
 //echo($test->refundTicket("openid000000000000000002", 6)['message']."\n");
