@@ -89,7 +89,7 @@ class ticketHandler{
         $result->msgType = "text";
         $openId = $data->fromUserName;
         $dataapi = new DataAPI();
-        $ticketResult = $dataapi->getTicket($openId);
+        $ticketResult = $dataapi->getTicketInfo($openId);
         $result->content = "";
         if($ticketResult['state'] == "true"){
             for($i = 0; $i < count($ticketResult['message']); $i++){
