@@ -15,10 +15,7 @@ class ticketHandler{
     //return: ResponseData $result
     public function ticketHandle($data){
         $content = trim($data->content);
-        if(substr($content, 0, 6) == "抢票"){
-            $result = $this->takeTicket($data);
-        }
-        else if(substr($content, 0, 6) == "退票"){
+        if(substr($content, 0, 6) == "退票"){
             $result = $this->refundTicket($data);
         }
         else if(substr($content, 0, 6) == "查票"){
