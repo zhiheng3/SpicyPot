@@ -55,14 +55,16 @@ class WechatCallbackAPI
     public function processMsg()
     {
 		//get post data, May be due to the different environments
-		//$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-		$postStr = "<xml>
-<ToUserName><![CDATA[toUserName]]></ToUserName>
-<FromUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo3]]></FromUserName>
-<CreateTime>1416409763</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[退票32]]></Content>
-</xml>";
+		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+		/*$postStr = "<xml>
+    <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+    <FromUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></FromUserName>
+    <CreateTime>1416404624</CreateTime>
+    <MsgType><![CDATA[event]]></MsgType>
+    <Event><![CDATA[CLICK]]></Event>
+    <EventKey><![CDATA[USER_BIND]]></EventKey>
+    <Encrypt><![CDATA[q+dwIC8tN+WjlZ1ubrn2uHsA5773vuwzdVRvMtO40gSkAkVd1ku2XUJGAH6RSdIJmcI9KbHBNHDmb9SvdxLgSkGYTH7pIKSPQd0LsfaOkD+FPozIOyq8hV6DgWLJXqxrFhjhSpfEb1R5zP8FLiUWcHQdtq5CgLWFeScAzqi3wbnCv8BjEzpfJOzI6rz9Z+wIz1xJzEPTEQcvjJhO2WYIxzjPb1RBHnGV4b2OScNu6iGVQZR/IqqLU9oLBdetAk9wT6bOa1C5J3FJXl7td7mtaS/92tzAoeT5UJGpm15Qs+p06h9XJ3ST54q8oDBzmiEP/YfVtEn66lx6kz55xJWYa4iejGMlVna+RvXMQ3lKXCPT/nd/0vpb6MdKIF2cZPdpFIoxejEYFPkEaMuyInfOA1Hxo84LOqBl4uzXgczvQ7FjZ2PsPwoPQn9wT6ch4NxNMvXr+SeDRAXRuwoKVy6XlQ==]]></Encrypt>
+</xml>";*/
 
       	//extract post data
       	$logfile = fopen("./log/request_log", "a");
