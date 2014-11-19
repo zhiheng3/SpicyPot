@@ -1,6 +1,11 @@
 
 body{
-	background-color: #E0E0E0;
+	background-color: #DCE7E7;
+	font-family:"微软雅黑","黑体","宋体";
+    line-height: 1.428571429;
+    position: relative;   /*重要！保证footer是相对于wapper位置绝对*/  
+    height: auto;          /* 保证页面能撑开浏览器高度时显示正常*/  
+    min-height: 100%  /* IE6不支持，IE6要单独配置*/  
 }
 #ImgTop{
 	width: 100%;
@@ -27,7 +32,8 @@ body{
 
 #Confirm-Title p{
 	margin: 0px;
-	font-size: 1.4em;
+	font-size: 1.5em;
+	font-weight: bold;
 }
 
 #Confirm-List{
@@ -37,8 +43,10 @@ body{
 }
 
 #Confirm-List p{
-	font-size: 1.4em;
+	font-size: 1.2em;
 	margin-left: 30px;
+	color: #b94a48;
+	font-weight: bold;
 }
 
 .input-selfinformation{
@@ -100,3 +108,19 @@ pre {
     border-radius: 4px;
     overflow: auto;
 }
+
+#footer {
+	position: relative;
+	margin-top: 0px;
+	height: 37px;
+	clear: both;
+	text-align: center;
+	position: absolute;  bottom: 0; /* 关键 */  
+    left:0; /* IE下一定要记得 */  
+    display: block;
+    
+}
+
+#main-content{  
+   padding-bottom: 60px; /*重要！给footer预留的空间*/  
+}  

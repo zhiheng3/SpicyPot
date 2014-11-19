@@ -12,26 +12,26 @@
 <title>用户验证</title>  
 </head>  
 <body>  
-<div id = "ImgTop">
-	<img src="./img/31.png">
+<div id = "main-content">
+    <div id = "ImgTop">
+    	<img src="./img/newlogo.jpg">
+    </div>
+    <div id = "Confirm-Title">
+    	<p>用户验证</p>
+    </div>
+    <form action="" method="get" id = "Confirm-List">
+      <p>学号 <input type="text"  id = "Username" class = "input-selfinformation"/></p>
+      <p>密码 <input type="password"  id = "Password" class = "input-selfinformation"/></p>
+      <div><input id = "Forcebind" type="checkbox" value = "Forcebind" name="Forcebind">强制绑定
+      <input type="submit" value="认证" id = "Confirm-Button"/></div>
+    </form>
+    <pre id="results" style="margin-top: 15px">请填写信息进行认证。</pre>
 </div>
-<div id = "Confirm-Title">
-	<p>用户验证</p>
-</div>
-<form action="" method="get" id = "Confirm-List">
-  <p>学号 <input type="text"  id = "Username" class = "input-selfinformation"/></p>
-  <p>密码 <input type="password"  id = "Password" class = "input-selfinformation"/></p>
-  <input type="submit" value="认证" id = "Confirm-Button"/>
-</form>
-<img class = "Verify-Img" id = "VerifyOKIMG" src="./img/VerifySuccessImg.png">
-
-<img class = "Verify-Img" id = "VerifyNOIMG" src="./img/VerifyFailImg.png">
-<input id = "Cancel-Button" value = "返回" type = "button"/>
-<pre id="results" style="margin-top: 15px">请填写信息进行认证。</pre>
-<div id = "Confirm-Inc">
-	<p>清华大学/校团委<p>
+<footer id = "footer">
+	<p>清华大学/校团委</p>
 	<p>@2014</p>
-</div>
+</footer>
+
 <script>
         function getStringFromUrl(name){
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
