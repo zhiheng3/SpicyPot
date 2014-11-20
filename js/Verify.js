@@ -16,18 +16,35 @@ function VerifyFail(){
 	$("#Cancel-Button").css("display","block");
 }
 
-$(document).ready(function(){
+function SetFooter(){
 	var height =  document.body.scrollHeight;
-	$("#main-content").css("height",height);
+
+	//$("#main-content").css("height",height);
+
+	var js_main_content = $("#main-content");
+	var set = js_main_content.hasClass("Setted");
+	//debugger;
+	if(!set){
+		js_main_content.addClass("Setted");
+		js_main_content.css("height",height);
+	}
 	$("body").css("height",height);
+
+	
+}
+
+$(document).ready(function(){
+	SetFooter();
+	
+	
 
 	//alert(height);
 	$("#Cancel-Button").click(function(){
 		$("#VerifyNOIMG").css("display","none");
 		$("#Cancel-Button").css("display","none");
 		$("#Confirm-List").css("display","block");
-		$("#Username").css("placeholder","请输入您的学号");
-		$("#Password").css("placeholder","使用info密码进行登录");
+		$("#Username").val("");
+		$("#Password").val("");
 		$("#results").text("请填写信息进行认证。");
 	});
 });

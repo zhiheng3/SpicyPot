@@ -5,8 +5,11 @@ body{
     line-height: 1.428571429;
     position: relative;   /*重要！保证footer是相对于wapper位置绝对*/  
     height: auto;          /* 保证页面能撑开浏览器高度时显示正常*/  
-    min-height: 100%  /* IE6不支持，IE6要单独配置*/  
+    min-height: 100%; /* IE6不支持，IE6要单独配置*/ 
+    margin: 0px;
 }
+
+
 #ImgTop{
 	width: 100%;
 	
