@@ -12,21 +12,35 @@
 <script src="./js/Verify.js"></script>
 <title>用户验证</title>  
 </head>  
-<body>  
+<body>
 <div id = "main-content">
     <div id = "ImgTop">
-    	<img src="./img/newlogo.jpg">
+        <img src="./img/newlogo.jpg">
     </div>
     <div id = "Confirm-Title">
-    	<p>用户验证</p>
+        <p>用户验证</p>
     </div>
+    
     <form action="" method="get" id = "Confirm-List">
-      <p><lable>学号</lable> <input type="text"  id = "Username" class = "input-selfinformation" placeholder="请输入您的学号"/></p>
-      <p><lable>密码</lable><input type="password"  id = "Password" class = "input-selfinformation" placeholder="使用info密码进行登录"/></p>
-      <div id = "Button-Line">
-        <input id = "Forcebind" type="checkbox" value = "Forcebind" name="Forcebind">强制绑定
-        <input type="submit" value="认证" id = "Confirm-Button"/>
-      </div>
+        <span>           
+            <input type="text"  id = "Username" class = "input-selfinformation" placeholder="请输入您的学号"/>
+            <lable>学号</lable>
+            <div class = "ClearFix"></div>
+        </span>
+        <span>
+            
+            <input type="password" id = "Password" class = "input-selfinformation" placeholder="使用info密码进行登录"/>
+            <lable>密码</lable>
+            <div class = "ClearFix"></div>
+
+        </span>
+        <div id = "Button-Line">
+            <input id = "Forcebind" type="checkbox" value = "Forcebind" name="Forcebind"/><span>强制绑定</span>
+            <input type="submit" value="认证" id = "Confirm-Button"/>
+
+            <div class = "ClearFix"></div>
+        </div>
+        <div class = "ClearFix"></div>
     </form>
     <img class = "Verify-Img" id = "VerifyOKIMG" src="./img/VerifySuccessImg.png">
 

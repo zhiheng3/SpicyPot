@@ -29,13 +29,29 @@ function SetFooter(){
 		js_main_content.css("height",height);
 	}
 	$("body").css("height",height);
-
 	
+}
+
+function SetComfirmList(){
+	var width =  document.body.scrollWidth;	
+	var js_comfirmlist = $("#Confirm-List");
+	if(width * 0.8 > 400){
+
+		
+		js_comfirmlist.css("width",400);
+	}
+	else if(width < 250){
+		js_comfirmlist.css("width",width*0.9);
+		js_comfirmlist.css("margin","auto");
+		$("#Username").css("height","20px");
+		$("#Password").css("height","20px");
+	}
+
 }
 
 $(document).ready(function(){
 	SetFooter();
-	
+	SetComfirmList();
 	
 
 	//alert(height);
