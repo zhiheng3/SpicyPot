@@ -67,11 +67,24 @@ function SetForceBlindText(){
 }
 
 function SetBGIMG(){
-	var js_BGIMG = $("#BG-IMG");
+	var width =  document.body.scrollWidth;	
 	var height =  document.body.scrollHeight;
-	var bg_height = height - 45;
+	var js_BGIMG = $("#BG-IMG");
+
+	if(width > 500){
+		if(width > height){
+			js_BGIMG.attr("src","./img/Verify_bg_Big_Width.png");
+		}
+		else{
+			js_BGIMG.attr("src","./img/Verify_bg_Big_Height.png");
+		}
+	}
 	
+	var bg_height = height - 45;	
 	js_BGIMG.css("height",bg_height);
+
+
+	
 }
 
 $(document).ready(function(){
