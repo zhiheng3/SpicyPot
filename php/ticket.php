@@ -45,8 +45,8 @@ class ticketHandler{
 			$result->articles[0] = new Article();
             $result->articles[0]->title = "抢票成功！";
             $result->articles[0]->description = "抢票成功！";
-            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
-            $result->articles[0]->url = "http://wx9.igeek.asia/ActivityInfo.html";
+            $result->articles[0]->picUrl = "../img/tsinghua.jpg";
+            $result->articles[0]->url = "../ticket.php?id={$ticketResult['message']}";
         }
         else{
             $result->msgType = "text";
@@ -72,7 +72,7 @@ class ticketHandler{
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->refundTicket($openId, $ticketId);
         if($ticketResult['state'] == "true"){
-            $result->content = "退票成功！";
+            $result->content = "再见官人，奴家会想你的！（退票成功）";
         }
         else{
             $result->content = "退票失败：" . $ticketResult['message'];
@@ -86,25 +86,38 @@ class ticketHandler{
     //return ResponseData $result
     public function getTicket($data){
         $result = new ResponseData();
-        $result->msgType = "text";
         $openId = $data->fromUserName;
         $dataapi = new DataAPI();
         $ticketResult = $dataapi->getTicketInfo($openId);
-        $result->content = "";
         if($ticketResult['state'] == "true"){
             $tickets = count($ticketResult['message']);
             if($tickets == 0){
+                $result->msgType = "text";
                 $result->content = "您目前没有票哦~";
                 return $result;
             }
+            $result->msgType = "news";
+            /*
             for($i = 0; $i < $tickets; $i++){
                 $j = $i + 1;
                 $result->content .= "$j: ";
                 $result->content .= $ticketResult['message'][$i];
                 $result->content .= "\n";
             }
+            */
+            $result->articleCount = $tickets;
+	        $result->articles = array();
+            for($i = 0; $i < $tickets; $i++){
+                $j = $i + 1;
+			    $result->articles[$i] = new Article();
+                $result->articles[$i]->title = "#$j";
+                $result->articles[$i]->description = "您的第$j张票";
+                $result->articles[$i]->picUrl = "../img/tsinghua.jpg";
+                $result->articles[$i]->url = "../ticket.php?id={$ticketResult['message'][$i]}";
+            }
         }
         else{
+            $result->msgType = "text";
             $result->content = "查询失败：" . $ticketResult['message'];
         }
         return $result;
