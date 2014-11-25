@@ -74,15 +74,15 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
-        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."' AND state = 1");
+        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."'");
 		if (!empty(mysql_fetch_array($result))){
 			return(array("state" => "false", "message" => "这个openId已经绑定"));			
 		}
-		$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1");
+		$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId);
 		if (!empty(mysql_fetch_array($result))){
 			return(array("state" => "false", "message" => "这个studentId已经绑定"));			
 		}
-		mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."',1)");
+		mysql_query("INSERT INTO user_information (student_id, openid) VALUES (".$studentId.",'".$openId."')");
 		return(array("state" => "true", "message" => ""));
     }
 
@@ -98,14 +98,14 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
-        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."' AND state = 1");
+        $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."'");
 		if (!empty(mysql_fetch_array($result))){
 			return(array("state" => "false", "message" => "这个openId已经绑定"));			
 		}
 
-		$result = mysql_query("UPDATE user_information SET state = 0 WHERE student_id=".$studentId);
+		$result = mysql_query("DELETE from user_information WHERE student_id=".$studentId);
 
-		mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."',1)");
+		mysql_query("INSERT INTO user_information (student_id, openid, state) VALUES (".$studentId.",'".$openId."')");
 		return(array("state" => "true", "message" => ""));
     }
 
@@ -121,11 +121,12 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
-		$result = mysql_query("SELECT * FROM user_information WHERE student_id=".$studentId ." AND state = 1 AND openid='".$openId."'");
+		$result = mysql_query("SELECT id FROM user_information WHERE student_id=".$studentId ."AND openid='".$openId."'");
 		if (empty(mysql_fetch_array($result))){
 			return(array("state" => "false", "message" => "没有找到绑定记录"));
 		}
-		mysql_query("UPDATE user_information SET state = 0 WHERE student_id=".$studentId ." AND openid='".$openId."'");
+
+		mysql_query("DELETE FROM user_information WHERE student_id=".$studentId ." AND openid='".$openId."'");
 		return(array("state" => "true", "message" => ""));
     }
 
