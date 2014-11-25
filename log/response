@@ -1,6 +1,7 @@
 <xml>
 <ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
 <FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<<<<<<< HEAD
 <CreateTime>1416403585</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs_uUHyqwJkHBkklPh8TrTCg">请点击我进行绑定</a>]]></Content>
@@ -547,11 +548,21 @@
 <ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
 <FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
 <CreateTime>1416922024</CreateTime>
+=======
+<CreateTime>1416404755</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs_uUHyqwJkHBkklPh8TrTCg">请点击我进行绑定</a>]]></Content>
 </xml><xml>
 <ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
 <FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1416404777</CreateTime>
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs_uUHyqwJkHBkklPh8TrTCg">请点击我进行绑定</a>]]></Content>
+</xml><xml>
+<ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<<<<<<< HEAD
 <CreateTime>1416922791</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[抢票失败：没有对应的学生]]></Content>
@@ -687,4 +698,9 @@
 <CreateTime>1416927598</CreateTime>
 <MsgType><![CDATA[news]]></MsgType>
 <ArticleCount>2</ArticleCount><Articles><item><Title><![CDATA[#1]]></Title><Description><![CDATA[您的第1张票]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/tsinghua.jpg]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/Ticket.php?id=4]]></Url></item><item><Title><![CDATA[#2]]></Title><Description><![CDATA[您的第2张票]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/tsinghua.jpg]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/Ticket.php?id=3]]></Url></item></Articles>
+=======
+<CreateTime>1416404821</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[你目前绑定的学号是2012013316]]></Content>
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
 </xml>

@@ -1,4 +1,5 @@
 <xml>
+<<<<<<< HEAD
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
     <FromUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo]]></FromUserName>
     <CreateTime>1416403164</CreateTime>
@@ -13,4 +14,11 @@
 <CreateTime>1416403281</CreateTime>
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs0bER4zxjWSx5gEmMkv1bvo">请点击我进行绑定</a>]]></Content>
+=======
+<ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1416320201</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs_uUHyqwJkHBkklPh8TrTCg">请点击我进行绑定</a>]]></Content>
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
 </xml>

@@ -1,6 +1,7 @@
 <xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
     <FromUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></FromUserName>
+<<<<<<< HEAD
     <CreateTime>1416403468</CreateTime>
     <MsgType><![CDATA[event]]></MsgType>
     <Event><![CDATA[CLICK]]></Event>
@@ -46,11 +47,14 @@
 <xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
     <FromUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></FromUserName>
+=======
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
     <CreateTime>1416404624</CreateTime>
     <MsgType><![CDATA[event]]></MsgType>
     <Event><![CDATA[CLICK]]></Event>
     <EventKey><![CDATA[USER_BIND]]></EventKey>
     <Encrypt><![CDATA[q+dwIC8tN+WjlZ1ubrn2uHsA5773vuwzdVRvMtO40gSkAkVd1ku2XUJGAH6RSdIJmcI9KbHBNHDmb9SvdxLgSkGYTH7pIKSPQd0LsfaOkD+FPozIOyq8hV6DgWLJXqxrFhjhSpfEb1R5zP8FLiUWcHQdtq5CgLWFeScAzqi3wbnCv8BjEzpfJOzI6rz9Z+wIz1xJzEPTEQcvjJhO2WYIxzjPb1RBHnGV4b2OScNu6iGVQZR/IqqLU9oLBdetAk9wT6bOa1C5J3FJXl7td7mtaS/92tzAoeT5UJGpm15Qs+p06h9XJ3ST54q8oDBzmiEP/YfVtEn66lx6kz55xJWYa4iejGMlVna+RvXMQ3lKXCPT/nd/0vpb6MdKIF2cZPdpFIoxejEYFPkEaMuyInfOA1Hxo84LOqBl4uzXgczvQ7FjZ2PsPwoPQn9wT6ch4NxNMvXr+SeDRAXRuwoKVy6XlQ==]]></Encrypt>
+<<<<<<< HEAD
 </xml>
 <xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
@@ -1012,3 +1016,22 @@
     <MsgId>6085657140362582621</MsgId>
     <Encrypt><![CDATA[Qucb37I+6XChPIAB/TtKWQ6jZwcjr0cABlIcX94ZfZpwn916FDhhaUlSjEiUQZLDOVFy8TN/f5ZETM3027179ZEGumFGW09wYzi1p32aa+pxZ5QyfbpOvQPV1to4F60oQ6+YVT9tUcQmGp2X/JPA/fUB2qNmIRQAZwUJEjS+eBxjIzZ9E3lgf/WacQAPncMCLtYH1/fu5q9/oNEzWz/3YUfwmMe11/GRgx5hkTtF+wCgV3x43JMTzHnlj0m/QrjZGtk0IyVsNDwUN0VSfzvYm236XL0XSIfHuVxyza942qO6BLGiWm4CHKkaJrAScmoHsquQ3clduGoVziH0ExBCJk88Wm3YW1SW4IWc+YrEBLSqLzNwb74ZgWBF2pgOmaqteH2wAJIMiEA4pO5MKylqtCOm8Khv74pkflFrc7lCQRs=]]></Encrypt>
 </xml>
+=======
+</xml><xml>
+    <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+    <FromUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></FromUserName>
+    <CreateTime>1416404624</CreateTime>
+    <MsgType><![CDATA[event]]></MsgType>
+    <Event><![CDATA[CLICK]]></Event>
+    <EventKey><![CDATA[USER_BIND]]></EventKey>
+    <Encrypt><![CDATA[q+dwIC8tN+WjlZ1ubrn2uHsA5773vuwzdVRvMtO40gSkAkVd1ku2XUJGAH6RSdIJmcI9KbHBNHDmb9SvdxLgSkGYTH7pIKSPQd0LsfaOkD+FPozIOyq8hV6DgWLJXqxrFhjhSpfEb1R5zP8FLiUWcHQdtq5CgLWFeScAzqi3wbnCv8BjEzpfJOzI6rz9Z+wIz1xJzEPTEQcvjJhO2WYIxzjPb1RBHnGV4b2OScNu6iGVQZR/IqqLU9oLBdetAk9wT6bOa1C5J3FJXl7td7mtaS/92tzAoeT5UJGpm15Qs+p06h9XJ3ST54q8oDBzmiEP/YfVtEn66lx6kz55xJWYa4iejGMlVna+RvXMQ3lKXCPT/nd/0vpb6MdKIF2cZPdpFIoxejEYFPkEaMuyInfOA1Hxo84LOqBl4uzXgczvQ7FjZ2PsPwoPQn9wT6ch4NxNMvXr+SeDRAXRuwoKVy6XlQ==]]></Encrypt>
+</xml><xml>
+    <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+    <FromUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></FromUserName>
+    <CreateTime>1416404624</CreateTime>
+    <MsgType><![CDATA[event]]></MsgType>
+    <Event><![CDATA[CLICK]]></Event>
+    <EventKey><![CDATA[USER_BIND]]></EventKey>
+    <Encrypt><![CDATA[q+dwIC8tN+WjlZ1ubrn2uHsA5773vuwzdVRvMtO40gSkAkVd1ku2XUJGAH6RSdIJmcI9KbHBNHDmb9SvdxLgSkGYTH7pIKSPQd0LsfaOkD+FPozIOyq8hV6DgWLJXqxrFhjhSpfEb1R5zP8FLiUWcHQdtq5CgLWFeScAzqi3wbnCv8BjEzpfJOzI6rz9Z+wIz1xJzEPTEQcvjJhO2WYIxzjPb1RBHnGV4b2OScNu6iGVQZR/IqqLU9oLBdetAk9wT6bOa1C5J3FJXl7td7mtaS/92tzAoeT5UJGpm15Qs+p06h9XJ3ST54q8oDBzmiEP/YfVtEn66lx6kz55xJWYa4iejGMlVna+RvXMQ3lKXCPT/nd/0vpb6MdKIF2cZPdpFIoxejEYFPkEaMuyInfOA1Hxo84LOqBl4uzXgczvQ7FjZ2PsPwoPQn9wT6ch4NxNMvXr+SeDRAXRuwoKVy6XlQ==]]></Encrypt>
+</xml>
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
