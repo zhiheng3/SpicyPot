@@ -5,22 +5,70 @@
   * Last modified: 2014.11.12
   */
 class DataAPI{
-    //create某项活动
-	//参数：char location
-	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
-    //！！！信息不完善
-	public function createActivity($stage){
+	
+	//初始化某项活动的票
+	//参数：int ticket_num(票的总数), int activity_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function initTicket($ticket_num, $activity_id){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
+
+		for ($i = 0; $i < $ticket_num; $i++){
+			mysql_query("INSERT INTO ticket (activity_id) VALUES (".$activity_id.")");	
+		}
+		return (array("state" => "true", "message" => ""));
+	}
+
+
+	//!!state 暂时为1
+    //create某项活动
+	//参数: 一个数组，各项分别是：
+		/*
+		start_time datetime,		#活动开始时间
+		end_time datetime,			#活动结束时间
+		ticket_start_time datetime,	#抢票开始时间
+		ticket_end_time datetime,	#抢票结束时间
+		
+		stage char(50),				#活动地点 "大礼堂" "新清华学堂" "综体"
+		information char(200),		#附加信息
+		ticket_number int(4),		#票总数
+	
+		ticket_per_student int(4),	#每人最大可抢票数
+		is_seat_selectable int(4)	#是否可选座  0:不可选座  1:可选座
+		*/
+		//其中 datetime为字符串，格式如"2014-11-11 08:00:00"
+	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
+    //
+	public function createActivity($activity){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_query("SET NAMES UTF8");
+		mysql_select_db("wx9_db", $con);
         
+		$start_time = $activity["start_time"];
+		$end_time = $activity["end_time"];
+		$ticket_start_time = $activity["ticket_start_time"];
+		$ticket_end_time = $activity["ticket_end_time"];
+		$state = 1;				#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
+		$stage = $activity["stage"];
+		$information = $activity["information"];
+		$ticket_number = $activity["ticket_number"];
+		$ticket_available_number = $activity["ticket_number"];
+		$ticket_per_student = $activity["ticket_per_student"];
+		$is_seat_selectable = $activity["is_seat_selectable"];
+
         //插入活动    
-        if (!mysql_query("INSERT INTO activity (stage) VALUES ('".$stage."')")){
+        if (!mysql_query("INSERT INTO activity 	(start_time,end_time,ticket_start_time,ticket_end_time,state,stage,information,ticket_number,ticket_available_number,ticket_per_student,is_seat_selectable)  VALUES ('".$start_time."','".$end_time."','".$ticket_start_time."','".$ticket_end_time."',$state,'".$stage."','".$information."',$ticket_number,$ticket_available_number,$ticket_per_student,$is_seat_selectable)")){
              return(array("state" =>"false", "message" => "插入活动出错"));           
         }
+
 
         //查询此次活动分配的id
         $result_set = mysql_query("SELECT id FROM activity WHERE stage ='".$stage."'");
@@ -30,6 +78,10 @@ class DataAPI{
         while($result =  mysql_fetch_array($result_set)){
             $activity_id = $result[0];
         }
+
+		//添加对应的票
+		$this->initTicket($ticket_number, $activity_id);
+
         return(array("state" => "true", "message" => $activity_id));
     }
 
@@ -130,24 +182,6 @@ class DataAPI{
 		mysql_query("DELETE FROM user_information WHERE student_id=".$studentId ." AND openid='".$openId."'");
 		return(array("state" => "true", "message" => ""));
     }
-
-
-	//初始化某项活动的票
-	//参数：int ticket_num(票的总数), int activity_id
-	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
-	public function initTicket($ticket_num, $activity_id){
-        //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
-            return(array("state" => "false", "message" => "数据库连接错误"));
-        }
-		mysql_select_db("wx9_db", $con);
-
-		for ($i = 0; $i < $ticket_num; $i++){
-			mysql_query("INSERT INTO ticket (activity_id) VALUES (".$activity_id.")");	
-		}
-		return (array("state" => "true", "message" => ""));
-	}
 
 
 	//根据openid获得student_id
