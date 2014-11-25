@@ -113,7 +113,7 @@ class ticketHandler{
                 $j = $i + 1;
 			    $result->articles[$i] = new Article();
                 $result->articles[$i]->title = "#$j";
-                $result->articles[$i]->description = "第$j张票";
+                $result->articles[$i]->description = "您的第" . $j . "张票";
                 $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]}";
             }
