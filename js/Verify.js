@@ -49,6 +49,22 @@ function SetComfirmList(){
 
 }
 
+function SetForceBlindText(){
+	
+	var js_ForceBlindText = $("#ForeBlindText");
+
+	if(js_ForceBlindText.hasClass("BlindDisActive")){
+		js_ForceBlindText.attr("class","BlindActive");
+		js_ForceBlindText.css("color","rgb(200,0,0)");
+	}
+	else{
+		js_ForceBlindText.attr("class","BlindDisActive");
+		js_ForceBlindText.css("color","black");
+	}
+
+                
+}
+
 $(document).ready(function(){
 	SetFooter();
 	SetComfirmList();
@@ -61,7 +77,18 @@ $(document).ready(function(){
 		$("#Confirm-List").css("display","block");
 		$("#Username").val("");
 		$("#Password").val("");
+
+		
+		//$("#Forcebind").removeAttr("checked");
+		//$("#ForeBlindText").attr("class","BlindDisActive");
+		//$("#ForeBlindText").css("color","black");
+
 		$("#results").text("请填写信息进行认证。");
+
+	});
+
+	$("#Forcebind").mousedown(function(){
+		SetForceBlindText();
 	});
 });
 
