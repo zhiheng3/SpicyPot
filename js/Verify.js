@@ -66,10 +66,18 @@ function SetForceBlindText(){
                 
 }
 
+function SetBGIMG(){
+	var js_BGIMG = $("#BG-IMG");
+	var height =  document.body.scrollHeight;
+	var bg_height = height - 45;
+	
+	js_BGIMG.css("height",bg_height);
+}
+
 $(document).ready(function(){
 	SetFooter();
 	SetComfirmList();
-	
+	SetBGIMG();
 
 	//alert(height);
 	$("#Cancel-Button").click(function(){
