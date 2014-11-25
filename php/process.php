@@ -64,8 +64,8 @@ class RequestProcess{
         $studentid = $dataapi->getStudentId($data->fromUserName);
         $result->msgType = "text";
         if ($studentid['state'] == 'true'){
-            $result->content = "你目前绑定的学号是" . $studentid['message'];
-            $result->content = "如需解绑" . "<a href=\"wx9.igeek.asia/Unbind.php?id=$data->fromUserName\">请点击这里</a>";
+            $result->content = "你目前绑定的学号是" . $studentid['message']
+                             . "如需解绑" . "<a href=\"wx9.igeek.asia/Unbind.php?id=$data->fromUserName\">请点击这里</a>";
         }
         else{
             $result->content = "<a href=\"wx9.igeek.asia/Verify.html?id=$data->fromUserName\">请点击我进行绑定</a>";
