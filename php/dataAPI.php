@@ -174,7 +174,7 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
-		$result = mysql_query("SELECT id FROM user_information WHERE student_id=".$studentId ."AND openid='".$openId."'");
+		$result = mysql_query("SELECT id FROM user_information WHERE student_id=".$studentId ." AND openid='".$openId."'");
 		if (empty(mysql_fetch_array($result))){
 			return(array("state" => "false", "message" => "没有找到绑定记录"));
 		}

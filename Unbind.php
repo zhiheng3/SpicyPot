@@ -17,7 +17,7 @@
   <div data-role="content">
     <?php
         require_once "./php/dataAPI.php";
-        $open_id = $_POST['id'];
+        $open_id = $_GET['id'];
         $dataapi = new dataAPI();
         $data = $dataapi->getStudentId($open_id);
         if ($data['state'] == 'true'){
