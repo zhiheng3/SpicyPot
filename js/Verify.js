@@ -35,9 +35,10 @@ function SetFooter(){
 function SetComfirmList(){
 	var width =  document.body.scrollWidth;	
 	var js_comfirmlist = $("#Confirm-List");
+	var js_comfirmBox = $("#ConfirmBox");
 	if(width * 0.8 > 400){
 
-		
+		js_comfirmBox.css("width",450);		
 		js_comfirmlist.css("width",400);
 	}
 	else if(width < 250){

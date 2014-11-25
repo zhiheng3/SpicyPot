@@ -1,5 +1,6 @@
 
 body{
+
 	background-color: rgba(240,244,245,0.9);
 	font-family:"微软雅黑","黑体","宋体";
     line-height: 1.428571429;
@@ -7,6 +8,24 @@ body{
     margin: 0px;
 }
 
+#DIV-BGIMG{
+	position:absolute;
+	width:100%; 
+	height:100%; 
+
+	z-index:-1;
+	overflow: hidden;
+}
+
+#DIV-BGIMG img{
+	width: 100%;
+	height: 90%;
+	opacity: 0.7;
+}
+
+#BG-IMG{
+
+}
 
 #ImgTop{
 	width: 100%;
@@ -40,7 +59,7 @@ body{
 	padding-bottom: 1%;
 	border: 1px solid #323232;
 	margin:auto;
-
+	margin-top: 5px;
 
 	-webkit-background-clip: border-box;
 	-webkit-background-origin: padding-box;
@@ -48,7 +67,9 @@ body{
 	-webkit-box-shadow: rgb(207, 214, 222) 0px 2px 2px 0px;
 	background-attachment: scroll;
 	background-clip: border-box;
-	background-color: rgb(255, 255, 255);
+
+	background-color: rgba(255, 255, 255,0.7);
+
 	background-image: none;
 	background-origin: padding-box;
 	background-size: auto;
@@ -82,13 +103,13 @@ body{
 	width: 100%;
 	height: 25px;
 	text-align: center;
-	
+	font-weight:bolder;
 }
 
 #Confirm-Title p{
 	margin: 0px;
 	font-size: 1em;
-	font-weight: bold;
+	font-weight: bolder;
 }
 
 #Confirm-List{
@@ -121,7 +142,7 @@ body{
 	padding: 1px;
 	font-size: 1.2em;
 	margin-top: 1.5%;
-
+	font-weight:bolder;
 }
 
 .input-selfinformation{
