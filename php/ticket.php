@@ -45,8 +45,8 @@ class ticketHandler{
 			$result->articles[0] = new Article();
             $result->articles[0]->title = "抢票成功！";
             $result->articles[0]->description = "抢票成功！";
-            $result->articles[0]->picUrl = "../img/tsinghua.jpg";
-            $result->articles[0]->url = "../ticket.php?id={$ticketResult['message']}";
+            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
+            $result->articles[0]->url = "http://wx9.igeek.asia/ticket.php?id={$ticketResult['message']}";
         }
         else{
             $result->msgType = "text";
@@ -112,8 +112,8 @@ class ticketHandler{
 			    $result->articles[$i] = new Article();
                 $result->articles[$i]->title = "#$j";
                 $result->articles[$i]->description = "您的第$j张票";
-                $result->articles[$i]->picUrl = "../img/tsinghua.jpg";
-                $result->articles[$i]->url = "../ticket.php?id={$ticketResult['message'][$i]}";
+                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
+                $result->articles[$i]->url = "http://wx9.igeek.asia/ticket.php?id={$ticketResult['message'][$i]}";
             }
         }
         else{
