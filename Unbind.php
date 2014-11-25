@@ -15,8 +15,29 @@
   </div>
 
   <div data-role="content">
-    你确定要解除绑定吗
-    <button>a</button>
+    <?php
+        require_once "./php/dataAPI.php";
+        $open_id = $_POST['id'];
+        $dataapi = new dataAPI();
+        $data = $dataapi->getStudentId($open_id);
+        if ($data['state'] == 'true'){
+            $student_id = $data['message'];
+            echo "<p>你当前绑定的学号是$student_id</p>";
+            echo "<p>是否确认要解绑？</p>";
+echo <<< EOT
+    <div data-role="controlgroup" data-type="vertical">
+        <a id="confirm" data-role="button">确认</a>
+        <a id="cancel" data-role="button">取消</a>
+    </div>
+EOT;
+        }
+        else{
+            echo "<p>当前的微信号没有绑定学号！</p>";
+echo <<< EOT
+    <a id="cancel" data-role="button">关闭</a>
+EOT;
+        }
+    ?>
   </div>
 
   <div data-role="footer" data-position="fixed">
