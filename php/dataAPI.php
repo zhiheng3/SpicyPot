@@ -9,7 +9,7 @@ class DataAPI{
 	//参数：char location
 	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
     //！！！信息不完善
-	public function createActivity($location){
+	public function createActivity($stage){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
@@ -18,12 +18,12 @@ class DataAPI{
 		mysql_select_db("wx9_db", $con);
         
         //插入活动    
-        if (!mysql_query("INSERT INTO activity (location) VALUES ('".$location."')")){
+        if (!mysql_query("INSERT INTO activity (stage) VALUES ('".$stage."')")){
              return(array("state" =>"false", "message" => "插入活动出错"));           
         }
 
         //查询此次活动分配的id
-        $result_set = mysql_query("SELECT id FROM activity WHERE location='".$location."'");
+        $result_set = mysql_query("SELECT id FROM activity WHERE stage ='".$stage."'");
         if (!$result_set){
 			return(array("state" =>"false", "message" => "返回活动id出错"));			
 		}
@@ -35,10 +35,10 @@ class DataAPI{
 
 
     //建立座位
-	//参数：String stage 舞台（如"DaLiTang")
-	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
+	//参数：int activity_id, char location（几排几列或者几区）, int capability （可选，座位容量，默认为1）
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
     //！！！信息不完善
-	public function createSeat($stage, $capability = 1){
+	public function createSeat($activity_id, $location, $capability = 1){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
@@ -47,19 +47,20 @@ class DataAPI{
 		mysql_select_db("wx9_db", $con);
         
         //插入座位    
-        if (!mysql_query("INSERT INTO seat (stage, capability) VALUES ('".$stage."',".$capability.")")){
+        if (!mysql_query("INSERT INTO seat (activity_id, location, capability,resitual_capability) VALUES (".$activity_id.","."'".$location."',".$capability.",".$capability.")")){
              return(array("state" =>"false", "message" => "插入座位出错"));           
         }
 
         //查询此次座位分配的id
-        $result_set = mysql_query("SELECT id FROM seat WHERE stage='".$stage."'");
+        /*$result_set = mysql_query("SELECT id FROM seat WHERE stage='".$stage."'");
         if (!$result_set){
 			return(array("state" =>"false", "message" => "返回座位id出错"));			
 		}
         while($result =  mysql_fetch_array($result_set)){
             $seat_id = $result[0];
         }
-        return(array("state" => "true", "message" => $seat_id));
+		*/
+        return(array("state" => "true", "message" => ""));
     }
     
 
@@ -158,7 +159,7 @@ class DataAPI{
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
-		$result = mysql_fetch_array(mysql_query("SELECT student_id FROM user_information WHERE openid='".$openId ."' AND state = 1"));
+		$result = mysql_fetch_array(mysql_query("SELECT student_id FROM user_information WHERE openid='".$openId ."'"));
 		if (empty($result)){
 			return(array("state" =>"false", "message" => "没有对应的学生"));
 		}
