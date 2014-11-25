@@ -44,7 +44,13 @@ EOT;
   <h1>共青团清华大学委员会</h1>
   <h1>&copy 2014</h1>
   </div>
-</div> 
+</div>
+
+<script>
+$(document).on("click", "#cancel", function(){
+    window.close();
+});
+</script>
 
 </body>
 </html>
