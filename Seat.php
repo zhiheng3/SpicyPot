@@ -51,11 +51,11 @@ $(document).ready(function(){
     $("td").width(size);
     $("td").height(size);
     $("td").css("text-align", "center"); 
-    $("td").css("background", "#a1a1a1");
+    $("td").css("background-color", "#a1a1a1");
     $("td a").css("display", "block");
     $("td a").css("width", "100%");
     $("td a").css("height", "100%");
-    $("#C").css("background", "#00ff00");
+    $("#C").css("background-color", "#00ff00");
 });
 
 function setTable(seats){
@@ -70,8 +70,8 @@ function setTable(seats){
 function select(seat){
     unselect();
     selectedseat = $(seat);
-    selectedcolor = $(seat).css("background");
-    $(seat).css("background", "#ff0000");
+    selectedcolor = $(seat).css("background-color");
+    $(seat).css("background-color", "#ff0000");
     $("#selected").text($(seat)[0].id);
 }
 
