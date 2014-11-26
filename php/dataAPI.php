@@ -139,7 +139,6 @@ class DataAPI{
 		}	
 	}
 
-
     //建立活动座位
 	//参数：int activity_id, [[string location, int capability]] 座位的位置（名称）和座位的容量
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
