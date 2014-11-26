@@ -300,6 +300,7 @@ class DataAPI{
 		
 	}
 
+    //！！未考虑活动是否开始等state
 	//退票
 	//参数：int openId, int ticket_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]   
@@ -328,12 +329,16 @@ class DataAPI{
 		$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
         
         //如果票绑定了座位，要修改座位的余票
-        //$result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
-
+        if (!$ticket[1] == null){      
+            $result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
+        }else{
+            $result2 = True;
+        }
+        
         //退票
 		$result3 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
 
-		if (!$result1  || !$result3){
+		if (!$result1  | !$result2 | !$result3){
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}else{
 			return(array("state" => "true", "message" => ""));
@@ -386,20 +391,21 @@ class DataAPI{
 
 
     //选座
-	//参数：int ticket_id；int seat_id
+	//参数：int ticket_id；string seat_location
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
-	//!!尚未考虑票是否已使用;未考虑openid
-	public function takeSeat($ticket_id, $seat_id){
+	//!!尚未考虑活动状态;未考虑openid;未验证活动
+	public function takeSeat($ticket_id, $seat_location){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
-    
+        mysql_query("SET NAMES UTF8");
+
         //验证票是否存在
-        $result_set = mysql_query("SELECT * FROM ticket WHERE id=".$ticket_id);
-		if (!$ticket=mysql_fetch_array($result_set)){
+        $result_set = mysql_query("SELECT seat_id FROM ticket WHERE id=$ticket_id LIMIT 1");
+		if (!$ticket = mysql_fetch_assoc($result_set)){
 			return(array("state" => "false", "message" => "这张票不存在或无效"));		
 		}
 
@@ -409,33 +415,28 @@ class DataAPI{
 		}
 		
 		
-		//获取座位已选票数
-		//!！未考虑票是否使用、有效等
-        $result_set_2 = mysql_query("SELECT id FROM ticket WHERE seat_id=".$seat_id." AND activity_id =".$ticket['activity_id']);
-        if (!$result_set_2){
-			return(array("state" =>"false", "message" => "查询已选票数出错"));			
-		}
-        $num_seated = 0;
-        while( mysql_fetch_array($result_set_2)){
-            $num_seated++;
+		//获取座位剩余票数
+        $seat = mysql_fetch_assoc(mysql_query("SELECT resitual_capability,location,id,capability FROM seat WHERE location='".$seat_location."' LIMIT 1"));
+//echo("SELECT resitual_capability,location,id FROM seat WHERE name='".$seat_name."' LIMIT 1");
+        if (!$seat){
+            return(array("state" => "false", "message" => "不存在这个座位"));
         }
-
-
-		//获取座位容量
-		$seat_set = mysql_query("SELECT * FROM seat WHERE id=".$seat_id);
-		if (!$seat=mysql_fetch_array($seat_set)){
-			return(array("state" => "false", "message" => "这个座位不存在"));		
-		}
+        $resitual_capability = $seat['resitual_capability'];
+        $location = $seat['location'];
+        $seat_id = $seat['id'];
 
 		//验证要选的座位是否有余量		 
-		if($seat['capability'] <= $num_seated){//没有余量
-			if ($seat['capability'] >1){  //是区域
+		if($resitual_capability == 0){      //没有余量
+			if ($seat['capability'] >1){    //是区域
 				return(array("state" =>"false", "message" => "此区域没有余票"));
 			}else{							//是座位
 				return(array("state" =>"false", "message" => "此座位已经被选"));
 			}
 		}else{//有余量
-			mysql_query("UPDATE ticket SET seat_id = ".$seat_id." WHERE id=".$ticket_id);
+            //更新票的座位信息
+			mysql_query("UPDATE ticket SET seat_id = $seat_id, seat_location ='".$location."' WHERE id=".$ticket_id);
+            //更新座位容量
+            mysql_query("UPDATE seat SET resitual_capability = resitual_capability-1 WHERE id=".$seat_id);
 			return(array("state" => "true", "message" => ""));
 		}
 

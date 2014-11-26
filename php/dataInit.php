@@ -26,20 +26,25 @@ echo($test->createSeats(1, [array("location" => "1-1","capability" => 1),array("
 */
 
 //print_r($test->getSeatInfo(1));
-print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",242));
+//print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",242));
 
 //print_r($test->getTicketList("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
 //print_r($test->takeTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
 
 //print_r($test->getTicketInfo(1)['message']);
 
-/*
-echo($test->takeSeat(0,1)['message']."!\n");
-echo($test->takeSeat(1,1)['message']."!\n");
-echo($test->takeSeat(1,2)['message']."!\n");
-echo($test->takeSeat(2,1)['message']."!\n");
-echo($test->takeSeat(2,2)['message']."!\n");
-*/
+
+print_r($test->takeSeat(1,'1-1'));
+print_r($test->takeSeat(1,'1-2'));
+print_r($test->takeSeat(4,'1-1'));
+print_r($test->takeSeat(4,'2-2'));
+print_r($test->takeSeat(5,'B区'));
+print_r($test->takeSeat(6,'B区'));
+print_r($test->takeSeat(7,'B区'));
+print_r($test->takeSeat(8,'B区'));
+print_r($test->takeSeat(9,20));
+print_r($test->takeSeat(-1,'C区'));
+
 
 //echo($test->initTicket(30, 1)['state']."\n");
 //echo($test->takeTicketInfo("openid000000000000000001", 1)['message']."\n");
