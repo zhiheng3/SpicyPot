@@ -111,6 +111,26 @@ class DataAPI{
 		}	
 	}
 
+	//获得票信息
+	//参数：int ticket_id
+	//返回: ["state", "message"]: ["true", 关联数组（见票表）] or ["false", 错误信息] 
+    //！！！信息不完善
+	public function getTicketInfo($ticket_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
+		
+		if (!$result = mysql_fetch_assoc(mysql_query("SELECT * FROM ticket WHERE id=$ticket_id"))){
+			return(array("state" => "false", "message" => "没有找到此活动"));
+		}else{
+			return(array("state" => "true", "message" => $result));
+		}	
+	}
+
 
     //建立活动座位
 	//参数：int activity_id, char location（几排几列或者几区）, int capability （可选，座位容量，默认为1）
@@ -309,11 +329,11 @@ class DataAPI{
 	}
 
 
-	//查票
+	//查票(列表)
 	//参数：int openId；第二个参数int activity_id，查此活动的票，如果没有第二个参数是查所有活动的票
-	//返回: ["state", "message"]: ["true", [int ticket_id]] or ["false", 错误信息] 
+	//返回: ["state", "message"]: ["true", [[int id, Stirng activity_name]]] or ["false", 错误信息] 
 	//!!尚未考虑票是否已使用;未返回活动不存在的信息
-	public function getTicketInfo($openId, $activity_id = -1){
+	public function getTicketList($openId, $activity_id = -1){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
@@ -339,12 +359,12 @@ class DataAPI{
 				array_unshift($result, $result_row[0]);
 			}
 		}else{//查询指定活动
-			$result_set = mysql_query("SELECT id FROM ticket WHERE student_id=".$student_id." AND activity_id = ".$activity_id);
+			$result_set = mysql_query("SELECT id, activity_name FROM ticket WHERE student_id=".$student_id." AND activity_id = ".$activity_id);
 			if (!$result_set){
 				return(array("state" =>"false", "message" => "查询出错"));			
 			}
 			while($result_row = mysql_fetch_array($result_set)){
-				array_unshift($result, $result_row[0]);
+				array_unshift($result, $result_row);
 			}
 		}
 		
