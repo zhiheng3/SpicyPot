@@ -286,7 +286,7 @@ class DataAPI{
 		
 		if (mysql_query("UPDATE ticket SET student_id = ".$student_id." WHERE id=".$ticket_id ." LIMIT 1")){
 			//更新活动余票
-			mysql_query("UPDATE activity SET ticket_available_number =".($activity['ticket_available_number']-1)."WHERE id=$activity_id LIMIT 1");
+			mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=$activity_id LIMIT 1");
 			return (array("state" => "true", "message" => $ticket_id));
 		}else{
 			return (array("state" => "true", "message" => "抢票时发生错误"));
