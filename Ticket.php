@@ -60,7 +60,7 @@ echo <<< EOT
         <li> 结束时间 $endtime </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
-        <a href="./Activity.php?id=$activityid" data-role="button"data-icon="info">活动详情</a>
+        <a href="./Activity.php?id=$activityid" data-ajax="false" data-role="button" data-icon="info">活动详情</a>
         <a href="#" data-role="button"data-icon="search">选座</a>
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
     </div>

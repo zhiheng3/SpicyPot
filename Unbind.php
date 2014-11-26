@@ -64,7 +64,7 @@ $(document).on("click", "#confirm", function(){
 });
 
 $(document).on("click", "#cancel", function(){
-    window.close();
+    WeixinJSBridge.invoke('closeWindow',{},function(res){});
 });
 
 function CreateMessage(){
