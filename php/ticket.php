@@ -94,7 +94,8 @@ class ticketHandler{
         $result = new ResponseData();
         $openId = $data->fromUserName;
         $dataapi = new DataAPI();
-        $ticketResult = $dataapi->getTicketInfo($openId);
+        //$ticketResult = $dataapi->getTicketInfo($openId);
+        $ticketResult = $dataapi->getTicketList($openId);
         if($ticketResult['state'] == "true"){
             $tickets = count($ticketResult['message']);
             if($tickets == 0){
@@ -109,14 +110,14 @@ class ticketHandler{
             $result->articleCount = $tks;
 	        $result->articles = array();
             for($i = 0; $i < $tks; $i++){
-                //$eventInfo = $dataapi->getActivityInfo($eventId);
                 $j = $i + 1;
 			    $result->articles[$i] = new Article();
-                $result->articles[$i]->title = "#$j";
-                //$result->articles[$i]->title = $eventInfo;
+                //$result->articles[$i]->title = "#$j";
+                $result->articles[$i]->title = $ticketResult['message'][$i]['activity_name'];
                 $result->articles[$i]->description = "您的第" . $j . "张票";
                 $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
-                $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]}";
+                //$result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]}";
+                $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]['id']}";
             }
         }
         else{
