@@ -20,9 +20,10 @@
 <title>活动详情</title>
 </head>
 <body>
-	<div id = "ImgTop">
+<!--	<div id = "ImgTop">
 		<img src="./img/newlogo.jpg">
 	</div>
+-->
 	<div id = "MainContent">
 		<div id = "Activity">
 			<div id = "Activity-Title">紫荆之声</div>

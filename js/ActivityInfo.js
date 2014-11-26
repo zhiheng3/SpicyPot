@@ -70,6 +70,6 @@ function SetTimeInfoDivHeight()
 	var js_ImgTop = $("#ImgTop");
 	var js_timeInfo = $("#Time-Info");
 	if(he>750){
-		js_timeInfo.css("height",he-50-192-65-js_ImgTop.height());
+		js_timeInfo.css("height",he-70-192-65);
 	}
 }
