@@ -16,10 +16,15 @@
   </div>
 
   <div data-role="content" id = "TicketInfo">
+    <p id = "ETicket"></p>
     <p id = "ActivityName">XXX E-Ticket</p>
-    <p>活动地点：综体</p>
-    <p>活动开始时间：2014年11月11日09时00分</p>
-    <p>活动结束时间：2014年11月11日11时30分</p>
+    <p id = "ActivityPlace">活动地点：综体</p>
+    <p id = "ActivitySeat">座位：11排11座</p>
+    <p id = "ActivityStart">活动开始时间：2014年11月11日09时00分</p>
+    <p id = "ActivityEnd">活动结束时间：2014年11月11日11时30分</p>
+    <p><a href="#" data-role="button" data-inline="true" data-icon="info">活动详情</a></p>
+    <p><a href="#" data-role="button" data-inline="true" data-icon="search">选座</a></p>
+    <p><a href="#" data-role="button" data-inline="true" data-icon="delete">退票</a></p>   
   </div>
 
   <div data-role="footer">
