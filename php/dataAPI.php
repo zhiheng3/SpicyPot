@@ -320,7 +320,7 @@ class DataAPI{
 
 		//退票
 		$result1 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
-		$result2 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number -1 WHERE id =$ticket[0] LIMIT 1");
+		$result2 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
 		if (!$result1 || !$result2){
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}else{
