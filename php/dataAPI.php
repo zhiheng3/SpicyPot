@@ -25,7 +25,7 @@ class DataAPI{
 
 
 	//!!state 暂时为1
-    //create某项活动
+    //create某项活动,包括初始化它的票
 	//参数: 一个数组，各项分别是：
 		/*
 		start_time datetime,		#活动开始时间
@@ -42,7 +42,6 @@ class DataAPI{
 		*/
 		//其中 datetime为字符串，格式如"2014-11-11 08:00:00"
 	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
-    //
 	public function createActivity($activity){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
@@ -86,7 +85,7 @@ class DataAPI{
     }
 
 
-    //建立座位
+    //建立活动座位
 	//参数：int activity_id, char location（几排几列或者几区）, int capability （可选，座位容量，默认为1）
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
     //！！！信息不完善
@@ -204,7 +203,6 @@ class DataAPI{
 	//抢票
 	//参数：int openId, int activity_id
 	//返回: ["state", "message"]: ["true", int ticket_id] or ["false", 错误信息] 
-	//！！未考虑活动是否存在、是否有效
 	public function takeTicket($openId, $activity_id){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
@@ -221,17 +219,32 @@ class DataAPI{
 			return(array("state" => "false", "message" => $get_student_id['message']));
 		}
 
-		$result = mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id is NULL");
-		$ticket_found = mysql_fetch_array($result);
-		if (empty($ticket_found)){
-			return(array("state" => "false", "message" =>"票已抢光"));
+		//获得这个活动
+		$activity = mysql_fetch_array(mysql_query("SELECT state, ticket_available_number FROM activity WHERE id=$activity_id LIMIT 1"));
+		if ($activity){
+			if ($activity["state"] != 1){
+				return(array("state" => "false", "message" =>"非抢票时间"));
+			}
+			if ($activity["ticket_available_number"] == 0){
+				return(array("state" => "false", "message" =>"票已抢光"));
+			}
+		}else{
+			return(array("state" => "false", "message" =>"活动不存在"));
 		}
+		
+		//找到空票
+		$result = mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id is NULL LIMIT 1");
+		$ticket_found = mysql_fetch_array($result);
 		$ticket_id = $ticket_found['id'];
-		if (mysql_query("UPDATE ticket SET student_id = ".$student_id." WHERE id=".$ticket_id)){
+		
+		if (mysql_query("UPDATE ticket SET student_id = ".$student_id." WHERE id=".$ticket_id ." LIMIT 1")){
+			//更新活动余票
+			mysql_query("UPDATE activity SET ticket_available_number =".($activity['ticket_available_number']-1)."WHERE id=$activity_id LIMIT 1");
 			return (array("state" => "true", "message" => $ticket_id));
 		}else{
 			return (array("state" => "true", "message" => "抢票时发生错误"));
 		} 
+		
 	}
 
 	//退票
@@ -254,13 +267,14 @@ class DataAPI{
 		}
 
 		//查询符合的票
-		if (empty(mysql_fetch_array(mysql_query("SELECT * from ticket WHERE id=".$ticket_id." AND student_id = ".$student_id)))){
+		if (empty($ticket=mysql_fetch_array(mysql_query("SELECT activity_id from ticket WHERE id=".$ticket_id." AND student_id = $student_id LIMIT 1")))){
 			return(array("state" =>"false", "message" => "没有对应的票"));
 		}
 
 		//退票
-		$result = mysql_query("UPDATE ticket SET student_id = null WHERE id=".$ticket_id." AND student_id = ".$student_id);
-		if (!$result){
+		$result1 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id."LIMIT 1");
+		$result2 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number -1 WHERE id =$ticket[0] LIMIT 1");
+		if (!$result1 || !$result2){
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}else{
 			return(array("state" => "true", "message" => ""));
