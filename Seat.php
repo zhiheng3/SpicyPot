@@ -17,7 +17,7 @@
   <div data-role="content">
     <div data-role="collapsible">
         <h1>座位示意图</h1>
-        <img src="./img/seat2.png" style="width:100%;height:100%"/>
+        <img src="./img/seat2.png" style="width:100%;height:auto"/>
     </div>
     请选择座位后点击确定按钮。
     <div data-role="controlgroup" data-type="vertical">

@@ -60,7 +60,7 @@ echo <<< EOT
     <ul data-role="listview" data-inset="true">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
-            <img src="./img/qrcode_test.png" style="width:100%;height:100%"/>
+            <img src="./img/qrcode_test.png" style="width:100%;height:auto"/>
         </li>
         <li> 学号 $studentid </li>
         <li> 该票状态 $status </li>
@@ -74,7 +74,9 @@ echo <<< EOT
         <a href="./Activity.php?id=$activityid" data-ajax="false" data-role="button" data-icon="info">活动详情</a>
 EOT;
         if(!$result['message']['seat_location'] && $result2['message']['is_seat_selectable'] == 1){
-            echo "<a href=\"#\" data-role=\"button\"data-icon=\"search\">选座</a>";
+echo <<< EOT
+        <a href="./Seat.php?activityid=$activityid&ticketid=$ticket_id&openid=$open_id" data-ajax="false" data-role="button" data-icon="info">选座</a>
+EOT;
         }
 echo <<< EOT
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
