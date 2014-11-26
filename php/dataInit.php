@@ -6,9 +6,9 @@ $test = new DataAPI();
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
 
-
-/*echo($test->createActivity(array(
-	"name" => "软件学院学生节",
+/*
+echo($test->createActivity(array(
+	"name" => "软件学院学生节2",
 	"start_time" => "2014-11-11 08:00:00",
 	"end_time" => "2014-11-11 09:00:00",
 	"ticket_start_time" => "2014-11-2 19:00:00",
@@ -20,7 +20,9 @@ $test = new DataAPI();
 	"is_seat_selectable" => 1
 ))['message']);
 */
-print_r($test->getTicketList("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
+print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1));
+
+//print_r($test->getTicketList("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
 
 
 //print_r($test->getTicketInfo(1)['message']);
