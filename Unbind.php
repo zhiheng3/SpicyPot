@@ -54,7 +54,6 @@ $(document).on("click", "#confirm", function(){
         CreateMessage();
       if(result["state"] == "true"){
         $("#unbind_message").text("解绑成功，请点击上方的返回按钮返回");
-    
         $("#confirm").css("display","none");
         $(".unbind_hint").css("display","none");
       }
