@@ -26,7 +26,7 @@ class RequestProcess{
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);
             }
-	        else if (substr($content, 0, 6) == "退票" || substr($content, 0, 6) == "查票"){
+	        else if (substr($content, 0, 6) == "退票"){
 	            $result = $ticketHandler->ticketHandle($data);
 	        }
             else{
@@ -43,6 +43,9 @@ class RequestProcess{
 				else if(substr($data->eventKey, 0, 4) == "TAKE"){
 					$result = $ticketHandler->takeTicket($data);
 				}
+                else if($data->eventKey == "CHECK_TICKET"){
+                    $result = $ticketHandler->getTicket($data);
+                }
             }
         }
         
