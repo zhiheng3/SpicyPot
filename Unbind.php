@@ -51,7 +51,7 @@ EOT;
 $(document).on("click", "#confirm", function(){
     $.post("./mask.php", $("#postdata").text(), function(data){
       CreateMessage();
-      if(data['status'] == "true"){
+      if(data['state'] == "true"){
         $("#unblind_message").text("解绑成功，请点击上方的返回按钮返回");
     
         $("#confirm").css("display","none");
