@@ -31,7 +31,7 @@
     </ul>
     <div data-role="controlgroup" data-type="vertical">
         <a href="#" data-role="button">确定</a>
-        <a href="javascript:unselect();" data-role="button">重选</a>
+        <a href="#" data-role="button" id="test">重选</a>
         <a href="#" data-role="button">返回</a>
     </div>
   </div>
@@ -42,13 +42,19 @@
 </div> 
 
 <script>
+
 $(document).ready(function(){
     selectedseat = "";
     selectedcolor = "#a1a1a1";
-    $("td").height($("td").width());
-    $("td").css("text-align", "center");
     setTable(2);
+    var size = $("td").width();
+    $("td").width(size);
+    $("td").height(size);
+    $("td").css("text-align", "center"); 
     $("td").css("background", "#a1a1a1");
+    $("td a").css("display", "block");
+    $("td a").css("width", "100%");
+    $("td a").css("height", "100%");
     $("#C").css("background", "#00ff00");
 });
 
@@ -74,8 +80,15 @@ function unselect(){
     $("#selected").text("");
 }
 
-$(document).on("click", "td", function(e){
-    select(e.target);
+$(document).on("click", "td a", function(e){
+    console.log(e.target.parentElement);
+    select(e.target.parentElement);
+    return false;
+});
+
+$(document).on("click", "#test", function(e){
+    console.log(e);
+    unselect();
 });
 
 </script>
