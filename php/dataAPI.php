@@ -21,7 +21,7 @@ class DataAPI{
 		$activity_name = mysql_fetch_row(mysql_query("SELECT name FROM activity WHERE id = $activity_id LIMIT 1"))[0];
 
 		for ($i = 0; $i < $ticket_num; $i++){
-			mysql_query("INSERT INTO ticket (activity_id,activity_name) VALUES (".$activity_id.",'".$activity_name."')");	
+			mysql_query("INSERT INTO ticket (state,activity_id,activity_name) VALUES (0,".$activity_id.",'".$activity_name."')");	
 		}
 		return (array("state" => "true", "message" => ""));
 	}
@@ -340,7 +340,8 @@ class DataAPI{
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
-		
+		mysql_query("SET NAMES UTF8");
+
 		//获得student_id
 		$get_student_id = $this->getStudentId($openId);
 		if ($get_student_id['state'] == "true"){
@@ -351,19 +352,19 @@ class DataAPI{
 
 		$result = array();
 		if ($activity_id == -1){//查询所有活动
-			$result_set = mysql_query("SELECT id FROM ticket WHERE student_id=".$student_id);
+			$result_set = mysql_query("SELECT id, activity_name FROM ticket WHERE student_id=".$student_id);
 			if (!$result_set){
 				return(array("state" =>"false", "message" => "查询出错"));			
 			}
-			while($result_row = mysql_fetch_array($result_set)){
-				array_unshift($result, $result_row[0]);
+			while($result_row = mysql_fetch_assoc($result_set)){
+				array_unshift($result, $result_row);
 			}
 		}else{//查询指定活动
 			$result_set = mysql_query("SELECT id, activity_name FROM ticket WHERE student_id=".$student_id." AND activity_id = ".$activity_id);
 			if (!$result_set){
 				return(array("state" =>"false", "message" => "查询出错"));			
 			}
-			while($result_row = mysql_fetch_array($result_set)){
+			while($result_row = mysql_fetch_assoc($result_set)){
 				array_unshift($result, $result_row);
 			}
 		}
