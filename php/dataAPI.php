@@ -17,8 +17,11 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
+		//获得活动名称
+		$activity_name = mysql_fetch_row(mysql_query("SELECT name FROM activity WHERE id = $activity_id LIMIT 1"))[0];
+
 		for ($i = 0; $i < $ticket_num; $i++){
-			mysql_query("INSERT INTO ticket (activity_id) VALUES (".$activity_id.")");	
+			mysql_query("INSERT INTO ticket (activity_id,activity_name) VALUES (".$activity_id.",'".$activity_name."')");	
 		}
 		return (array("state" => "true", "message" => ""));
 	}
@@ -28,6 +31,7 @@ class DataAPI{
     //create某项活动,包括初始化它的票
 	//参数: 一个数组，各项分别是：
 		/*
+  		name char(60),  			#活动名称
 		start_time datetime,		#活动开始时间
 		end_time datetime,			#活动结束时间
 		ticket_start_time datetime,	#抢票开始时间
@@ -50,7 +54,7 @@ class DataAPI{
         }
 		mysql_query("SET NAMES UTF8");
 		mysql_select_db("wx9_db", $con);
-        
+        $name = $activity["name"];
 		$start_time = $activity["start_time"];
 		$end_time = $activity["end_time"];
 		$ticket_start_time = $activity["ticket_start_time"];
@@ -64,9 +68,10 @@ class DataAPI{
 		$is_seat_selectable = $activity["is_seat_selectable"];
 
         //插入活动    
-        if (!mysql_query("INSERT INTO activity 	(start_time,end_time,ticket_start_time,ticket_end_time,state,stage,information,ticket_number,ticket_available_number,ticket_per_student,is_seat_selectable)  VALUES ('".$start_time."','".$end_time."','".$ticket_start_time."','".$ticket_end_time."',$state,'".$stage."','".$information."',$ticket_number,$ticket_available_number,$ticket_per_student,$is_seat_selectable)")){
+        if (!mysql_query("INSERT INTO activity 	(name,start_time,end_time,ticket_start_time,ticket_end_time,state,stage,information,ticket_number,ticket_available_number,ticket_per_student,is_seat_selectable)  VALUES ('".$name."','".$start_time."','".$end_time."','".$ticket_start_time."','".$ticket_end_time."',$state,'".$stage."','".$information."',$ticket_number,$ticket_available_number,$ticket_per_student,$is_seat_selectable)")){
              return(array("state" =>"false", "message" => "插入活动出错"));           
         }
+
 
 
         //查询此次活动分配的id
@@ -83,6 +88,28 @@ class DataAPI{
 
         return(array("state" => "true", "message" => $activity_id));
     }
+
+	
+
+	//获得活动信息
+	//参数：int activity_id
+	//返回: ["state", "message"]: ["true", 关联数组（见活动表）] or ["false", 错误信息] 
+    //！！！信息不完善
+	public function getActivityInfo($activity_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
+		
+		if (!$result = mysql_fetch_assoc(mysql_query("SELECT * FROM activity WHERE id=$activity_id"))){
+			return(array("state" => "false", "message" => "没有找到此活动"));
+		}else{
+			return(array("state" => "true", "message" => $result));
+		}	
+	}
 
 
     //建立活动座位

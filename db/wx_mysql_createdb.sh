@@ -19,6 +19,7 @@ openid char(50),		#openid
 #活动表
 create table activity(
 id int(4) not null primary key auto_increment,
+name char(60),			#活动名称
 start_time datetime,		#活动开始时间
 end_time datetime,		#活动结束时间
 state int(4),			#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
@@ -29,8 +30,8 @@ ticket_end_time datetime,	#抢票结束时间
 ticket_number int(4),		#票总数
 ticket_available_number int(4),	#票余量
 ticket_per_student int(4),	#每人最大可抢票数
-is_seat_selectable int(4),	#是否可选座  0:不可选座  1:可选座
-seat_map_id int(4),		#座位图id 
+is_seat_selectable int(4)	#是否可选座  0:不可选座  1:可选座
+#seat_map_id int(4),		#座位图id 
 );
 
 #活动座位信息表（跟活动有关）
@@ -38,25 +39,27 @@ create table seat(
 id int(4) not null primary key auto_increment,
 activity_id int(4),		#对应的活动id
 resitual_capability int(4),	#此座位剩余容量
-stage char(50),			#座位所在的场所
+#stage char(50),		#座位所在的场所
 location char(50),		#座位的位置（排、列）
 #available bool,		#是否可选
 capability int(4)		#此座位容量（单人座为1,区域可设置）
 );
 
+
 #固定座位信息表（每个场所的座位固定）
-create table seat_base(
-id int(4) not null primary key auto_increment,
-stage char(50),			#座位所在的场所
-location char(50),		#座位的位置（排、列）
-capability int(4)		#此座位容量（单人座为1,区域可设置）
-);
+#create table seat_base(
+#id int(4) not null primary key auto_increment,
+#stage char(50),			#座位所在的场所
+#location char(50),		#座位的位置（排、列）
+#capability int(4)		#此座位容量（单人座为1,区域可设置）
+#);
 
 #票信息表
 create table ticket(
 id int(4) not null primary key auto_increment,
 state int(4),			#两个状态：0未入场，1已入场
 activity_id int(4),		#活动id
+activity_name char(60),		#活动名称
 seat_id int(4),			#座位id
 seat_location char(50),		#座位的位置（排、列）
 student_id int(4)		#学号

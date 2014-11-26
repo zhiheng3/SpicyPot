@@ -5,18 +5,24 @@ $test = new DataAPI();
 //echo($test->binding("openid000000000000000001", 2012010001, "binding")."\n");
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-/*echo($test->createActivity(array(
+
+/*
+echo($test->createActivity(array(
+	"name" => "马兰花开",
 	"start_time" => "2014-11-11 08:00:00",
 	"end_time" => "2014-11-11 09:00:00",
 	"ticket_start_time" => "2014-11-2 19:00:00",
 	"ticket_end_time" =>  "2014-11-2 19:00:00",
 	"stage" => "大礼堂",
-	"information" => "马兰花开第五十次纪念演出！",
+	"information" => "第五十次纪念演出！",
 	"ticket_number" => 60,
 	"ticket_per_student" => 1,
 	"is_seat_selectable" => 1
-))['message']);*/
-//echo($test->getStudentId("o9aMOs_uUHyqwJkHBkklPh8TrTCg")['message']."!\n");
+))['message']);
+*/
+
+print_r($test->getActivityInfo(1)['message']);
+
 /*
 echo($test->takeSeat(0,1)['message']."!\n");
 echo($test->takeSeat(1,1)['message']."!\n");
@@ -25,7 +31,7 @@ echo($test->takeSeat(2,1)['message']."!\n");
 echo($test->takeSeat(2,2)['message']."!\n");
 */
 
-echo($test->initTicket(30, 1)['state']."\n");
+//echo($test->initTicket(30, 1)['state']."\n");
 //echo($test->takeTicketInfo("openid000000000000000001", 1)['message']."\n");
 //echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
 //echo($test->takeTicket("openid000000000000000002", 1)['message']."\n");
