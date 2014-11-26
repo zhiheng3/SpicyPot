@@ -14,17 +14,46 @@
   <div data-role="header" id = "ImgTop">
     <h1>购票详情</h1>
   </div>
+  
+  <?php
+    require_once "./php/dataAPI.php";
+    $dataapi = new dataAPI();
+    $result = $dataapi->getTicketInfo($_GET['id']);
+    $result2 = $dataapi->getActivityInfo($result['message']['activity_id']);
+    if ($result['state'] == 'false' || $result2['state'] == 'false'){
+echo <<< EOT
+    <div data-role="content" id = "Error">
+        没有查询到这张票！
+    </div>
+EOT;
+    }
+    else{
+        $studentid = $result['message']['student_id'];
+        if ($result['message']['state'] == 0){
+            $status = "有效";
+        }
+        else{
+            $status = "已使用";
+        }
+        $activityname = $result2['message']['name'];
+        $activitystage = $result2['message']['stage'];
+        $starttime = $result2['message']['start_time'];
+        $endtime = $result2['message']['end_time'];
 
+echo <<< EOT
   <div data-role="content" id = "TicketInfo">
     <ul data-role="listview" data-inset="true">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
-            <p>此处是电子票</p>
+            <img src="./img/qrcode_test.png" style="width:100%;height:100%"/>
         </li>
-        <li> 活动地点 </li>
+        <li> 学号 $studentid </li>
+        <li> 该票状态 $status </li>
+        <li> 活动名称 $activityname </li>
+        <li> 活动地点 $activitystage </li>
         <li> 座位 </li>
-        <li> 活动开始时间 </li>
-        <li> 活动结束结束 </li>
+        <li> 开始时间 $starttime </li>
+        <li> 结束时间 $endtime </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
         <a href="#" data-role="button"data-icon="info">活动详情</a>
@@ -32,6 +61,9 @@
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
     </div>   
   </div>
+EOT;
+}
+?>
 
   <div data-role="footer" data-position="fixed">
   <h1>共青团清华大学委员会 &copy 2014</h1>
