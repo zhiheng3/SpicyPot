@@ -42,8 +42,7 @@ EOT;
   </div>
 
   <div data-role="footer" data-position="fixed">
-  <h1>共青团清华大学委员会</h1>
-  <h1>&copy 2014</h1>
+  <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div>
 
@@ -65,7 +64,7 @@ $(document).on("click", "#confirm", function(){
 });
 
 $(document).on("click", "#cancel", function(){
-    window.close();
+    WeixinJSBridge.invoke('closeWindow',{},function(res){});
 });
 
 function CreateMessage(){

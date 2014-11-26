@@ -1,19 +1,22 @@
-<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">  
-<html xmlns="http://www.w3.org/1999/xhtml">  
-<head>  
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-<meta name="viewport" content="width=device-width"/>
-<meta http-equiv="Access-Control-Allow-Origin" content="*">  
-<link rel="stylesheet" type="text/css" href="./css/ChooseSeat.css">
-<script type="text/javascript" src = "./js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src = "./js/ChooseSeat.js"></script>
-
-<title>选座</title>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script src="./js/jquery.mobile-1.4.5.min.js"></script>
 </head>
 <body>
-	<div id = "PlaceName">大礼堂</div>
-	<hr style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" margin-bottom="0" size="1">
 
+<div data-role="page" data-theme="a" id="mainpage">
+  <div data-role="header">
+    <h1>选择座位</h1>
+  </div>
+  
+  <div data-role="footer" data-position="fixed">
+  <h1>共青团清华大学委员会 &copy 2014</h1>
+  </div>
+</div> 
 </body>
-
 </html>
