@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div data-role="page" data-theme="a" id="pageone">
+<div data-role="page" data-theme="a" id="mainpage">
   <div data-role="header" id = "ImgTop">
     <h1>购票详情</h1>
   </div>
@@ -27,34 +27,28 @@
         <li> 活动结束结束 </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
-        <a href="#" data-role="button" data-inline="false" data-icon="info">活动详情</a>
-        <a href="#" data-role="button" data-inline="false" data-icon="search">选座</a>
-        <a href="#" data-role="button" data-inline="false" data-icon="delete">退票</a>
+        <a href="#" data-role="button"data-icon="info">活动详情</a>
+        <a href="#" data-role="button"data-icon="search">选座</a>
+        <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
     </div>   
   </div>
 
   <div data-role="footer" data-position="fixed">
-  <h1>共青团清华大学委员会</h1>
-  <h1>&copy 2014</h1>
+  <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div> 
 
-<!--
-<div data-role="page" id="pagetwo">
-  <div data-role="header">
-    <h1>我是一个对话框！</h1>
-  </div>
-
+<div data-role="page" id="refund">
+    <div data-role="header">
+        <h1>确认退票</h1>
+    </div>
   <div data-role="content">
-    <p>对话框与普通页面不同，它显示在当前页面的顶端。它不会横跨整个页面宽度。对话框页眉中的图标 “X” 可关闭对话框。</p>
-    <a href="#pageone">转到页面一</a>
+        <div data-role="controlgroup" data-type="vertical">
+        <a href="#" data-role="button" id="refund_confirm">确认</a>
+        <a href="#mainpage" data-transition="none" data-role="button">取消</a>
+    </div>   
   </div>
-
-  <div data-role="footer">
-  <h1>页脚文本</h1>
-  </div>
-</div> 
--->
+</div>
 
 </body>
 </html>
