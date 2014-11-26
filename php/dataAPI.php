@@ -267,7 +267,7 @@ class DataAPI{
 		}
 
 		//获得这个活动
-		$activity = mysql_fetch_array(mysql_query("SELECT state, ticket_available_number FROM activity WHERE id=$activity_id LIMIT 1"));
+		$activity = mysql_fetch_array(mysql_query("SELECT state, ticket_available_number,ticket_per_student FROM activity WHERE id=$activity_id LIMIT 1"));
 		if ($activity){
 			if ($activity["state"] != 1){
 				return(array("state" => "false", "message" =>"非抢票时间"));
@@ -279,6 +279,9 @@ class DataAPI{
 			return(array("state" => "false", "message" =>"活动不存在"));
 		}
 		
+		if (mysql_num_rows(mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id =$student_id LIMIT ".$activity["ticket_per_student"])) == $activity["ticket_per_student"] ){
+			return(array("state" => "false", "message" =>"每人只能选".$activity["ticket_per_student"]."张票"));		
+		}
 		//找到空票
 		$result = mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id is NULL LIMIT 1");
 		$ticket_found = mysql_fetch_array($result);
