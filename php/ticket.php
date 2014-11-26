@@ -18,9 +18,11 @@ class ticketHandler{
         if(substr($content, 0, 6) == "退票"){
             $result = $this->refundTicket($data);
         }
+/*
         else if(substr($content, 0, 6) == "查票"){
             $result = $this->getTicket($data);        
         }
+*/
         else{
             $result->msgType = "text";
             $result->content = "请输入帮助查看应用说明";
@@ -45,7 +47,7 @@ class ticketHandler{
 			$result->articles[0] = new Article();
             $result->articles[0]->title = "抢票成功！";
             $result->articles[0]->description = "抢票成功！";
-            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
+            $result->articles[0]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
             $result->articles[0]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message']}";
         }
         else{
@@ -114,7 +116,7 @@ class ticketHandler{
 			    $result->articles[$i] = new Article();
                 $result->articles[$i]->title = "#$j";
                 $result->articles[$i]->description = "您的第" . $j . "张票";
-                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/tsinghua.jpg";
+                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]}";
             }
         }
