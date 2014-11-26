@@ -54,7 +54,12 @@ else if ($_POST["type"] == "verify"){
 	$valid = json_decode($verify, true);
 	if ($valid['code'] == 0){ //Verify ok
 	    $dataapi = new dataAPI();
-	    $bindResult = $dataapi->binding($_POST["open_id"], intval($valid['data']['ID']), "binding");
+	    if ($_POST["force"] == "true"){
+	        $bindResult = $dataapi->forceBinding($_POST["open_id"], intval($valid['data']['ID']));
+	    }
+	    else{
+	        $bindResult = $dataapi->bind($_POST["open_id"], intval($valid['data']['ID']));
+	    }
 	    if($bindResult['state'] == "true"){
 	        $result['code'] = 0;
 		    $result['message'] = "绑定成功";

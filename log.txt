@@ -1,0 +1,24 @@
+<xml>
+<<<<<<< HEAD
+    <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+    <FromUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo]]></FromUserName>
+    <CreateTime>1416403164</CreateTime>
+    <MsgType><![CDATA[event]]></MsgType>
+    <Event><![CDATA[CLICK]]></Event>
+    <EventKey><![CDATA[USER_BIND]]></EventKey>
+    <Encrypt><![CDATA[CEhholdvIxDFTtrieqtm3Ijkrqm0arZwOJtxSDXfoMb7rye9ch/EHgU6XtpLIFHgoxbogPAbC7ShYbBZnsZYVhbwzrgzZy4NOj8e0916yG7KjIxbkbWhHmlRv9vMIUd/YY+IJ6fYZLR7TjRzsfjMzgrT3TdzuBw0lYq/mHnk443IS5lAan4tqEKBpY5gqcultSjKW25UyiERm7udFvwPtOQ8O/M7p5Wsq9lnPLUcYJniglFUzB8oo2HYaTPcESmep+h+yi6cmKh2T8J0sfPDOVCaVKp/Q8UnUq+3v4IEoSIRMgCUS2Uei5ryiyBx1GuPSA9L1ut8J1A8tiT/jtmerhouDBiJTzZXVn6I5Hh0ep6b1V/zCH2DDpd5YbtHcZfieQqxYPjDzOXtc8qSjw3GjGiEhos9Q11S56uiAq3zm/yiYCCmE67d6ctWJvOteYLtdM36RCAN057TO78qMRnW9w==]]></Encrypt>
+</xml>
+<xml>
+<ToUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1416403281</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs0bER4zxjWSx5gEmMkv1bvo">请点击我进行绑定</a>]]></Content>
+=======
+<ToUserName><![CDATA[o9aMOs_uUHyqwJkHBkklPh8TrTCg]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1416320201</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[<a href="wx9.igeek.asia/Verify.html?id=o9aMOs_uUHyqwJkHBkklPh8TrTCg">请点击我进行绑定</a>]]></Content>
+>>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
+</xml>
