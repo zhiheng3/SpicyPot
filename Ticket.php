@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+<script> var tmphref = location.href; </script>
 </head>
 <body>
 
@@ -14,6 +15,7 @@
   <div data-role="header" id = "ImgTop">
     <h1>购票详情</h1>
   </div>
+
   
   <?php
     require_once "./php/dataAPI.php";
@@ -87,18 +89,39 @@ EOT;
   </div>
 </div>
 
+<div data-role="page" data-theme="a" id="refundsuccess">
+    <div data-role="header">
+        <h1>退票成功</h1>
+    </div>
+    <div data-role="content">
+        <a href="javascript:WeixinJSBridge.invoke('closeWindow',{},function(res){});" data-role="button">返回</a>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <h1>共青团清华大学委员会 &copy 2014</h1>
+    </div>
+</div>
+
+<div data-role="page" data-theme="a" id="refundfail">
+    <div data-role="header">
+        <h1>退票失败</h1>
+    </div>
+    <div data-role="content">
+        <a href="#mainpage" data-transition="none" data-role="button">返回</a>
+    </div>
+    <div data-role="footer" data-position="fixed">
+        <h1>共青团清华大学委员会 &copy 2014</h1>
+    </div>
+</div>
+
 <script>
     $(document).on("click", "#refund_confirm", function(){
     $.post("./mask.php", $("#postdata").text(), function(data){
         var result = JSON.parse(data);
         if(result["state"] == "true"){
-            $('#mainpage').empty();
-            $('#mainpage').remove();
-            $('#TicketBack').text("退票成功");
-            $('#refund_confirm').css("display","none");
+            location.href = tmphref + "#refundsuccess";
         }
         else{
-            $('#TicketBack').text("退票失败，请重试");
+            location.href = tmphref + "#refundfail";
         }
     });
 });
