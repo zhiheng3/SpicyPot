@@ -27,7 +27,7 @@
 echo <<< EOT
     <div data-role="controlgroup" data-type="vertical">
         <a id="confirm" data-role="button">确认</a>
-        <a id="cancel" data-role="button">取消</a>
+        <a id="cancel" data-role="button">返回</a>
     </div>
     <div id="postdata" style="display:none">method=unbind&openid=$open_id&studentid=$student_id</div>
 EOT;
@@ -51,14 +51,14 @@ EOT;
 $(document).on("click", "#confirm", function(){
     $.post("./mask.php", $("#postdata").text(), function(data){
       CreateMessage();
-      if(data['status'] == true){
-        $("#unblind_message").text("解绑成功，请点击上方的取消按钮返回");
+      if(data['state'] == "true"){
+        $("#unblind_message").text("解绑成功，请点击上方的返回按钮返回");
     
         $("#confirm").css("display","none");
-         $(".unblind_hint").css("display","none");
+        $(".unblind_hint").css("display","none");
       }
       else{
-        var error_message = "解绑失败," + data['message'] + ",请点击上方的取消按钮返回";
+        var error_message = "解绑失败,错误原因：" + data['message'] + ",请点击上方的确认按钮重试";
         $("#unblind_message").text(error_message);    
       }
     });
