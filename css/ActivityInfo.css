@@ -13,6 +13,7 @@ body{
 	width: 100%;
 }
 
+
 #Activity{
 	background-color: #315AEF;
 	height:60px
@@ -42,10 +43,12 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 
 
 #Time-Left{
-	width: 1000px;
+	width: 85%;
 	height: 30px;
 	text-align: center;
 	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .Number-Left{
@@ -127,7 +130,7 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 	padding-bottom: 3px;
 	padding-top: 7px;
 	font-family: "微软雅黑";
-	width: 1000px;
+	width: 85%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -139,7 +142,7 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 	background-color: rgb(200,200,200);
 	font-size: 0.9em;
 	margin-bottom: 4px;
-	width: 1000px;
+	width: 85%;
 }
 
 .General-Box p{
