@@ -77,7 +77,7 @@ EOT;
 
 <div data-role="page" id="refund">
     <div data-role="header">
-        <h1>确认退票</h1>
+        <h1 id = "TicketBack">确认退票</h1>
     </div>
   <div data-role="content">
         <div data-role="controlgroup" data-type="vertical">
@@ -90,6 +90,16 @@ EOT;
 <script>
     $(document).on("click", "#refund_confirm", function(){
     $.post("./mask.php", $("#postdata").text(), function(data){
+        var result = JSON.parse(data);
+        if(result["state"] == "true"){
+            $('#mainpage').empty();
+            $('#mainpage').remove();
+            $('#TicketBack').text("退票成功");
+            $('#refund_confirm').css("display","none");
+        }
+        else{
+            $('#TicketBack').text("退票失败，请重试");
+        }
     });
 });
 
