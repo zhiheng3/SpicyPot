@@ -114,7 +114,15 @@ class DataAPI{
 	//获得票信息
 	//参数：int ticket_id
 	//返回: ["state", "message"]: ["true", 关联数组（见票表）] or ["false", 错误信息] 
-    //！！！信息不完善
+	/* 关联数组项：	
+		id int(4) not null primary key auto_increment,
+		state int(4),			#两个状态：0未入场，1已入场
+		activity_id int(4),		#活动id
+		activity_name char(60),		#活动名称
+		seat_id int(4),			#座位id
+		seat_location char(50),		#座位的位置（排、列）
+		student_id int(4)		#学号
+	*/
 	public function getTicketInfo($ticket_id){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
@@ -133,31 +141,24 @@ class DataAPI{
 
 
     //建立活动座位
-	//参数：int activity_id, char location（几排几列或者几区）, int capability （可选，座位容量，默认为1）
+	//参数：int activity_id, [[string location, int capability]] 座位的位置（名称）和座位的容量
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
-    //！！！信息不完善
-	public function createSeat($activity_id, $location, $capability = 1){
+	public function createSeats($activity_id, $seatList){
         //连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
         
-        //插入座位    
-        if (!mysql_query("INSERT INTO seat (activity_id, location, capability,resitual_capability) VALUES (".$activity_id.","."'".$location."',".$capability.",".$capability.")")){
-             return(array("state" =>"false", "message" => "插入座位出错"));           
-        }
-
-        //查询此次座位分配的id
-        /*$result_set = mysql_query("SELECT id FROM seat WHERE stage='".$stage."'");
-        if (!$result_set){
-			return(array("state" =>"false", "message" => "返回座位id出错"));			
+		//插入座位   
+		foreach($seatList as $seat){         
+        	if (!mysql_query("INSERT INTO seat (activity_id, location, capability,resitual_capability) VALUES (".$activity_id.","."'".$seat['location']."',".$seat['capability'].",".$seat['capability'].")")){
+            	return(array("state" =>"false", "message" => "插入座位出错"));           
+        	}
 		}
-        while($result =  mysql_fetch_array($result_set)){
-            $seat_id = $result[0];
-        }
-		*/
+
         return(array("state" => "true", "message" => ""));
     }
     
@@ -279,9 +280,11 @@ class DataAPI{
 			return(array("state" => "false", "message" =>"活动不存在"));
 		}
 		
+		//检查每人可选票数是否超过
 		if (mysql_num_rows(mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id =$student_id LIMIT ".$activity["ticket_per_student"])) == $activity["ticket_per_student"] ){
-			return(array("state" => "false", "message" =>"每人只能选".$activity["ticket_per_student"]."张票"));		
+			return(array("state" => "false", "message" =>"每人只能抢".$activity["ticket_per_student"]."张票"));		
 		}
+
 		//找到空票
 		$result = mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id is NULL LIMIT 1");
 		$ticket_found = mysql_fetch_array($result);
@@ -317,14 +320,20 @@ class DataAPI{
 		}
 
 		//查询符合的票
-		if (empty($ticket=mysql_fetch_array(mysql_query("SELECT activity_id from ticket WHERE id=".$ticket_id." AND student_id = $student_id LIMIT 1")))){
+		if (empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE id=".$ticket_id." AND student_id = $student_id LIMIT 1")))){
 			return(array("state" =>"false", "message" => "没有对应的票"));
 		}
+        
+        //更新活动余票
+		$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
+        
+        //如果票绑定了座位，要修改座位的余票
+        //$result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
 
-		//退票
-		$result1 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
-		$result2 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
-		if (!$result1 || !$result2){
+        //退票
+		$result3 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
+
+		if (!$result1  || !$result3){
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}else{
 			return(array("state" => "true", "message" => ""));
@@ -433,7 +442,7 @@ class DataAPI{
     }
 
 
-
+    /*
     //获取单个座位信息
 	//参数：int activity_id, int seat_id
 	//返回: ["state", "message"]: ["true", ["seat_id", "capability", "num_seated"]] or ["false", 错误信息] 
@@ -466,25 +475,12 @@ class DataAPI{
         }
         return(array("state" => "true", "message" => array("seat_id"=>$seat_id, "capability"=>$capability, "num_seated"=>$num_seated)));     
     }
+    */
     
 
     //获取全部座位信息
 	//参数：int activity_id
-	//返回: ["state", "message"]: ["true", [["seat_id", "capability", "num_seated"]]] or ["false", 错误信息] 
-    //    其中"seat_id", "capability", "num_seated"都是int。"capability"为座位容量，"num_seated"为此座位已选的票数
-    //尚未考虑票是否已使用、取消等等
-//使用例子：
-/*
-$result = $test->getSeatInfo(1);
-$resultMessage = $result['message'];
-if ($result['state'] == "true"){
-	foreach($result['message'] as $a){
-		echo($a["seat_id"].$a["capability"].$a["num_seated"]."\n");
-	}
-}else{
-	echo($resultMessage."\n");
-}*/
-
+	//返回: ["state", "message"]: ["true", [[String location, int resitual_capability]]] or ["false", 错误信息] 
 	public function getSeatInfo($activity_id){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
@@ -492,29 +488,19 @@ if ($result['state'] == "true"){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
     
-        //获得活动地点
-        $result_set = mysql_query("SELECT location FROM activity WHERE id=".$activity_id);
-        if (!$result_set){
-				return(array("state" =>"false", "message" => "查询活动出错"));			
-		}
-        $location = mysql_fetch_array($result_set)[0];
-        
-        //根据地点取出seat列表
-        $result_set = mysql_query("SELECT id FROM seat WHERE location='".$location."'");
+        //取出seat列表
+        $result_set = mysql_query("SELECT location, resitual_capability FROM seat WHERE activity_id= $activity_id");
         if (!$result_set){
 				return(array("state" =>"false", "message" => "获取座位列表出错"));			
 		}      
         
         $result = array();
-        //对每个seat查询capability 和 num_seated
-        while($result_row = mysql_fetch_array($result_set)){
-            $single_result = $this->getSingleSeatInfo($activity_id, $result_row[0]);
-            if ($single_result['state'] == "false"){
-                return(array("state" =>"false", "message" => $single_result['message']));
-            }else{
-                array_unshift($result, $single_result['message']);            
-            }
+
+        //将每个seat装入结果
+        while($seat = mysql_fetch_assoc($result_set)){
+            array_unshift($result, $seat);            
 		}
         return(array("state" =>"true", "message" => $result));  
     }	

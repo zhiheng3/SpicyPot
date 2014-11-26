@@ -8,22 +8,28 @@ $test = new DataAPI();
 
 /*
 echo($test->createActivity(array(
-	"name" => "软件学院学生节2",
+	"name" => "小平太2",
 	"start_time" => "2014-11-11 08:00:00",
 	"end_time" => "2014-11-11 09:00:00",
 	"ticket_start_time" => "2014-11-2 19:00:00",
 	"ticket_end_time" =>  "2014-11-2 19:00:00",
-	"stage" => "大礼堂",
-	"information" => "有ipad奖品哦！",
-	"ticket_number" => 60,
+	"stage" => "综体",
+	"information" => "Mr.L",
+	"ticket_number" => 3,
 	"ticket_per_student" => 1,
 	"is_seat_selectable" => 1
 ))['message']);
 */
-//print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1));
+
+/*
+echo($test->createSeats(1, [array("location" => "1-1","capability" => 1),array("location" => "1-2","capability" => 1),array("location" => "1-3","capability" => 1),array("location" => "2-1","capability" => 1),array("location" => "2-2","capability" => 1),array("location" => "2-3","capability" => 1),array("location" => "B区","capability" => 3),array("location" => "C区","capability" => 10)])['message']);
+*/
+
+//print_r($test->getSeatInfo(1));
+print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",242));
 
 //print_r($test->getTicketList("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
-print_r($test->takeTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
+//print_r($test->takeTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
 
 //print_r($test->getTicketInfo(1)['message']);
 
