@@ -60,7 +60,7 @@ echo <<< EOT
     <ul data-role="listview" data-inset="true">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
-            <img src="./img/qrcode_test.png" style="width:100%;height:100%"/>
+            <img src="./img/qrcode_test.png" style="width:100%;height:auto"/>
         </li>
         <li> 学号 $studentid </li>
         <li> 该票状态 $status </li>
