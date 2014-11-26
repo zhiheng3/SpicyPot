@@ -53,7 +53,7 @@ class ticketHandler{
             $result->articles[0]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message']}";
 */
             $result->content = "抢票成功，" . 
-                                "<a href=\"http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message']}\">点此查看电子票</a>";
+                                "<a href=\"http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message']}\">点此查看电子票</a>";
         }
         else{
 			if($ticketResult['message'] == "票已抢光"){
@@ -117,7 +117,7 @@ class ticketHandler{
                 $result->articles[$i]->description = "您的第" . $j . "张票";
                 $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
                 //$result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]}";
-                $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?id={$ticketResult['message'][$i]['id']}";
+                $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
             }
         }
         else{
