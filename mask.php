@@ -1,4 +1,6 @@
 <?php
+require_once "./php/dataAPI.php";
+
 $method = $_POST['method'];
 if ($method == 'unbind'){
     $openId = $_POST['openid'];

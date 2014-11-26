@@ -29,6 +29,7 @@ echo <<< EOT
         <a id="confirm" data-role="button">确认</a>
         <a id="cancel" data-role="button">取消</a>
     </div>
+    <div id="postdata" style="display:none">method=unbind&openid=$open_id&studentid=$student_id</div>
 EOT;
         }
         else{
@@ -47,6 +48,11 @@ EOT;
 </div>
 
 <script>
+$(document).on("click", "#confirm", function(){
+    $.post("./mask.php", $("#postdata").text(), function(data){
+    });
+});
+
 $(document).on("click", "#cancel", function(){
     window.close();
 });
