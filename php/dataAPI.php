@@ -328,12 +328,12 @@ class DataAPI{
 		$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
         
         //如果票绑定了座位，要修改座位的余票
-        $result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
+        //$result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
 
         //退票
 		$result3 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
 
-		if (!$result1 || !$result2 || !$result3){
+		if (!$result1  || !$result3){
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}else{
 			return(array("state" => "true", "message" => ""));
