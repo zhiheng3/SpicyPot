@@ -25,8 +25,8 @@ echo($test->createActivity(array(
 echo($test->createSeats(1, [array("location" => "1-1","capability" => 1),array("location" => "1-2","capability" => 1),array("location" => "1-3","capability" => 1),array("location" => "2-1","capability" => 1),array("location" => "2-2","capability" => 1),array("location" => "2-3","capability" => 1),array("location" => "B区","capability" => 3),array("location" => "C区","capability" => 10)])['message']);
 */
 
-print_r($test->getSeatInfo(1));
-//print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1));
+//print_r($test->getSeatInfo(1));
+print_r($test->refundTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",242));
 
 //print_r($test->getTicketList("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
 //print_r($test->takeTicket("o9aMOs0bER4zxjWSx5gEmMkv1bvo",1)['message']);
