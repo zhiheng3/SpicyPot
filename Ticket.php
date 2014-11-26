@@ -18,9 +18,11 @@
   <?php
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
+    $verify = $dataapi->getStudentId($_GET['openid']);
     $result = $dataapi->getTicketInfo($_GET['id']);
     $result2 = $dataapi->getActivityInfo($result['message']['activity_id']);
-    if ($result['state'] == 'false' || $result2['state'] == 'false'){
+    $studentid = $result['message']['student_id'];
+    if ($result['state'] == 'false' || $result2['state'] == 'false' || $studentid != $verify['message']){
 echo <<< EOT
     <div data-role="content" id = "Error">
         没有查询到这张票！
@@ -28,7 +30,6 @@ echo <<< EOT
 EOT;
     }
     else{
-        $studentid = $result['message']['student_id'];
         if ($result['message']['state'] == 0){
             $status = "有效";
         }
@@ -39,6 +40,8 @@ EOT;
         $activitystage = $result2['message']['stage'];
         $starttime = $result2['message']['start_time'];
         $endtime = $result2['message']['end_time'];
+        $open_id = $_GET['openid'];
+        $ticket_id = $_GET['id'];
 
 echo <<< EOT
   <div data-role="content" id = "TicketInfo">
@@ -59,7 +62,8 @@ echo <<< EOT
         <a href="#" data-role="button"data-icon="info">活动详情</a>
         <a href="#" data-role="button"data-icon="search">选座</a>
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
-    </div>   
+    </div>
+    <div id="postdata" style="display:none">method=refundTicket&openid=$open_id&ticketid=$ticket_id</div>
   </div>
 EOT;
 }
@@ -81,6 +85,14 @@ EOT;
     </div>   
   </div>
 </div>
+
+<script>
+    $(document).on("click", "#refund_confirm", function(){
+    $.post("./mask.php", $("#postdata").text(), function(data){
+    });
+});
+
+</script>
 
 </body>
 </html>
