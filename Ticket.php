@@ -20,7 +20,8 @@
     $dataapi = new dataAPI();
     $verify = $dataapi->getStudentId($_GET['openid']);
     $result = $dataapi->getTicketInfo($_GET['id']);
-    $result2 = $dataapi->getActivityInfo($result['message']['activity_id']);
+    $activityid = $result['message']['activity_id'];
+    $result2 = $dataapi->getActivityInfo($activityid);
     $studentid = $result['message']['student_id'];
     if ($result['state'] == 'false' || $result2['state'] == 'false' || $studentid != $verify['message']){
 echo <<< EOT
@@ -59,7 +60,7 @@ echo <<< EOT
         <li> 结束时间 $endtime </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
-        <a href="#" data-role="button"data-icon="info">活动详情</a>
+        <a href="./Activity.php?id=$activityid" data-role="button"data-icon="info">活动详情</a>
         <a href="#" data-role="button"data-icon="search">选座</a>
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
     </div>

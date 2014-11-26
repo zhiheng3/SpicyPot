@@ -31,7 +31,15 @@
 		<div data-role="header" id = "ImgTop">
 	    	<h1>活动详情</h1>
 	  	</div>
-
+    <?php
+        require_once "./php/dataAPI.php";
+        $dataapi = new dataAPI();
+        $result = $dataapi->getActivityInfo($_GET['id']);
+        $remain = 0;
+        if ($result['state'] == 'true'){
+            $remain = $result['message']['ticket_available_number'];
+        }
+    ?>
 	<div data-role="content" id = "TicketInfo">
 	    <ul data-role="listview" data-inset="true">
 	    	<li id = "Rob-Start">离抢票开始还有</li>
@@ -54,7 +62,7 @@
 				</div>
 	    	</li>
 	       	<li>抢票开始时间</li>
-	       	<li>当前余票: <span id = "TicketLeft">200</span> 张</li>
+	       	<li>当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</li>
 	        <li id = "ActivityPlace">活动地点</li>
 	        <li id = "ActivityStartTime">活动开始时间</li>
 	        <li id = "ActivityEndTime">活动结束时间</li>
@@ -67,8 +75,7 @@
 	 </div>
 
   <div data-role="footer" data-position="fixed">
-	  <h1>共青团清华大学委员会</h1>
-	  <h1>&copy 2014</h1>
+	  <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div> 
 
