@@ -44,6 +44,7 @@
 
 <div id="ticketid" style="display:none;"><?php echo $_GET['ticketid'];?></div>
 <div id="activityid" style="display:none;"><?php echo $_GET['activityid'];?></div>
+<div id="openid" style="display:none;"><?php echo $_GET['openid'];?></div>
 
 <script>
 
@@ -130,6 +131,7 @@ function draw(){
 }
 
 function update(message){
+    selectedseat = "";
     $("#message").text("正在更新座位信息...");
     $.post("./mask.php", {"method":"seatInfo", "activityid":$("#activityid").text()}, function (data){
         var result = JSON.parse(data);
@@ -159,6 +161,7 @@ function confirm(){
             update("选座成功");
             $("#bconfirm").remove();
             $("#breselect").remove();
+            location.href = "./Ticket.php?id=" + $("#ticketid").text() + "&openid=" + $("#openid").text();
         }
         else{
             update(result["message"]);
