@@ -33,7 +33,7 @@
     <div data-role="controlgroup" data-type="vertical">
         <a href="javascript:confirm();" data-role="button" id="bconfirm">确定</a>
         <a href="javascript:unselect();" data-role="button" id="breselect">重选</a>
-        <a href="javascript:update();" data-role="button">刷新</a>
+        <a href="javascript:update('请选择座位后点击确定');" data-role="button">刷新</a>
     </div>
   </div>
   
@@ -63,7 +63,7 @@ $(document).ready(function(){
     selectedseat = "";
     selectedcolor = IC;
     setTable(parseInt($("#columns").text()));
-    update();
+    update("请选择座位后点击确定");
     var size = $("td").width();
     $("td").width(size);
     $("td").height(size);
@@ -129,12 +129,12 @@ function draw(){
     }
 }
 
-function update(){
+function update(message){
     $("#message").text("正在更新座位信息...");
     $.post("./mask.php", {"method":"seatInfo", "activityid":$("#activityid").text()}, function (data){
         var result = JSON.parse(data);
         if (result["state"] == "true"){
-            $("#message").text("请选择座位后点击确定");
+            $("#message").text(message);
             for (var i in result["message"]){
                 seatstate[result["message"][i]["location"]] = parseInt(result["message"][i]["resitual_capability"]);
             }
@@ -154,14 +154,14 @@ function confirm(){
     $("#message").text("正在处理选座请求...");
     $.post("./mask.php", {"method":"takeSeat", "ticketid":$("#ticketid").text(), "seatid":seat}, function(data){
         var result = JSON.parse(data);
-        update();
+        
         if (result["state"] == "true"){
-            $("#message").text("选座成功");
+            update("选座成功");
             $("#bconfirm").remove();
             $("#breselect").remove();
         }
         else{
-            $("#message").text(result["message"]);
+            update(result["message"]);
         }
     });
 }
