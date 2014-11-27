@@ -415,7 +415,8 @@ class DataAPI{
 		
 		
 		//获取座位剩余票数
-        $seat = mysql_fetch_assoc(mysql_query("SELECT resitual_capability,location,id,capability FROM seat WHERE location='".$seat_location."' LIMIT 1"));
+		$activity_id = mysql_fetch_assoc(mysql_query("SELECT activity_id FROM ticket WHERE id='".$ticket_id."' LIMIT 1"))['activity_id'];
+        $seat = mysql_fetch_assoc(mysql_query("SELECT resitual_capability,location,id,capability FROM seat WHERE location='".$seat_location."' AND activity_id = $activity_id LIMIT 1"));
 //echo("SELECT resitual_capability,location,id FROM seat WHERE name='".$seat_name."' LIMIT 1");
         if (!$seat){
             return(array("state" => "false", "message" => "不存在这个座位"));
