@@ -62,7 +62,7 @@ $(document).ready(function(){
     
     selectedseat = "";
     selectedcolor = IC;
-    setTable(2);
+    setTable(parseInt($("#columns").text()));
     update();
     var size = $("td").width();
     $("td").width(size);
@@ -81,6 +81,8 @@ $(document).ready(function(){
 function setTable(seats){
     if (seats > 4){
         displayname = false;
+        $("#seats").css("border-spacing", "5px");
+        $("td").css("border-radius", "5px");
     }
     else{
         displayname = true;
