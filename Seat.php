@@ -161,6 +161,7 @@ function confirm(){
             $("#message").text(result["message"]);
         }
     });
+    update();
 }
 
 $(document).on("click", "td a", function(e){
