@@ -161,7 +161,7 @@ function confirm(){
             update("选座成功");
             $("#bconfirm").remove();
             $("#breselect").remove();
-            location.href = "./Ticket.php?id=" + $("#ticketid").text() + "&openid=" + $("#openid").text();
+            location.replace("./Ticket.php?id=" + $("#ticketid").text() + "&openid=" + $("#openid").text());
         }
         else{
             update(result["message"]);
