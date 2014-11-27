@@ -160,8 +160,8 @@ function confirm(){
         else{
             $("#message").text(result["message"]);
         }
+        update();
     });
-    update();
 }
 
 $(document).on("click", "td a", function(e){
