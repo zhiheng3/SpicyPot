@@ -75,7 +75,7 @@ echo <<< EOT
 EOT;
         if(!$result['message']['seat_location'] && $result2['message']['is_seat_selectable'] == 1){
 echo <<< EOT
-        <a href="./Seat.php?activityid=$activityid&ticketid=$ticket_id&openid=$open_id" data-ajax="false" data-role="button" data-icon="info">选座</a>
+        <a href="./Seat.php?activityid=$activityid&ticketid=$ticket_id&openid=$open_id" data-ajax="false" data-role="button" data-icon="grid">选座</a>
 EOT;
         }
 echo <<< EOT

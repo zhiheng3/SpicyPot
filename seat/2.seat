@@ -1,10 +1,10 @@
 <table id="seats" style="border:none;width:100%;">
   <tr>
-    <td id="A"><a>A</a></td>
-    <td id="B"><a>B</a></td>
+    <td id="A区"><p>A区</p><a></a></td>
+    <td id="B区"><p>B区</p><a></a></td>
   </tr>
   <tr>
-    <td id="C"><a>C</a></td>
-    <td id="D"><a>D</a></td>
+    <td id="C区"><p>C区</p><a></a></td>
+    <td id="D区"><p>D区</p><a></a></td>
   </tr>
 </table>

@@ -25,4 +25,11 @@ else if($method == 'takeSeat'){
     $takeSeatResult = $dataapi->takeSeat($ticketId, $seatId);
     echo json_encode($takeSeatResult);
 }
+
+else if ($method == 'seatInfo'){
+    $activityId = $_POST['activityid'];
+    $dataapi = new dataAPI();
+    $seatInfoResult = $dataapi->getSeatInfo(intval($activityId));
+    echo json_encode($seatInfoResult);
+}
 ?>
