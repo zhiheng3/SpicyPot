@@ -22,7 +22,7 @@ class RequestProcess{
             if ($content == "帮助"){
                 $result = $this->help($data);
             }
-            else if ($content == "抢票压力测试"){
+            else if ($content == "抢票 压力测试"){
                 $dataapi = new DataAPI();
                 $ticketResult = $dataapi->takeTicketTest($data->fromUserName);
                 $result->msgType = "text";
