@@ -89,7 +89,7 @@ class WechatCallbackAPI
 		        fwrite($logfile, $response);
 		        fclose($logfile);
         }else {
-        	echo "";
+        	echo "1";
         	exit;
         }
     }
