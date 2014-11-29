@@ -17,16 +17,20 @@ class RequestProcess{
     //Test: No
     public function process($data){
 	    $result = new ResponseData();
-	    $ticketHandler = new ticketHandler();
 	    if ($data->msgType == "text"){
             $content = trim($data->content);
             if ($content == "帮助"){
                 $result = $this->help($data);
             }
+            else if ($content == "抢票压力测试"){
+                $dataapi = new DataAPI();
+                $result = $dataapi->takeTicketTest($data->fromUserName);
+            }
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);
             }
 	        else if (substr($content, 0, 6) == "退票"){
+                $ticketHandler = new ticketHandler();
 	            $result = $ticketHandler->ticketHandle($data);
 	        }
             else{
@@ -41,9 +45,11 @@ class RequestProcess{
                     $result = $this->bindlink($data);
                 }
 				else if(substr($data->eventKey, 0, 4) == "TAKE"){
+                    $ticketHandler = new ticketHandler();
 					$result = $ticketHandler->takeTicket($data);
 				}
                 else if($data->eventKey == "CHECK_TICKET"){
+                    $ticketHandler = new ticketHandler();
                     $result = $ticketHandler->getTicket($data);
                 }
             }
