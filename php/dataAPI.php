@@ -22,7 +22,7 @@ class DataAPI{
 		//获得这个活动
 		$activity = mysql_fetch_array(mysql_query("SELECT ticket_available_number FROM activity where id = 7 LIMIT 1"));
 		if ($activity){
-			if ($activity["ticket_available_number"] == 0){
+			if ($activity["ticket_available_number"] <= 0){
 				return(array("state" => "false", "message" =>"票已抢光"));
 			}
 		}else{
@@ -33,6 +33,11 @@ class DataAPI{
 		mysql_query("BEGIN");
 		mysql_query("SET AUTOCOMMIT=0");
 		if (mysql_query("UPDATE ticket SET seat_location = '".$openId."' WHERE seat_location is NULL LIMIT 1")){
+			if (mysql_affected_rows() ==0){
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "true", "message" => "票已抢光"));
+			}
 			//更新活动余票
 			if(mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=7 LIMIT 1")){
 				mysql_query("SET AUTOCOMMIT=1");
@@ -47,7 +52,7 @@ class DataAPI{
 		}else{
 			mysql_query("SET AUTOCOMMIT=1");
 			mysql_query("COMMIT");
-			return (array("state" => "true", "message" => "票已抢光"));
+			return (array("state" => "true", "message" => "抢票出错"));
 		} 
 		
 	}
