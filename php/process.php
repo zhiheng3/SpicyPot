@@ -24,7 +24,14 @@ class RequestProcess{
             }
             else if ($content == "抢票压力测试"){
                 $dataapi = new DataAPI();
-                $result = $dataapi->takeTicketTest($data->fromUserName);
+                $ticketResult = $dataapi->takeTicketTest($data->fromUserName);
+                $result->msgType = "text";
+                if($ticketResult["state"] == true){
+                    $result->content = "抢票成功";
+                }
+                else{
+                    $reuslt->content = "抢票失败：" . $ticketResult["message"];
+                }
             }
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);

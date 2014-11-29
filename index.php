@@ -29,6 +29,7 @@ class WechatCallbackAPI
     
     private function checkSignature()
 	{
+/*
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
             throw new Exception('TOKEN is not defined!');
@@ -50,6 +51,7 @@ class WechatCallbackAPI
 		}else{
 			return false;
 		}
+*/
         return true;
 	}
 
