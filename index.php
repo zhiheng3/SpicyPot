@@ -18,6 +18,7 @@ class WechatCallbackAPI
 {
 	public function valid()
     {
+/*
         $echoStr = $_GET["echostr"];
 
         //valid signature , option
@@ -25,6 +26,7 @@ class WechatCallbackAPI
         	echo $echoStr;
         	exit;
         }
+*/
     }
     
     private function checkSignature()
