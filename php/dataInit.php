@@ -24,6 +24,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 1
 ))['message']);
 */
+/*
 print_r($test->refundTicketTest("",253));
 print_r($test->refundTicketTest("",254));
 print_r($test->refundTicketTest("",255));
@@ -31,8 +32,8 @@ print_r($test->refundTicketTest("",256));
 print_r($test->refundTicketTest("",251));
 print_r($test->refundTicketTest("",252));
 print_r($test->refundTicketTest("",252));
+*/
 
-/*
 print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test0001"));

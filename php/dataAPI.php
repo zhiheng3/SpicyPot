@@ -42,7 +42,7 @@ class DataAPI{
 			if(mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=7 LIMIT 1")){
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
-				return (array("state" => "true", "message" => $ticket_id));
+				return (array("state" => "true", "message" => ""));
 			}else{
 				mysql_query("roolback");
 				mysql_query("SET AUTOCOMMIT=1");
