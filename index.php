@@ -59,8 +59,8 @@ class WechatCallbackAPI
     {
 		//get post data, May be due to the different environments
 		//$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = file_get_contents("php://input");
-/*
+        //$postStr = file_get_contents("php://input");
+
 		$postStr = "<xml>
 <ToUserName><![CDATA[test0563]]></ToUserName>
 <FromUserName><![CDATA[test0563]]></FromUserName>
@@ -68,7 +68,7 @@ class WechatCallbackAPI
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[抢票 压力测试]]></Content>
 </xml>";
-*/
+
       	//extract post data
       	$logfile = fopen("./log/request_log", "a");
       	fwrite($logfile, $postStr);

@@ -33,6 +33,17 @@ class RequestProcess{
                     $reuslt->content = "抢票失败：" . $ticketResult["message"];
                 }
             }
+            else if ($content == "退票 压力测试"){
+                $dataapi = new DataAPI();
+                $ticketResult = $dataapi->refundTicketTest($data->fromUserName);
+                $result->msgType = "text";
+                if($ticketResult["state"] == true){
+                    $result->content = "退票成功";
+                }
+                else{
+                    $reuslt->content = "退票失败：" . $ticketResult["message"];
+                }
+            }
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);
             }
