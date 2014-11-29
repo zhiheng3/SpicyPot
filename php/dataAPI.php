@@ -138,6 +138,22 @@ class DataAPI{
 			return(array("state" => "true", "message" => $result));
 		}	
 	}
+public function getTicketInfo2($ticket_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		
+		
+		if (!$result = mysql_fetch_assoc(mysql_query("SELECT * FROM ticket WHERE id=$ticket_id"))){
+			return(array("state" => "false", "message" => "没有找到此活动"));
+		}else{
+			return(array("state" => "true", "message" => $result));
+		}	
+	}
+
 
     //建立活动座位
 	//参数：int activity_id, [[string location, int capability]] 座位的位置（名称）和座位的容量
