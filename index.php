@@ -18,7 +18,6 @@ class WechatCallbackAPI
 {
 	public function valid()
     {
-/*
         $echoStr = $_GET["echostr"];
 
         //valid signature , option
@@ -26,12 +25,10 @@ class WechatCallbackAPI
         	echo $echoStr;
         	exit;
         }
-*/
     }
     
     private function checkSignature()
 	{
-/*
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
             throw new Exception('TOKEN is not defined!');
@@ -53,7 +50,6 @@ class WechatCallbackAPI
 		}else{
 			return false;
 		}
-*/
         return true;
 	}
 
