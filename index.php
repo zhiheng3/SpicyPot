@@ -29,50 +29,50 @@ class WechatCallbackAPI
     
     private function checkSignature()
 	{
-
+/*
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
             throw new Exception('TOKEN is not defined!');
         }
-        
+        $logfile = fopen("./log/t_log", "a");
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-        		
+        $nonce = $_GET["nonce"];	
 		$token = TOKEN;
 		$tmpArr = array($token, $timestamp, $nonce);
         // use SORT_STRING rule
 		sort($tmpArr, SORT_STRING);
 		$tmpStr = implode( $tmpArr );
 		$tmpStr = sha1( $tmpStr );
-		
 		if( $tmpStr == $signature ){
 			return true;
 		}else{
 			return false;
 		}
-
-        //return true;
+*/
+        return true;
 	}
 
     public function processMsg()
     {
 		//get post data, May be due to the different environments
-	    $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        //$postStr = file_get_contents("php://input");
+	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postStr = file_get_contents("php://input");
 /*
 		$postStr = "<xml>
-<ToUserName><![CDATA[1]]></ToUserName>
-<FromUserName><![CDATA[test0563]]></FromUserName>
-<CreateTime>1417286261</CreateTime>           
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[抢票 压力测试]]></Content>
+    <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+    <FromUserName><![CDATA[o9aMOszP5QhMgEWO8GJTOOolWIEM]]></FromUserName>
+    <CreateTime>1417336884</CreateTime>
+    <MsgType><![CDATA[event]]></MsgType>
+    <Event><![CDATA[CLICK]]></Event>
+    <EventKey><![CDATA[TAKE_1]]></EventKey>
+    <Encrypt><![CDATA[DmVFNgPKsJGTeO5+PFiK+5bLhlqXLLisxSuE/IJiWeR9F9H5jHcVoXgEffSoXIx3JA6muuoMQX3PaxgJIZFckRrAhRW1dfm4H1YTQS8izxi78cMGaAhBF4+5+FLh3ts/aP9w+pAsqHcbcj1BCFBfXg19xkABXChHsE7hvEoLVz9eEVuQSRLr9lwsBp0Tp5jYPbWZ8jIQ50L0hYAuplfJXiepkKbgxPATJI5rzHAkmFzAuqQMvEaJ8CIZhuVy+vaq6cThonhgYLzF8Q4H7gF8wSrLDk28k5gH+UKky3FaHmHVTv8mLuvxPA6uKLKS+die0QzaqpT19Bc/mVOwikznCuW5W0UPd2Iyzn5ZvwfHrYq7wOteSZCdVhYoERKtmI6nWQT2DXNqb37es/nYKFXXBPZhvOkUGprJl7d1pr2Ngro=]]></Encrypt>
 </xml>";
 */
       	//extract post data
-      	$logfile = fopen("./log/request_log", "a");
-      	fwrite($logfile, $postStr);
-      	fclose($logfile);
+      	//$logfile = fopen("./log/request_log", "a");
+      	//fwrite($logfile, $postStr);
+      	//fclose($logfile);
 		if (!empty($postStr)){
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                    the best way is to check the validity of xml by yourself */
@@ -85,9 +85,9 @@ class WechatCallbackAPI
                 //echo $responseObj->response($responseData);
 		        $response = $responseObj->response($responseData);
 		        echo $response;
-		        $logfile = fopen("./log/response", "a");
-		        fwrite($logfile, $response);
-		        fclose($logfile);
+		        //$logfile = fopen("./log/response", "a");
+		        //fwrite($logfile, $response);
+		        //fclose($logfile);
         }else {
         	echo "";
         	exit;
