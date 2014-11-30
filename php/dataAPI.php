@@ -44,7 +44,7 @@ class DataAPI{
 				mysql_query("COMMIT");
 				return (array("state" => "true", "message" => ""));
 			}else{
-				mysql_query("roolback");
+				mysql_query("ROLLBACK");
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
 				return (array("state" => "true", "message" => "票已抢光"));
@@ -62,7 +62,7 @@ class DataAPI{
 	//退票
 	//参数：int openId, int ticket_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]   
-	public function refundTicketTest($openId, $ticket_id){
+	public function refundTicketTest($openId){
 		//连接数据库
         $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
@@ -72,52 +72,42 @@ class DataAPI{
 
 
 		//查询符合的票
-		if (empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE id=".$ticket_id." AND seat_location ='". $open_id."' LIMIT 1")))){
-			return(array("state" =>"false", "message" => "没有对应的票"));
+		if (empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
+			return(array("state" =>"false", "message" => "没有对应的票!"));
 		}
         
 
 		mysql_query("BEGIN");
 		mysql_query("SET AUTOCOMMIT=0");
         //更新活动余票
-		if (!$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1")){
-			mysql_query("roolback");
+		if ($result3 = mysql_query("UPDATE ticket SET seat_location = null WHERE seat_location = '".$openId."' LIMIT 1")){
+			//退票
+			if (mysql_affected_rows() ==0){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "false", "message" => "没有对应的票"));
+			}
+			if (!$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =7 LIMIT 1")){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return(array("state" =>"false", "message" => "退票时出错!"));
+			}
+			
+		}else{
+			mysql_query("ROLLBACK");
 			mysql_query("SET AUTOCOMMIT=1");
 			mysql_query("COMMIT");
 			return(array("state" =>"false", "message" => "退票时出错"));
 		}
         
-        //退票
-		if (!$result3 = mysql_query("UPDATE ticket SET seat_location = null WHERE id=".$ticket_id." AND seat_location = '".$openId."' LIMIT 1")){
-			mysql_query("roolback");
-			mysql_query("SET AUTOCOMMIT=1");
-			mysql_query("COMMIT");
-			return(array("state" =>"false", "message" => "退票时出错"));
-		}
+        
 		mysql_query("SET AUTOCOMMIT=1");
 		mysql_query("COMMIT");
 		return(array("state" => "true", "message" => ""));
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -434,7 +424,7 @@ public function getTicketInfo2($ticket_id){
 			mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=$activity_id LIMIT 1");
 			return (array("state" => "true", "message" => $ticket_id));
 		}else{
-			return (array("state" => "true", "message" => "抢票时发生错误"));
+			return (array("state" => "false", "message" => "抢票时发生错误"));
 		} 
 		
 	}
