@@ -39,10 +39,10 @@ create table seat(
 id int(4) not null primary key auto_increment,
 activity_id int(4),		#对应的活动id
 resitual_capability int(4),	#此座位剩余容量
-#stage char(50),		#座位所在的场所
 location char(50),		#座位的位置（排、列）
-#available bool,		#是否可选
 capability int(4)		#此座位容量（单人座为1,区域可设置）
+#stage char(50),		#座位所在的场所
+#available bool,		#是否可选
 );
 
 
