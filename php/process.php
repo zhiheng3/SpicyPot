@@ -30,7 +30,7 @@ class RequestProcess{
                     $result->content = "抢票成功";
                 }
                 else{
-                    $reuslt->content = "抢票失败：" . $ticketResult["message"];
+                    $result->content = "抢票失败：" . $ticketResult["message"];
                 }
             }
             else if ($content == "退票 压力测试"){
