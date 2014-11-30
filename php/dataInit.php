@@ -24,22 +24,27 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 1
 ))['message']);
 */
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
 /*
-print_r($test->refundTicketTest("",253));
-print_r($test->refundTicketTest("",254));
-print_r($test->refundTicketTest("",255));
-print_r($test->refundTicketTest("",256));
-print_r($test->refundTicketTest("",251));
-print_r($test->refundTicketTest("",252));
-print_r($test->refundTicketTest("",252));
+print_r($test->refundTicketTest("test0008"));
+print_r($test->refundTicketTest("test0009"));
+
+print_r($test->refundTicketTest("test0014"));
+print_r($test->refundTicketTest("test0015"));
+print_r($test->refundTicketTest("test0016"));
+print_r($test->refundTicketTest("test0017"));
 */
-
+/*
 print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test3000"));
 print_r($test->takeTicketTest("test3000"));
-
+*/
 /*
 echo($test->createActivity(array(
 	"name" => "小平太2",
