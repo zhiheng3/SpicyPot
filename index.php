@@ -58,7 +58,7 @@ class WechatCallbackAPI
     public function processMsg()
     {
 		//get post data, May be due to the different environments
-	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+	    $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         //$postStr = file_get_contents("php://input");
 /*
 		$postStr = "<xml>
