@@ -18,6 +18,7 @@ class WechatCallbackAPI
 {
 	public function valid()
     {
+/*
         $echoStr = $_GET["echostr"];
 
         //valid signature , option
@@ -25,6 +26,7 @@ class WechatCallbackAPI
         	echo $echoStr;
         	exit;
         }
+*/
     }
     
     private function checkSignature()
@@ -57,7 +59,8 @@ class WechatCallbackAPI
     {
 		//get post data, May be due to the different environments
 	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = file_get_contents("php://input");
+        //$postStr = file_get_contents("php://input");
+        
 /*
 		$postStr = "<xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
