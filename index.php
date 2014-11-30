@@ -29,7 +29,7 @@ class WechatCallbackAPI
     
     private function checkSignature()
 	{
-/*
+
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
             throw new Exception('TOKEN is not defined!');
@@ -51,15 +51,15 @@ class WechatCallbackAPI
 		}else{
 			return false;
 		}
-*/
-        return true;
+
+        //return true;
 	}
 
     public function processMsg()
     {
 		//get post data, May be due to the different environments
 	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = file_get_contents("php://input");
+        //$postStr = file_get_contents("php://input");
 /*
 		$postStr = "<xml>
 <ToUserName><![CDATA[1]]></ToUserName>
