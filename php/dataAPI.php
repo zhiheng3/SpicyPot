@@ -120,25 +120,6 @@ class DataAPI{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	//初始化某项活动的票
 	//参数：int ticket_num(票的总数), int activity_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
