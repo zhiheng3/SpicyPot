@@ -60,9 +60,10 @@ class WechatCallbackAPI
 		//get post data, May be due to the different environments
 	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         $postStr = file_get_contents("php://input");
+        echo "1";
 /*
 		$postStr = "<xml>
-<ToUserName><![CDATA[test0563]]></ToUserName>
+<ToUserName><![CDATA[1]]></ToUserName>
 <FromUserName><![CDATA[test0563]]></FromUserName>
 <CreateTime>1417286261</CreateTime>           
 <MsgType><![CDATA[text]]></MsgType>
@@ -79,8 +80,10 @@ class WechatCallbackAPI
                 libxml_disable_entity_loader(true);
                 $parseObj = new RequestParse();
                 $requestData = $parseObj->parse($postStr);
+                echo "2";
                 $processObj  = new RequestProcess();
                 $responseData = $processObj->process($requestData);
+                echo "3";
                 $responseObj = new RequestResponse();
                 //echo $responseObj->response($responseData);
 		        $response = $responseObj->response($responseData);
