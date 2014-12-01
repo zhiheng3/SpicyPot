@@ -18,6 +18,11 @@ class DataAPI{
         }
 		mysql_select_db("wx9_db", $con);
 
+
+if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
+			return(array("state" =>"false", "message" => "您已经抢过票了!"));
+		}
+
 		//获得这个活动
 		$activity = mysql_fetch_array(mysql_query("SELECT ticket_available_number FROM activity where id = 7 LIMIT 1"));
 		if ($activity){
