@@ -6,6 +6,109 @@
   */
 class DataAPI{
 	
+	//test!!
+	//抢票
+	//参数：int openId, int activity_id
+	//返回: ["state", "message"]: ["true", int ticket_id] or ["false", 错误信息] 
+	public function takeTicketTest($openId){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+
+		//获得这个活动
+		$activity = mysql_fetch_array(mysql_query("SELECT ticket_available_number FROM activity where id = 7 LIMIT 1"));
+		if ($activity){
+			if ($activity["ticket_available_number"] <= 0){
+				return(array("state" => "false", "message" =>"票已抢光"));
+			}
+		}else{
+			return(array("state" => "false", "message" =>"活动不存在"));
+		}
+		
+		
+		mysql_query("BEGIN");
+		mysql_query("SET AUTOCOMMIT=0");
+		if (mysql_query("UPDATE ticket SET seat_location = '".$openId."' WHERE seat_location is NULL LIMIT 1")){
+			if (mysql_affected_rows() ==0){
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "false", "message" => "票已抢光"));
+			}
+			//更新活动余票
+			if(mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=7 LIMIT 1")){
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "true", "message" => ""));
+			}else{
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "false", "message" => "票已抢光"));
+			}
+		}else{
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");
+			return (array("state" => "false", "message" => "抢票出错"));
+		} 
+		
+	}
+
+
+    //test!
+	//退票
+	//参数：int openId, int ticket_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]   
+	public function refundTicketTest($openId){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+
+
+		//查询符合的票
+		if (empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
+			return(array("state" =>"false", "message" => "没有对应的票!"));
+		}
+        
+
+		mysql_query("BEGIN");
+		mysql_query("SET AUTOCOMMIT=0");
+        //更新活动余票
+		if ($result3 = mysql_query("UPDATE ticket SET seat_location = null WHERE seat_location = '".$openId."' LIMIT 1")){
+			//退票
+			if (mysql_affected_rows() ==0){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "false", "message" => "没有对应的票"));
+			}
+			if (!$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =7 LIMIT 1")){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return(array("state" =>"false", "message" => "退票时出错!"));
+			}
+			
+		}else{
+			mysql_query("ROLLBACK");
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");
+			return(array("state" =>"false", "message" => "退票时出错"));
+		}
+        
+        
+		mysql_query("SET AUTOCOMMIT=1");
+		mysql_query("COMMIT");
+		return(array("state" => "true", "message" => ""));
+
+	}
+
+
 	//初始化某项活动的票
 	//参数：int ticket_num(票的总数), int activity_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
