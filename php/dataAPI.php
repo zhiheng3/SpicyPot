@@ -506,5 +506,4 @@ class DataAPI{
         return(array("state" =>"true", "message" => $result));  
     }	
 }
-?> 
-
+?>
