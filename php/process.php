@@ -34,7 +34,7 @@ class RequestProcess{
                     $result->content = "抢票成功";
                 }
                 else{
-                    $result->content = "抢票失败：" . $ticketResult->["message"];
+                    $result->content = "抢票失败：" . $ticketResult["message"];
                 }
             }
             else if($content == "退票 压力测试"){
@@ -45,7 +45,7 @@ class RequestProcess{
                     $result->content = "退票成功";
                 }
                 else{
-                    $result->content = "退票失败：" . $ticketResult->["message"];
+                    $result->content = "退票失败：" . $ticketResult["message"];
                 }
             }
 	        else if (substr($content, 0, 6) == "退票"){
