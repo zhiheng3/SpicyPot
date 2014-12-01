@@ -636,5 +636,4 @@ public function getTicketInfo2($ticket_id){
         return(array("state" =>"true", "message" => $result));  
     }	
 }
-?> 
-
+?>
