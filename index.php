@@ -58,7 +58,7 @@ class WechatCallbackAPI
 		//$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
         //The following line is for pressure test
-        $postStr = get_file_contents("php://input");
+        $postStr = file_get_contents("php://input");
 
         //Debug xml request
 		/*$postStr = "<xml>
