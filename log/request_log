@@ -1041,4 +1041,10 @@
 <MsgType><![CDATA[event]]></MsgType>
 <Event><![CDATA[CLICK]]></Event>
 <EventKey><![CDATA[CHECK_TICKET]]></EventKey>
+</xml><xml><ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
+<FromUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo]]></FromUserName>
+<CreateTime>1417444845</CreateTime>
+<MsgType><![CDATA[event]]></MsgType>
+<Event><![CDATA[CLICK]]></Event>
+<EventKey><![CDATA[TAKE_9]]></EventKey>
 </xml>
