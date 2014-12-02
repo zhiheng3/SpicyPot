@@ -43,8 +43,8 @@ EOT;
 
         //Generate a QR Code
         //$qrcodeInfo = $studentid . "\n" . $_GET['id'];
-        $qrcodeInfo = "test";
         //$qrcodeName = "./qrcode/{$_GET['id']}.png";
+        $qrcodeInfo = "test";
         $qrcodeName = "./qrcode/test.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
@@ -71,8 +71,9 @@ echo <<< EOT
     <ul data-role="listview" data-inset="true">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
+            <img src="./qrcode/test.png" style="width:100%;height:auto"/>
 EOT;
-           echo "<img src=$qrcodeName style=\"width:100%;height:auto\"/>";
+           //echo "<img src=\"./qrcode/test.png\" style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li> 学号 $studentid </li>
