@@ -45,25 +45,40 @@ EOT;
         $endtime = $result2['message']['end_time'];
         $open_id = $_GET['openid'];
         $ticket_id = $_GET['id'];
+        if($result2['message']['is_seat_selectable'] == 0){
+            $seatInfo = "本活动不需要选座";
+        }
+        else{
+            if($result['message']['seat_location']){
+                $seatInfo = $result['message']['seat_location'];
+            }
+            else $seatInfo = "该活动需要选座，请在下方进行选座操作";
+        }
 
 echo <<< EOT
   <div data-role="content" id = "TicketInfo">
     <ul data-role="listview" data-inset="true">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
-            <img src="./img/qrcode_test.png" style="width:100%;height:100%"/>
+            <img src="./img/qrcode_test.png" style="width:100%;height:auto"/>
         </li>
         <li> 学号 $studentid </li>
         <li> 该票状态 $status </li>
         <li> 活动名称 $activityname </li>
         <li> 活动地点 $activitystage </li>
-        <li> 座位 </li>
+        <li> 座位 $seatInfo </li>
         <li> 开始时间 $starttime </li>
         <li> 结束时间 $endtime </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
         <a href="./Activity.php?id=$activityid" data-ajax="false" data-role="button" data-icon="info">活动详情</a>
-        <a href="#" data-role="button"data-icon="search">选座</a>
+EOT;
+        if(!$result['message']['seat_location'] && $result2['message']['is_seat_selectable'] == 1){
+echo <<< EOT
+        <a href="./Seat.php?activityid=$activityid&ticketid=$ticket_id&openid=$open_id" data-ajax="false" data-role="button" data-icon="grid">选座</a>
+EOT;
+        }
+echo <<< EOT
         <a href="#refund" data-transition="none" data-rel="dialog" data-role="button" data-icon="delete">退票</a>
     </div>
     <div id="postdata" style="display:none">method=refundTicket&openid=$open_id&ticketid=$ticket_id</div>

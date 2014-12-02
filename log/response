@@ -703,4 +703,16 @@
 <MsgType><![CDATA[text]]></MsgType>
 <Content><![CDATA[你目前绑定的学号是2012013316]]></Content>
 >>>>>>> c79b9ebcd31c177a2af5fe20249cbd27a0b7bd7c
+</xml><xml>
+<ToUserName><![CDATA[o9aMOszP5QhMgEWO8GJTOOolWIEM]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1417440517</CreateTime>
+<MsgType><![CDATA[news]]></MsgType>
+<ArticleCount>3</ArticleCount><Articles><item><Title><![CDATA[亲亲非凡哥]]></Title><Description><![CDATA[您的第1张票]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/qrcode_test.png]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/Ticket.php?openid=o9aMOszP5QhMgEWO8GJTOOolWIEM&id=2290]]></Url></item><item><Title><![CDATA[马兰花开]]></Title><Description><![CDATA[您的第2张票]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/qrcode_test.png]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/Ticket.php?openid=o9aMOszP5QhMgEWO8GJTOOolWIEM&id=2257]]></Url></item><item><Title><![CDATA[马兰花开]]></Title><Description><![CDATA[您的第3张票]]></Description><PicUrl><![CDATA[http://wx9.igeek.asia/img/qrcode_test.png]]></PicUrl><Url><![CDATA[http://wx9.igeek.asia/Ticket.php?openid=o9aMOszP5QhMgEWO8GJTOOolWIEM&id=2251]]></Url></item></Articles>
+</xml><xml>
+<ToUserName><![CDATA[o9aMOs0bER4zxjWSx5gEmMkv1bvo]]></ToUserName>
+<FromUserName><![CDATA[gh_c91b78a69c83]]></FromUserName>
+<CreateTime>1417444986</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[抢票成功，<a href="http://wx9.igeek.asia/Ticket.php?openid=o9aMOs0bER4zxjWSx5gEmMkv1bvo&id=2260">点此查看电子票</a>]]></Content>
 </xml>

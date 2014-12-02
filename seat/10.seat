@@ -1,0 +1,14 @@
+<div id="info" style="display:none;">
+    <span id="displayname">1</span>
+    <span id="columns">2</span>
+</div>
+<table id="seats" style="border:none;width:100%;">
+  <tr>
+    <td id="A区"><a></a></td>
+    <td id="B区"><a></a></td>
+  </tr>
+  <tr>
+    <td id="C区"><a></a></td>
+    <td id="D区"><a></a></td>
+  </tr>
+</table>
