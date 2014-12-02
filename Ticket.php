@@ -21,8 +21,9 @@
     require_once "qrcode.php";
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
+    $ticketId = $_GET['id']
     $verify = $dataapi->getStudentId($_GET['openid']);
-    $result = $dataapi->getTicketInfo($_GET['id']);
+    $result = $dataapi->getTicketInfo($ticketId);
     $activityid = $result['message']['activity_id'];
     $result2 = $dataapi->getActivityInfo($activityid);
     $studentid = $result['message']['student_id'];
@@ -43,7 +44,7 @@ EOT;
 
         //Generate a QR Code
         $qrcode = new QRCodeGenerator();
-        $qrcode->generate($studentid, $_GET['id']);
+        //$qrcode->generate($studentid, $ticketId);
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
