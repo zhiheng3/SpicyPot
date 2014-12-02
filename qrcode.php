@@ -8,7 +8,7 @@ require_once "lib/phpqrcode.php";
 class QRCodeGenerator{
     public function generate($studentId, $ticketId){
         $qrcodeInfo = $studentId . "\n" . $ticketId;
-        $qrcodePath = "../qrcode/$ticketId.png";
+        $qrcodePath = "qrcode/$ticketId.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
         QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
