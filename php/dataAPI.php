@@ -39,9 +39,6 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 			if (mysql_affected_rows() ==0){
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
-
-				return (array("state" => "true", "message" => "票已抢光"));
-
 				return (array("state" => "false", "message" => "票已抢光"));
 
 			}
@@ -54,18 +51,12 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 				mysql_query("ROLLBACK");
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
-
-				return (array("state" => "true", "message" => "票已抢光"));
-
 				return (array("state" => "false", "message" => "票已抢光"));
 
 			}
 		}else{
 			mysql_query("SET AUTOCOMMIT=1");
 			mysql_query("COMMIT");
-
-			return (array("state" => "true", "message" => "抢票出错"));
-
 			return (array("state" => "false", "message" => "抢票出错"));
 
 		} 
@@ -433,12 +424,25 @@ public function getTicketInfo2($ticket_id){
 		$result = mysql_query("SELECT id FROM ticket WHERE activity_id=".$activity_id ." AND student_id is NULL LIMIT 1");
 		$ticket_found = mysql_fetch_array($result);
 		$ticket_id = $ticket_found['id'];
-		
+
+
+		mysql_query("BEGIN");
+		mysql_query("SET AUTOCOMMIT=0");
 		if (mysql_query("UPDATE ticket SET student_id = ".$student_id." WHERE id=".$ticket_id ." LIMIT 1")){
 			//更新活动余票
-			mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=$activity_id LIMIT 1");
-			return (array("state" => "true", "message" => $ticket_id));
+			if(mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=$activity_id LIMIT 1")){
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+				return (array("state" => "true", "message" => $ticket_id));
+			}else{
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");
+			}
 		}else{
+			mysql_query("ROLLBACK");
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");
 			return (array("state" => "false", "message" => "抢票时发生错误"));
 		} 
 		
@@ -469,24 +473,39 @@ public function getTicketInfo2($ticket_id){
 			return(array("state" =>"false", "message" => "没有对应的票"));
 		}
         
+
+		mysql_query("BEGIN");
+		mysql_query("SET AUTOCOMMIT=0");
         //更新活动余票
-		$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1");
+		if(!$result1 = mysql_query("UPDATE activity SET ticket_available_number = ticket_available_number +1 WHERE id =$ticket[0] LIMIT 1")){
+			mysql_query("ROLLBACK");
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");
+			return(array("state" =>"false", "message" => "退票时出错"));
+		}
         
         //如果票绑定了座位，要修改座位的余票
         if (!$ticket[1] == null){      
-            $result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1");
-        }else{
-            $result2 = True;
+            if(!$result2 = mysql_query("UPDATE seat SET resitual_capability = resitual_capability +1 WHERE id =$ticket[1] LIMIT 1")){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");	
+				return(array("state" =>"false", "message" => "退票时出错"));	
+			}
         }
         
         //退票
-		$result3 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1");
-
-		if (!$result1  | !$result2 | !$result3){
-			return(array("state" =>"false", "message" => "退票时出错"));
-		}else{
-			return(array("state" => "true", "message" => ""));
+		if (!$result3 = mysql_query("UPDATE ticket SET student_id = null, seat_id=null, seat_location=null WHERE id=".$ticket_id." AND student_id = ".$student_id." LIMIT 1")){
+			mysql_query("ROLLBACK");
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");	
+			return(array("state" =>"false", "message" => "退票时出错"));	
 		}
+
+		mysql_query("SET AUTOCOMMIT=1");
+		mysql_query("COMMIT");	
+		return(array("state" => "true", "message" => ""));
+
 	}
 
 
@@ -577,11 +596,27 @@ public function getTicketInfo2($ticket_id){
 			}else{							//是座位
 				return(array("state" =>"false", "message" => "此座位已经被选"));
 			}
-		}else{//有余量
+		}else{
+			//有余量
+			mysql_query("BEGIN");
+			mysql_query("SET AUTOCOMMIT=0");
             //更新票的座位信息
-			mysql_query("UPDATE ticket SET seat_id = $seat_id, seat_location ='".$location."' WHERE id=".$ticket_id);
+			if(!mysql_query("UPDATE ticket SET seat_id = $seat_id, seat_location ='".$location."' WHERE id=".$ticket_id)){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");	
+				return(array("state" =>"false", "message" => "选座时出错"));
+			}
+
             //更新座位容量
-            mysql_query("UPDATE seat SET resitual_capability = resitual_capability-1 WHERE id=".$seat_id);
+            if(!mysql_query("UPDATE seat SET resitual_capability = resitual_capability-1 WHERE id=".$seat_id)){
+				mysql_query("ROLLBACK");
+				mysql_query("SET AUTOCOMMIT=1");
+				mysql_query("COMMIT");	
+				return(array("state" =>"false", "message" => "选座时出错"));
+			}
+			mysql_query("SET AUTOCOMMIT=1");
+			mysql_query("COMMIT");
 			return(array("state" => "true", "message" => ""));
 		}
 

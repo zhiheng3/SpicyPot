@@ -10,25 +10,54 @@ $test = new DataAPI();
 //$test->binding("openid000000000000000001", 2012010001, "binding");
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-/*
+
+
 echo($test->createActivity(array(
-	"name" => "压力测试",
+	"name" => "马兰花开",
+	"start_time" => "2014-11-11 08:00:00",
+	"end_time" => "2014-11-11 09:00:00",
+	"ticket_start_time" => "2014-11-2 19:00:00",
+	"ticket_end_time" =>  "2014-11-2 19:00:00",
+	"stage" => "新清华学堂",
+	"information" => "第五十场献礼！",
+	"ticket_number" => 20,
+	"ticket_per_student" => 3,
+	"is_seat_selectable" => 1
+))['message']);
+
+echo($test->createActivity(array(
+	"name" => "马杯女篮决赛",
 	"start_time" => "2014-11-11 08:00:00",
 	"end_time" => "2014-11-11 09:00:00",
 	"ticket_start_time" => "2014-11-2 19:00:00",
 	"ticket_end_time" =>  "2014-11-2 19:00:00",
 	"stage" => "综体",
-	"information" => "Mr.L",
-	"ticket_number" => 2000,
-	"ticket_per_student" => 1,
+	"information" => "强强碰撞！",
+	"ticket_number" => 20,
+	"ticket_per_student" => 3,
 	"is_seat_selectable" => 1
 ))['message']);
+
+echo($test->createActivity(array(
+	"name" => "亲亲非凡哥",
+	"start_time" => "2014-11-11 08:00:00",
+	"end_time" => "2014-11-11 09:00:00",
+	"ticket_start_time" => "2014-11-2 19:00:00",
+	"ticket_end_time" =>  "2014-11-2 19:00:00",
+	"stage" => "大礼堂",
+	"information" => "啦啦啦！",
+	"ticket_number" => 20,
+	"ticket_per_student" => 1,
+	"is_seat_selectable" => 0
+))['message']);
+
+/*
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
+print_r($test->refundTicketTest("test0013"));
 */
-print_r($test->refundTicketTest("test0013"));
-print_r($test->refundTicketTest("test0013"));
-print_r($test->refundTicketTest("test0013"));
-print_r($test->refundTicketTest("test0013"));
-print_r($test->refundTicketTest("test0013"));
 /*
 print_r($test->refundTicketTest("test0008"));
 print_r($test->refundTicketTest("test0009"));
@@ -61,12 +90,13 @@ echo($test->createActivity(array(
 */
 
 /*
-print_r($test->createSeats(1, [array("location" => "1-1","capability" => 1),array("location" => "1-2","capability" => 1),array("location" => "1-3","capability" => 1),array("location" => "2-1","capability" => 1),array("location" => "2-2","capability" => 1),array("location" => "2-3","capability" => 1),array("location" => "B区","capability" => 3),array("location" => "C区","capability" => 10)]));
+print_r($test->createSeats(9, [array("location" => "1-1","capability" => 1),array("location" => "1-2","capability" => 1),array("location" => "1-3","capability" => 1),array("location" => "2-1","capability" => 1),array("location" => "2-2","capability" => 1),array("location" => "2-3","capability" => 1),array("location" => "B区","capability" => 9),array("location" => "C区","capability" => 5)]));
+
+
+
+print_r($test->createSeats(10, [array("location" => "A区","capability" =>5),array("location" => "B区","capability" => 5),array("location" => "C区","capability" => 12),array("location" => "D区","capability" => 3)]));
 */
 
-/*
-print_r($test->createSeats(2, [array("location" => "A区","capability" =>10),array("location" => "B区","capability" => 10),array("location" => "C区","capability" => 10),array("location" => "D区","capability" => 10)]));
-*/
 /*
 print_r($test->getTicketInfo(1));
 unset($test);
@@ -167,7 +197,7 @@ if ($result['state'] == "true"){
 }else{
 	echo($resultMessage."\n");
 }*/
-
+//print_r($test->getSeatInfo(10));
 
 //echo($test->refundTicket("openid000000000000000002", 6)['message']."\n");
 //echo($test->refundTicket("openid000000000000000002", 6)['message']."\n");
