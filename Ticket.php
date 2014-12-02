@@ -19,6 +19,7 @@
   
   <?php
     require_once "./lib/phpqrcode.php";
+    require_once "qrcode.php";
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
     $verify = $dataapi->getStudentId($_GET['openid']);
@@ -40,16 +41,10 @@ EOT;
         else{
             $status = "已使用";
         }
-/*
+
         //Generate a QR Code
-        //$qrcodeInfo = $studentid . "\n" . $_GET['id'];
-        //$qrcodeName = "./qrcode/{$_GET['id']}.png";
-        $qrcodeInfo = "test";
-        $qrcodeName = "./qrcode/test.png";
-        $errorCorrectionLevel = "L";
-        $matrixPointSize = 4;
-        QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
-*/
+        $qrcode = new QRCodeGenerator();
+        $qrcode->generate($studentid, $_GET['id']);
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
