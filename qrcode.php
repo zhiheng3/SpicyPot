@@ -11,7 +11,7 @@ class QRCodeGenerator{
         $qrcodePath = "qrcode/$ticketId.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
-        QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
+        QRCode::png($qrcodeInfo, $qrcodePath, $errorCorrectionLevel, $matrixPointSize, 2);
     }
 }
 ?>
