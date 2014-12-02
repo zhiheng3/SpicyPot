@@ -44,7 +44,7 @@ EOT;
 
         //Generate a QR Code
         $qrcode = new QRCodeGenerator();
-        $qrcode->generate($studentid, $ticketId);
+        //$qrcode->generate($studentid, $ticketId);
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
@@ -68,7 +68,8 @@ echo <<< EOT
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
 EOT;
-           echo "<img src=\"qrcode/$ticketId.png\" style=\"width:100%;height:auto\"/>";
+           //echo "<img src=\"qrcode/$ticketId.png\" style=\"width:100%;height:auto\"/>";
+            echo "<img src=\"qrcode/2.png\" style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li> 学号 $studentid </li>
