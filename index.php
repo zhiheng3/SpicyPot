@@ -18,7 +18,7 @@ class WechatCallbackAPI
 {
 	public function valid()
     {
-/*
+
         $echoStr = $_GET["echostr"];
 
         //valid signature , option
@@ -26,12 +26,12 @@ class WechatCallbackAPI
         	echo $echoStr;
         	exit;
         }
-*/
+
     }
     
     private function checkSignature()
 	{
-/*
+
         // you must define TOKEN by yourself
         if (!defined("TOKEN")) {
             throw new Exception('TOKEN is not defined!');
@@ -51,18 +51,19 @@ class WechatCallbackAPI
 		}else{
 			return false;
 		}
-*/
-        return true;
 	}
 
     public function processMsg()
     {
-		//get post data, May be due to the different environments
-	    //$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+		//get post data, May be due to the different environments   
+
+		$postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+
+        //The following line is for pressure test
         //$postStr = file_get_contents("php://input");
-        
-/*
-		$postStr = "<xml>
+
+        //Debug xml request
+		/*$postStr = "<xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
     <FromUserName><![CDATA[o9aMOszP5QhMgEWO8GJTOOolWIEM]]></FromUserName>
     <CreateTime>1417336884</CreateTime>
@@ -73,9 +74,9 @@ class WechatCallbackAPI
 </xml>";
 */
       	//extract post data
-      	//$logfile = fopen("./log/request_log", "a");
-      	//fwrite($logfile, $postStr);
-      	//fclose($logfile);
+      	$logfile = fopen("./log/request_log", "a");
+      	fwrite($logfile, $postStr);
+      	fclose($logfile);
 		if (!empty($postStr)){
                 /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                    the best way is to check the validity of xml by yourself */
@@ -88,9 +89,9 @@ class WechatCallbackAPI
                 //echo $responseObj->response($responseData);
 		        $response = $responseObj->response($responseData);
 		        echo $response;
-		        //$logfile = fopen("./log/response", "a");
-		        //fwrite($logfile, $response);
-		        //fclose($logfile);
+		        $logfile = fopen("./log/response", "a");
+		        fwrite($logfile, $response);
+		        fclose($logfile);
         }else {
         	echo "";
         	exit;

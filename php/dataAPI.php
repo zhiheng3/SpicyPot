@@ -5,7 +5,6 @@
   * Last modified: 2014.11.12
   */
 class DataAPI{
-	
 
 	//test!!
 	//抢票
@@ -18,6 +17,10 @@ class DataAPI{
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
+
+if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
+			return(array("state" =>"false", "message" => "您已经抢过票了!"));
+		}
 
 		//获得这个活动
 		$activity = mysql_fetch_array(mysql_query("SELECT ticket_available_number FROM activity where id = 7 LIMIT 1"));
@@ -36,7 +39,11 @@ class DataAPI{
 			if (mysql_affected_rows() ==0){
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
+
 				return (array("state" => "true", "message" => "票已抢光"));
+
+				return (array("state" => "false", "message" => "票已抢光"));
+
 			}
 			//更新活动余票
 			if(mysql_query("UPDATE activity SET ticket_available_number =ticket_available_number-1 WHERE id=7 LIMIT 1")){
@@ -47,12 +54,20 @@ class DataAPI{
 				mysql_query("ROLLBACK");
 				mysql_query("SET AUTOCOMMIT=1");
 				mysql_query("COMMIT");
+
 				return (array("state" => "true", "message" => "票已抢光"));
+
+				return (array("state" => "false", "message" => "票已抢光"));
+
 			}
 		}else{
 			mysql_query("SET AUTOCOMMIT=1");
 			mysql_query("COMMIT");
+
 			return (array("state" => "true", "message" => "抢票出错"));
+
+			return (array("state" => "false", "message" => "抢票出错"));
+
 		} 
 		
 	}
@@ -636,5 +651,4 @@ public function getTicketInfo2($ticket_id){
         return(array("state" =>"true", "message" => $result));  
     }	
 }
-?> 
-
+?>

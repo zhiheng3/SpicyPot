@@ -47,6 +47,28 @@ class RequestProcess{
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);
             }
+            else if($content == "抢票 压力测试"){
+                $dataapi = new DataAPI();
+                $ticketResult = $dataapi->takeTicketTest($data->fromUserName);
+                $result->msgType = "text";
+                if($ticketResult["state"] == "true"){
+                    $result->content = "抢票成功";
+                }
+                else{
+                    $result->content = "抢票失败：" . $ticketResult["message"];
+                }
+            }
+            else if($content == "退票 压力测试"){
+                $dataapi = new DataAPI();
+                $ticketResult = $dataapi->refundTicketTest($data->fromUserName);
+                $result->msgType = "text";
+                if($ticketResult["state"] == "true"){
+                    $result->content = "退票成功";
+                }
+                else{
+                    $result->content = "退票失败：" . $ticketResult["message"];
+                }
+            }
 	        else if (substr($content, 0, 6) == "退票"){
                 $ticketHandler = new ticketHandler();
 	            $result = $ticketHandler->ticketHandle($data);
