@@ -22,9 +22,7 @@
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
     $verify = $dataapi->getStudentId($_GET['openid']);
-    $result = $dataapi->getTicketInfo($_GET['id']);    
-
-
+    $result = $dataapi->getTicketInfo($_GET['id']);
     $activityid = $result['message']['activity_id'];
     $result2 = $dataapi->getActivityInfo($activityid);
     $studentid = $result['message']['student_id'];
@@ -42,9 +40,12 @@ EOT;
         else{
             $status = "已使用";
         }
+
         //Generate a QR Code
-        $qrcodeInfo = $verify . "\n" . $result["message"];
-        $qrcodeName = "./qrcode/{$result["message"]}.png";
+        //$qrcodeInfo = $studentid . "\n" . $_GET['id'];
+        $qrcodeInfo = "test";
+        //$qrcodeName = "./qrcode/{$_GET['id']}.png";
+        $qrcodeName = "./qrcode/test.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
         QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
