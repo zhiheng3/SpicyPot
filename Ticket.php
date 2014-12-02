@@ -71,7 +71,7 @@ echo <<< EOT
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
 EOT;
-            <img src=$qrcodeName style="width:100%;height:auto"/>
+           echo "<img src=$qrcodeName style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li> 学号 $studentid </li>
