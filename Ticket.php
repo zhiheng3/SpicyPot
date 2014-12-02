@@ -43,9 +43,12 @@ EOT;
             $status = "已使用";
         }
 
-        //Generate a QR Code
-        $qrcode = new QRCodeGenerator();
-        $qrcode->generate($studentid, $ticketId);
+        $qrfile = "qrcode/$ticketId.png";
+        if(!file_exists($qrfile)){
+            //Generate a QR Code if file doesn't exist
+            $qrcode = new QRCodeGenerator();
+            $qrcode->generate($studentid, $ticketId);
+        }
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
