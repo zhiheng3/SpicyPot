@@ -18,7 +18,6 @@
 
   
   <?php
-    require_once "./lib/phpqrcode.php";
     require_once "qrcode.php";
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
@@ -44,7 +43,7 @@ EOT;
 
         //Generate a QR Code
         $qrcode = new QRCodeGenerator();
-        $qrcode->generate($studentid, $_GET['id']);
+        //$qrcode->generate($studentid, $_GET['id']);
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
@@ -68,7 +67,7 @@ echo <<< EOT
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
 EOT;
-           echo "<img src=\"./qrcode/{$_GET['id']}.png\" style=\"width:100%;height:auto\"/>";
+           echo "<img src=\"qrcode/{$_GET['id']}.png\" style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li> 学号 $studentid </li>
