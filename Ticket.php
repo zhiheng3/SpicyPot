@@ -42,8 +42,10 @@ EOT;
         }
 
         //Generate a QR Code
-        $qrcodeInfo = $studentid . "\n" . $_GET['id'];
-        $qrcodeName = "./qrcode/{$_GET['id']}.png";
+        //$qrcodeInfo = $studentid . "\n" . $_GET['id'];
+        $qrcodeInfo = "test";
+        //$qrcodeName = "./qrcode/{$_GET['id']}.png";
+        $qrcodeName = "./qrcode/test.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
         QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
