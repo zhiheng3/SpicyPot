@@ -44,7 +44,7 @@ EOT;
 
         //Generate a QR Code
         $qrcode = new QRCodeGenerator();
-        $qrcode->generate($studentid, $_GET['id']);
+        //$qrcode->generate($studentid, $_GET['id']);
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
