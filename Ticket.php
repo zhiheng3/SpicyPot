@@ -22,9 +22,7 @@
     require_once "./php/dataAPI.php";
     $dataapi = new dataAPI();
     $verify = $dataapi->getStudentId($_GET['openid']);
-    $result = $dataapi->getTicketInfo($_GET['id']);    
-
-
+    $result = $dataapi->getTicketInfo($_GET['id']);
     $activityid = $result['message']['activity_id'];
     $result2 = $dataapi->getActivityInfo($activityid);
     $studentid = $result['message']['student_id'];
@@ -42,12 +40,14 @@ EOT;
         else{
             $status = "已使用";
         }
+/*
         //Generate a QR Code
         $qrcodeInfo = $verify . "\n" . $result["message"];
         $qrcodeName = "./qrcode/{$result["message"]}.png";
         $errorCorrectionLevel = "L";
         $matrixPointSize = 4;
         QRCode::png($qrcodeInfo, $qrcodeName, $errorCorrectionLevel, $matrixPointSize, 2);
+*/
 
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
@@ -71,7 +71,7 @@ echo <<< EOT
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
 EOT;
-           echo "<img src=$qrcodeName style=\"width:100%;height:auto\"/>";
+           //echo "<img src=$qrcodeName style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li> 学号 $studentid </li>
