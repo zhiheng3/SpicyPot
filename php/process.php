@@ -2,7 +2,7 @@
 /**
   * Process the user's request
   * Author: Zhao Zhiheng, Feng Zhibin
-  * Last modified: 2014.11.17
+  * Last modified: 2014.12.03
   */
   
 require_once "dataformat.php";
@@ -22,6 +22,8 @@ class RequestProcess{
             if ($content == "帮助"){
                 $result = $this->help($data);
             }
+/*
+            //pressure test
             else if ($content == "抢票 压力测试"){
                 $dataapi = new DataAPI();
                 $ticketResult = $dataapi->takeTicketTest($data->fromUserName);
@@ -44,35 +46,16 @@ class RequestProcess{
                     $result->content = "退票失败：" . $ticketResult["message"];
                 }
             }
+*/
             else if (substr($content, 0, 6) == "解绑"){
                 $result = $this->unbind($data);
             }
-            else if($content == "抢票 压力测试"){
-                $dataapi = new DataAPI();
-                $ticketResult = $dataapi->takeTicketTest($data->fromUserName);
-                $result->msgType = "text";
-                if($ticketResult["state"] == "true"){
-                    $result->content = "抢票成功";
-                }
-                else{
-                    $result->content = "抢票失败：" . $ticketResult["message"];
-                }
-            }
-            else if($content == "退票 压力测试"){
-                $dataapi = new DataAPI();
-                $ticketResult = $dataapi->refundTicketTest($data->fromUserName);
-                $result->msgType = "text";
-                if($ticketResult["state"] == "true"){
-                    $result->content = "退票成功";
-                }
-                else{
-                    $result->content = "退票失败：" . $ticketResult["message"];
-                }
-            }
+/*
 	        else if (substr($content, 0, 6) == "退票"){
                 $ticketHandler = new ticketHandler();
 	            $result = $ticketHandler->ticketHandle($data);
 	        }
+*/
             else{
                 $result->msgType = "text";
                 $result->content = "请输入帮助查看应用说明";

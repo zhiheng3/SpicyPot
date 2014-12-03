@@ -49,4 +49,17 @@ class Article{
     var $picUrl; // 图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
     var $url; // 点击图文消息跳转链接
 }
+
+class Activity{
+    var $name; //名称
+    var $start_time; //活动开始时间
+    var $end_time; //活动结束时间
+    var $ticket_start_time; //抢票开始时间
+    var $ticket_end_time; //抢票结束时间
+    var $stage; //活动地点
+    var $information; //详细信息
+    var $ticket_number; //总票数
+    var $ticket_per_student; //每人最大抢票数
+    var $is_seat_seletable; //是否可选座：0不可选，1可选
+}
 ?>
