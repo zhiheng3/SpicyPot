@@ -48,28 +48,32 @@
 	    <ul data-role="listview" data-inset="true">
 	    	<li id = "Rob-Start">离抢票开始还有</li>
 	    	<li id = "Rob-End">离抢票结束还有</li>
+	    	<li id = "Act-Start">离活动开始还有</li>
+	    	<li id = "Act-End">离活动结束还有</li>
+	    	<li id = "END">活动已经结束</li>
 	    	<li>
 	    		<div id = "Time-Left">
-					<div class = "Number-Left" id = "Day-Left">12</div>
+					<div class = "Number-Left" id = "Day-Left"></div>
 					<div class = "Text-Title">天</div>
 
-					<div class = "Number-Left" id = "Hor-Left">12</div>
+					<div class = "Number-Left" id = "Hor-Left"></div>
 					<div class = "Text-Title">时</div>
 
-					<div class = "Number-Left" id = "Min-Left">22</div>
+					<div class = "Number-Left" id = "Min-Left"></div>
 					<div class = "Text-Title">分</div>
 
-					<div class = "Number-Left" id = "Sec-Left">12</div>
+					<div class = "Number-Left" id = "Sec-Left"></div>
 					<div class = "Text-Title">秒</div>
 
 					<div class = "Clearfix"></div>
 				</div>
 	    	</li>
-	       	<li>抢票开始时间</li>
+	       	<li>抢票开始时间：<span id = "RobStartTime"></span></li>
+	       	<li>抢票结束时间：<span id = "RobEndTime"></span></li>
 	       	<li>当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</li>
 	        <li id = "ActivityPlace">活动地点：<?php echo $location;?></li>
-	        <li id = "ActivityStartTime">活动开始时间：<?php echo $startTime;?></li>
-	        <li id = "ActivityEndTime">活动结束时间：<?php echo $endTime;?></li>
+	        <li>活动开始时间：<span id = "ActivityStartTime"><?php echo $startTime;?></span></li>
+	        <li>活动结束时间：<span id = "ActivityEndTime"><?php echo $endTime;?></span></li>
 	         <li data-role="collapsible">
 	            <h1>活动预览</h1>
 	            <p>暂无图片</p>
