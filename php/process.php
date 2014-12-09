@@ -75,6 +75,9 @@ class RequestProcess{
                     $ticketHandler = new ticketHandler();
                     $result = $ticketHandler->getTicket($data);
                 }
+                else if($data->eventKey == "CHECK_ACTIVITY"){
+                    $result = $this->checkActivity();
+                }
             }
         }
         
@@ -165,6 +168,48 @@ class RequestProcess{
 	else{
 		$result->content = "解绑失败：" . $unbindResult['message'];
 	}
+        return $result;
+    }
+
+    //Author: Feng Chipan
+    //Get all activities
+    //params: none
+    //return: ResponseData $result
+    public function checkActivity(){
+        $dataapi = new DataAPI();
+        $activityResult = $dataapi->getActivityList();
+        if($activityResult["state"] == "false"){
+            $result->msgType = "text";
+            $result->content = "查询活动失败：" . $activityResult["message"];
+            return $result;
+        }
+        $tickets = count($activityResult["message"]);
+        if($tickets == 0){
+            $result->msgType = "text";
+            $result->content = "当前没有活动！";
+            return $result;
+        }
+        $result->msgType = "news";
+        if($tickets > 10) $tickets = 10;
+        $result->articleCount = $tickets;
+        $result->articles = array();
+        for($i = 0; $i < $tickets; $i++){
+            $result->articles[$i] = new Article();
+            $id = $activityResult["message"][$i];
+            $singleActivity = $dataapi->getActivityInfo($id);
+            if($singleActivity["state"] == true){
+                $result->articles[$i]->title = $singleActivity["message"]["name"];
+                $result->articles[$i]->description = $singleActivity["message"]["information"];
+                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
+                $result->articles[$i]->url = "http://wx9.igeek.asia/Activity.php?id=$id";
+            }
+            else{
+                $result->articles[$i]->title = "获取活动错误";
+                $result->articles[$i]->description = $singleActivity["message"];
+                $result->articles[$i]->picUrl = "";
+                $result->articles[$i]->url = "";
+            } 
+        }
         return $result;
     }
 }
