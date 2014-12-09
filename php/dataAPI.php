@@ -245,7 +245,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		}
 		$result = array();
 		while($result_row = mysql_fetch_row($result_set)){
-			array_unshift($result, $result_row);
+			array_unshift($result, $result_row[0]);
 		}
 		return(array("state" =>"true", "message" => array_reverse($result)));
 	}
@@ -625,6 +625,36 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		}
 
     }
+
+	//系统分配座位
+	//参数: int activity_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function assignSeats($activity_id){
+		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		
+		//查找未选座的票
+		if (!$result_set = mysql_query("select id from ticket where activity_id =$activity_id and student_id is not null and seat_id is null")){
+			return(array("state" =>"false", "message" => "查找未选座的票出错"));
+		}
+		//对每一张为选座的票分配座位
+		while(!$ticket = mysql_fetch_row($result_set)){
+			if(!$result_set = mysql_query("select location from seat where activity_id =$activity_id and resitual_capability>0 limit 1")){
+				return(array("state" =>"false", "message" => "查找座位出错"));
+			}
+			if(!$seat = mysql_fetch_row($result_set)){
+				return(array("state" =>"false", "message" => "座位已满，出错"));
+			}
+			if(takeSeat($ticket[0], $seat[0])["state"] == false){
+				return(array("state" =>"false", "message" => "分配座位时出错"));
+			}
+		}
+		return(array("state" =>"true", "message" => ""));
+
+	}
 
 
     /*
