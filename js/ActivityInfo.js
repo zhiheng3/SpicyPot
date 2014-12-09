@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+
 	//SetActivityPlace("综体");
 	//SetTimeInfoDivWidth();
 	//SetTimeLeftWidth();
@@ -56,6 +56,7 @@ function SetCountDown(){
     else{
         ResetAll();
         $("#END").css("display","block");
+        $("#Time-Left").css("display","none");
         return;
     }
 
