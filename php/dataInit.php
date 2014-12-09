@@ -2,6 +2,7 @@
 require_once "dataAPI.php";
 $test = new DataAPI();
 
+
 //echo($test->getStudentId("openid000000000000000003")["message"]."\n");
 /*for($i = 10001; $i <13001;$i++){
 	$s ="test".substr((""+$i),1);
@@ -11,7 +12,7 @@ $test = new DataAPI();
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
 
-
+/*
 echo($test->createActivity(array(
 	"name" => "马兰花开",
 	"start_time" => "2014-11-11 08:00:00",
@@ -38,6 +39,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 1
 ))['message']);
 
+
 echo($test->createActivity(array(
 	"name" => "亲亲非凡哥",
 	"start_time" => "2014-11-11 08:00:00",
@@ -50,7 +52,7 @@ echo($test->createActivity(array(
 	"ticket_per_student" => 1,
 	"is_seat_selectable" => 0
 ))['message']);
-
+*/
 /*
 print_r($test->refundTicketTest("test0013"));
 print_r($test->refundTicketTest("test0013"));
@@ -74,6 +76,7 @@ print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test3000"));
 print_r($test->takeTicketTest("test3000"));
 */
+//print_r($test->getActivityInfo(9));
 /*
 echo($test->createActivity(array(
 	"name" => "小平太2",
