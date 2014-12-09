@@ -11,7 +11,7 @@ $test = new DataAPI();
 //$test->binding("openid000000000000000001", 2012010001, "binding");
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-
+print_r($test->assignSeats(10));
 /*
 echo($test->createActivity(array(
 	"name" => "马兰花开",
@@ -76,7 +76,7 @@ print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test3000"));
 print_r($test->takeTicketTest("test3000"));
 */
-//print_r($test->getActivityInfo(9));
+//print_r($test->getActivityList());
 /*
 echo($test->createActivity(array(
 	"name" => "小平太2",
