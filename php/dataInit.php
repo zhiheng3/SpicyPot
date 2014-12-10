@@ -11,7 +11,7 @@ $test = new DataAPI();
 //$test->binding("openid000000000000000001", 2012010001, "binding");
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-print_r($test->assignSeats(10));
+
 /*
 echo($test->createActivity(array(
 	"name" => "马兰花开",
@@ -25,6 +25,7 @@ echo($test->createActivity(array(
 	"ticket_per_student" => 3,
 	"is_seat_selectable" => 1
 ))['message']);
+
 
 echo($test->createActivity(array(
 	"name" => "马杯女篮决赛",
@@ -53,6 +54,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 0
 ))['message']);
 */
+$test->dropActivity(15);
 /*
 print_r($test->refundTicketTest("test0013"));
 print_r($test->refundTicketTest("test0013"));
