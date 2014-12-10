@@ -33,10 +33,12 @@
         $remain = 0;
         if ($result['state'] == 'true'){
             $activity = $result['message']['name'];
+            $startTime = $result['message']['start_time'];
+            $endTime = $result['message']['end_time'];
             $remain = $result['message']['ticket_available_number'];
             $location = $result['message']['stage'];
-            $startTime = $result['message']['ticket_start_time'];
-            $endTime = $result['message']['ticket_end_time'];
+            $ticketStartTime = $result['message']['ticket_start_time'];
+            $ticketEndTime = $result['message']['ticket_end_time'];
         }
     ?>
 	<div data-role="page" data-theme="a" id="pageone">
@@ -68,8 +70,8 @@
 					<div class = "Clearfix"></div>
 				</div>
 	    	</li>
-	       	<li>抢票开始时间：<span id = "RobStartTime"></span></li>
-	       	<li>抢票结束时间：<span id = "RobEndTime"></span></li>
+	       	<li>抢票开始时间：<span id = "RobStartTime"><?php echo $ticketStartTime;?></span></li>
+	       	<li>抢票结束时间：<span id = "RobEndTime"><?php echo $ticketEndTime;?></span></li>
 	       	<li>当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</li>
 	        <li id = "ActivityPlace">活动地点：<?php echo $location;?></li>
 	        <li>活动开始时间：<span id = "ActivityStartTime"><?php echo $startTime;?></span></li>
