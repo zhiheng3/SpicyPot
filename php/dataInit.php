@@ -54,7 +54,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 0
 ))['message']);
 */
-$test->dropActivity(15);
+//print_r($test->updateActivityState(16,1));
 /*
 print_r($test->refundTicketTest("test0013"));
 print_r($test->refundTicketTest("test0013"));

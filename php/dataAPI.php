@@ -268,6 +268,29 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
         return(array("state" => "true", "message" => ""));
     }
 
+
+	//更新活动状态
+	//参数： int activity_id, int state
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function updateActivityState($activity_id, $state){
+		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
+		
+		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
+			return(array("state" => "false", "message" => "没有这个活动"));
+ 		}
+		
+		if(!mysql_query("update activity set state=$state where id=$activity_id")){
+			return(array("state" => "false", "message" => "更新失败"));
+ 		}
+		return(array("state" => "true", "message" => ""));
+	}
+
+
 	//删除活动
 	//参数：int activity_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
