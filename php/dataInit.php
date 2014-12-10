@@ -26,6 +26,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 1
 ))['message']);
 
+
 echo($test->createActivity(array(
 	"name" => "马杯女篮决赛",
 	"start_time" => "2014-11-11 08:00:00",
@@ -53,6 +54,7 @@ echo($test->createActivity(array(
 	"is_seat_selectable" => 0
 ))['message']);
 */
+$test->dropActivity(15);
 /*
 print_r($test->refundTicketTest("test0013"));
 print_r($test->refundTicketTest("test0013"));
@@ -76,7 +78,7 @@ print_r($test->takeTicketTest("test0001"));
 print_r($test->takeTicketTest("test3000"));
 print_r($test->takeTicketTest("test3000"));
 */
-//print_r($test->getActivityInfo(9));
+//print_r($test->getActivityList());
 /*
 echo($test->createActivity(array(
 	"name" => "小平太2",

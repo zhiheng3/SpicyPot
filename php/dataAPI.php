@@ -2,7 +2,7 @@
 /**
   * data API for mysql
   * Author: Chen Minghai
-  * Last modified: 2014.11.12
+  * Last modified: 2014.12.10
   */
 class DataAPI{
 
@@ -147,7 +147,6 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	}
 
 
-	//!!state 暂时为1
     //create某项活动,包括初始化它的票
 	//参数: 一个数组，各项分别是：
 		/*
@@ -209,7 +208,88 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
         return(array("state" => "true", "message" => $activity_id));
     }
 
+	//修改某项活动
+	//参数: int activity_id, 数组 activity:
+		// 第一个参数为要修改的活动id，第二个参数为活动信息，是一个数组，各项分别是：
+		/* 
+  		name char(60),  			#活动名称
+		start_time datetime,		#活动开始时间
+		end_time datetime,			#活动结束时间
+		ticket_start_time datetime,	#抢票开始时间
+		ticket_end_time datetime,	#抢票结束时间
+		
+		stage char(50),				#活动地点 "大礼堂" "新清华学堂" "综体"
+		information char(200),		#附加信息
+		ticket_number int(4),		#票总数
 	
+		ticket_per_student int(4),	#每人最大可抢票数
+		is_seat_selectable int(4)	#是否可选座  0:不可选座  1:可选座
+		*/
+		//其中 datetime为字符串，格式如"2014-11-11 08:00:00"
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function updateActivity($activity_id, $activity){
+        //连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_query("SET NAMES UTF8");
+		mysql_select_db("wx9_db", $con);
+		
+		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
+			return(array("state" => "false", "message" => "没有这个活动"));
+ 		}
+
+        $name = $activity["name"];
+		$start_time = $activity["start_time"];
+		$end_time = $activity["end_time"];
+		$ticket_start_time = $activity["ticket_start_time"];
+		$ticket_end_time = $activity["ticket_end_time"];
+		$state = 1;				#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
+		$stage = $activity["stage"];
+		$information = $activity["information"];
+		$ticket_number = $activity["ticket_number"];
+		$ticket_available_number = $activity["ticket_number"];
+		$ticket_per_student = $activity["ticket_per_student"];
+		$is_seat_selectable = $activity["is_seat_selectable"];
+
+        //更新活动    
+        if (!mysql_query("UPDATE activity SET name='".$name."',start_time='".$start_time."',end_time='".$end_time."',ticket_start_time='".$ticket_start_time."',ticket_end_time='".$ticket_end_time."',state=$state,stage='".$stage."',information='".$information."',ticket_number=$ticket_number,ticket_available_number=$ticket_available_number,ticket_per_student=$ticket_per_student,is_seat_selectable=$is_seat_selectable where id = $activity_id")){
+             return(array("state" =>"false", "message" => "更新活动出错"));           
+        }
+
+
+		//删除原有的票
+		mysql_query("delete from ticket where activity_id = $activity_id");
+
+		//添加新的票
+		$this->initTicket($ticket_number, $activity_id);
+
+        return(array("state" => "true", "message" => ""));
+    }
+
+	//删除活动
+	//参数：int activity_id
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function dropActivity($activity_id){
+		//连接数据库
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
+		mysql_select_db("wx9_db", $con);
+		mysql_query("SET NAMES UTF8");
+
+		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
+			return(array("state" => "false", "message" => "没有这个活动"));
+ 		}
+		
+		//删除票
+		mysql_query("delete from ticket where activity_id = $activity_id");
+		//删除活动
+		mysql_query("delete from activity where id = $activity_id");
+		
+	}
 
 	//获得活动信息
 	//参数：int activity_id
@@ -635,23 +715,26 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
-		
+		mysql_query("SET NAMES UTF8");
+
 		//查找未选座的票
 		if (!$result_set = mysql_query("select id from ticket where activity_id =$activity_id and student_id is not null and seat_id is null")){
 			return(array("state" =>"false", "message" => "查找未选座的票出错"));
 		}
+
 		//对每一张为选座的票分配座位
-		while(!$ticket = mysql_fetch_row($result_set)){
-			if(!$result_set = mysql_query("select location from seat where activity_id =$activity_id and resitual_capability>0 limit 1")){
+		while($ticket = mysql_fetch_row($result_set)){
+			if(!$result_set2 = mysql_query("select location from seat where activity_id =$activity_id and resitual_capability>0 limit 1")){
 				return(array("state" =>"false", "message" => "查找座位出错"));
 			}
-			if(!$seat = mysql_fetch_row($result_set)){
+			if(!$seat = mysql_fetch_row($result_set2)){
 				return(array("state" =>"false", "message" => "座位已满，出错"));
 			}
-			if(takeSeat($ticket[0], $seat[0])["state"] == false){
+			if($this->takeSeat($ticket[0], $seat[0])["state"] == "false"){
 				return(array("state" =>"false", "message" => "分配座位时出错"));
 			}
 		}
+
 		return(array("state" =>"true", "message" => ""));
 
 	}
