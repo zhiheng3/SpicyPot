@@ -119,7 +119,7 @@ class ticketHandler{
 			    }
 			    $result->articles[$i]->title = $activityResult['message']['name'];
 			    $result->articles[$i]->description = "活动地点：" . $activityResult['message']['stage'] . "\n" . "活动开始时间：" .         $activityResult['message']['start_time'] . "\n" . "活动结束时间：" . $activityResult['message']['end_time'];
-			    $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
+			    $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$activityId";
 			    $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
 			    //End
 			    /*

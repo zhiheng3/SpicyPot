@@ -2,7 +2,7 @@
 /**
   * Process the user's request
   * Author: Zhao Zhiheng, Feng Zhibin
-  * Last modified: 2014.12.03
+  * Last modified: 2014.12.16
   */
   
 require_once "dataformat.php";
@@ -200,7 +200,8 @@ class RequestProcess{
             if($singleActivity["state"] == true){
                 $result->articles[$i]->title = $singleActivity["message"]["name"];
                 $result->articles[$i]->description = $singleActivity["message"]["information"];
-                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
+                //Testing for picUrl
+                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$id";
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Activity.php?id=$id";
             }
             else{
