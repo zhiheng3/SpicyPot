@@ -10,9 +10,70 @@ $(document).ready(function(){
 });
 
 function StartCountDown(){
+    
+    $('#Time-Left').flipcountdown({
+        size:'sm',
+        tick:function(){
+            var nol = function(h){
+                return h>9?h:'0'+h;
+            }
 
-    var interval = 1000;
-    window.setInterval("SetCountDown()",interval);
+            var now = new Date(); 
+
+            var AS = $("#ActivityStartTime").text();
+            var AE = $("#ActivityEndTime").text();
+            var RS = $("#RobStartTime").text();
+            var RE = $("#RobEndTime").text();
+
+            var RobStartTime = parseDate(RS);
+            var RobEndTime = parseDate(RE);
+            var ActStartTime = parseDate(AS);
+            var ActEndTime = parseDate(AE);
+
+            var endDate;
+            if(now < RobStartTime){
+                ResetAll();
+                endDate = RobStartTime;
+                $("#Rob-Start").css("display","block");
+            }
+
+            else if((now >= RobStartTime) && (now < RobEndTime)){
+                ResetAll();
+                endDate = RobEndTime;
+                $("#Rob-End").css("display","block");
+            }
+
+            else if((now >= RobEndTime) && (now < ActStartTime)){
+                ResetAll();
+                endDate = ActStartTime;
+                $("#Act-Start").css("display","block");
+            }
+
+            else if((now >= ActStartTime) && (now < ActEndTime)){
+                ResetAll();
+                endDate = ActEndTime;
+                $("#Act-End").css("display","block");
+            }
+            else{
+                ResetAll();
+                $("#END").css("display","block");
+                $("#Time-Left").css("display","none");
+                return;
+            }
+            var NY = Math.round(endDate.getTime()/1000);
+
+            var range   = NY-Math.round((new Date()).getTime()/1000),
+                secday  = 86400, sechour = 3600,
+                days    = parseInt(range/secday),
+                hours   = parseInt((range%secday)/sechour),
+                min     = parseInt(((range%secday)%sechour)/60),
+                sec     = ((range%secday)%sechour)%60;
+            return nol(days)+' '+nol(hours)+' '+nol(min)+' '+nol(sec);
+        }
+    });
+
+    //var interval = 1000;
+    //window.setInterval("SetCountDown()",interval);
 }
 
 function SetCountDown(){
@@ -85,7 +146,7 @@ function ResetAll(){
 }
 
 function parseDate(date){
-    re = /(\d+)\-(\d+)\-(\d+)\-(\d+)\:(\d+)/g;
+    re = /(\d+)\-(\d+)\-(\d+)\s(\d+)\:(\d+)/g;
     if(re.test(date)){
         return(new Date(RegExp.$1,(RegExp.$2-1),RegExp.$3,RegExp.$4,RegExp.$5));
     }

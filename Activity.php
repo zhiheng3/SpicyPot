@@ -15,11 +15,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <meta name="viewport" content="width=device-width"/>
 <link rel="stylesheet" type="text/css" href="./css/ActivityInfo.css">
+<link rel="stylesheet" type="text/css" href="./css/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" type="text/css" href="./css/jquery.flipcountdown.css" />
+
+
 <script type="text/javascript" src = "./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src = "./js/ActivityInfo.js"></script>
-<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
-<script src="./js/jquery-1.11.1.min.js"></script>
-<script src="./js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src = "./js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src = "./js/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript" src = "./js/jquery.flipcountdown.js"></script>
 <title>活动详情</title>
 </head>
 <body>
@@ -55,19 +59,7 @@
 	    	<li id = "END">活动已经结束</li>
 	    	<li>
 	    		<div id = "Time-Left">
-					<div class = "Number-Left" id = "Day-Left"></div>
-					<div class = "Text-Title">天</div>
-
-					<div class = "Number-Left" id = "Hor-Left"></div>
-					<div class = "Text-Title">时</div>
-
-					<div class = "Number-Left" id = "Min-Left"></div>
-					<div class = "Text-Title">分</div>
-
-					<div class = "Number-Left" id = "Sec-Left"></div>
-					<div class = "Text-Title">秒</div>
-
-					<div class = "Clearfix"></div>
+					
 				</div>
 	    	</li>
 	       	<li>抢票开始时间：<span id = "RobStartTime"><?php echo $ticketStartTime;?></span></li>
