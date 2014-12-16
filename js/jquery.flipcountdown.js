@@ -124,7 +124,6 @@ jQuery.fn.flipCountDown = jQuery.fn.flipcountdown = function( _options ){
 				
 				_calcMoment = function(){
 					var value = '1',chars = [];
-					debugger;
 					if(options.tick)
 						value = (options.tick instanceof Function)?options.tick.call($box,counter):options.tick;
 					
