@@ -63,7 +63,7 @@ function StartCountDown(){
             var NY = Math.round(endDate.getTime()/1000);
 
             var range   = NY-Math.round((new Date()).getTime()/1000),
-                secday = 86400, sechour = 3600,
+                secday  = 86400, sechour = 3600,
                 days    = parseInt(range/secday),
                 hours   = parseInt((range%secday)/sechour),
                 min     = parseInt(((range%secday)%sechour)/60),
@@ -74,7 +74,6 @@ function StartCountDown(){
 
     //var interval = 1000;
     //window.setInterval("SetCountDown()",interval);
-}
 }
 
 function SetCountDown(){
