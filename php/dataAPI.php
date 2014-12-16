@@ -618,7 +618,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 
 	//查票(列表)
 	//参数：int openId；第二个参数int activity_id，查此活动的票，如果没有第二个参数是查所有活动的票
-	//返回: ["state", "message"]: ["true", [[int id, Stirng activity_name]]] or ["false", 错误信息] 
+	//返回: ["state", "message"]: ["true", [[int id, int activity_id]]] or ["false", 错误信息] 
 	//!!尚未考虑票是否已使用;未返回活动不存在的信息
 	public function getTicketList($openId, $activity_id = -1){
 		//连接数据库
@@ -639,7 +639,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 
 		$result = array();
 		if ($activity_id == -1){//查询所有活动
-			$result_set = mysql_query("SELECT id, activity_name FROM ticket WHERE student_id=".$student_id);
+			$result_set = mysql_query("SELECT id, activity_id FROM ticket WHERE student_id=".$student_id);
 			if (!$result_set){
 				return(array("state" =>"false", "message" => "查询出错"));			
 			}
@@ -647,7 +647,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 				array_unshift($result, $result_row);
 			}
 		}else{//查询指定活动
-			$result_set = mysql_query("SELECT id, activity_name FROM ticket WHERE student_id=".$student_id." AND activity_id = ".$activity_id);
+			$result_set = mysql_query("SELECT id, activity_id FROM ticket WHERE student_id=".$student_id." AND activity_id = ".$activity_id);
 			if (!$result_set){
 				return(array("state" =>"false", "message" => "查询出错"));			
 			}
