@@ -2,7 +2,7 @@
 /**
   * Process the user's request
   * Author: Zhao Zhiheng, Feng Zhibin
-  * Last modified: 2014.12.03
+  * Last modified: 2014.12.16
   */
   
 require_once "dataformat.php";
@@ -21,6 +21,10 @@ class RequestProcess{
             $content = trim($data->content);
             if ($content == "帮助"){
                 $result = $this->help($data);
+            }
+            
+            if ($content == "测试"){
+                $result = $this->test($data);
             }
 /*
             //pressure test
@@ -120,6 +124,13 @@ class RequestProcess{
                             输入抢票X（X为活动编号）。所有的输入忽略空格。";
         return $result;
     }
+    
+    private function test($data){
+        $result = new ResponseData();
+        $result->msgType = "text";
+        $result->content = "<a href=\"101.5.97.126/test/Seat.html\">";
+        return $result;
+    }
     /*
     //Author: Zhao Zhiheng
     //Process the bind operation
@@ -200,7 +211,8 @@ class RequestProcess{
             if($singleActivity["state"] == true){
                 $result->articles[$i]->title = $singleActivity["message"]["name"];
                 $result->articles[$i]->description = $singleActivity["message"]["information"];
-                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
+                //Testing for picUrl
+                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$id";
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Activity.php?id=$id";
             }
             else{

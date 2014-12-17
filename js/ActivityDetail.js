@@ -1,7 +1,7 @@
 /**
   * Activity Detail Control page
   * Author: Xu Yi
-  * Last modified: 2014.12.2
+  * Last modified: 2014.12.17
   * method:
   * param:
 */
@@ -14,7 +14,11 @@ $(document).ready(function(){
 
 	PreviewImg();
 
+	AutoStorage();
 
+	$("#resetBtn").click(function(e){
+		$("#Preview").empty();
+	});
 });
 
 
@@ -138,3 +142,19 @@ function parseDate(date){
 	}
 }
 
+
+function AutoStorage(){
+	$("#activity-form").sisyphus({
+		timeout: 10,
+		onSave: function() {
+			$('#log').html('正在自动保存...').fadeIn().delay(2000).fadeOut();
+		},
+		onRestore: function() {
+			$('#log').html('已从本地恢复...').fadeIn().delay(2000).fadeOut();
+		},
+		onRelease: function() {
+			$('#log').html('内容已经清除...').fadeIn().delay(2000).fadeOut();
+		}
+	});
+
+}

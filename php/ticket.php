@@ -2,7 +2,7 @@
 /**
   * Deal with requests for tickets
   * Author: Feng Zhibin
-  * Last modified: 2014.12.03
+  * Last modified: 2014.12.16
   */
 
 require_once "dataformat.php";
@@ -107,10 +107,27 @@ class ticketHandler{
             for($i = 0; $i < $tks; $i++){
                 $j = $i + 1;
 			    $result->articles[$i] = new Article();
+			    //Test
+			    $activityId = $ticketResult['message'][$i]['activity_id'];
+			    $activityResult = $dataapi->getActivityInfo($activityId);
+			    if($activityResult['state'] != "true"){
+                    $result->articles[$i]->title = "查询活动出错";
+                    $result->articles[$i]->description = "请确定操作正确，如有疑问请咨询客服";
+                    $result->articles[$i]->picUrl = "";
+                    $result->articles[$i]->url = "";
+                    continue;
+			    }
+			    $result->articles[$i]->title = $activityResult['message']['name'];
+			    $result->articles[$i]->description = "活动地点：" . $activityResult['message']['stage'] . "\n" . "活动开始时间：" .         $activityResult['message']['start_time'] . "\n" . "活动结束时间：" . $activityResult['message']['end_time'];
+			    $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$activityId";
+			    $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
+			    //End
+			    /*
                 $result->articles[$i]->title = $ticketResult['message'][$i]['activity_name'];
                 $result->articles[$i]->description = "您的第" . $j . "张票";
                 $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
+                */
             }
         }
         //Error from database

@@ -1,3 +1,13 @@
+/**
+  * Activity Activitt Info Control page
+  * Description : font-size adjust
+  *               count down
+  * Author: Xu Yi
+  * Last modified: 2014.12.18
+  * method:
+  * param:
+*/
+
 $(document).ready(function(){
 
 	//SetActivityPlace("综体");
@@ -6,6 +16,7 @@ $(document).ready(function(){
 	//SetTimeInfoDivHeight();
     ResetAll();
     StartCountDown();
+    AdjustFontSize();
 
 });
 
@@ -152,6 +163,14 @@ function parseDate(date){
     }
 }
 
+function AdjustFontSize(){
+    var width = document.body.scrollWidth;
+    
+    if(width < 370){
+        $("#TicketInfo").css("font-size","0.9em");
+    }
+}
+
 function SetActivityTime(strat,end){
 
 }
@@ -163,7 +182,7 @@ function SetActivityPlace(place){
 function SetTimeInfoDivWidth()
 {
 	
-　　var wi = document.body.scrollWidth;
+    var wi = document.body.scrollWidth;
     var js_generalTitle = $(".General-Title");
     var js_generalBox = $(".General-Box");
     var js_timeLeft = $("#Time-Left");
