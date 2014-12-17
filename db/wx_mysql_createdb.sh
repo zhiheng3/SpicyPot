@@ -23,7 +23,7 @@ name char(60),			#活动名称
 start_time datetime,		#活动开始时间
 end_time datetime,		#活动结束时间
 state int(4),			#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
-stage char(50),			#活动地点 0:大礼堂  1:新清华学堂  2:综体
+stage char(50),			#活动地点 "大礼堂"  "新清华学堂"  "综体"
 information char(200),		#附加信息
 ticket_start_time datetime,	#抢票开始时间
 ticket_end_time datetime,	#抢票结束时间
