@@ -51,11 +51,11 @@
 				$state = $stateList[$activity['state']];
                 $stateLabel = $labelList[$activity['state']];
 				echo "
-						<a href='#' class='list-group-item' onclick='getInfo($activity_id)'>
+						<a href='activity_detail.php?id=$activity_id' class='list-group-item'>
          
 							<span class='col-lg-2'>$name</span>
 							<span class='col-sm-2'><span class='label label-$stateLabel'>$state</span></span>
-							<botton type='button' class='btn btn-default btn-sm delete' onclick='doDelete($activity_id)'>
+							<botton type='button' class='btn btn-default btn-sm delete' id='aa' onclick='doDelete($activity_id)'>
 								<span class='glyphicon glyphicon-remove'> </span> 删除
 							</botton>
 						</a>
@@ -64,7 +64,10 @@
 		}
 		echo"</div></div>";
 	}
-?>            
+
+    
+?>      
+
         </form>
     </div>
 
@@ -75,23 +78,18 @@
 <script type="text/javascript" src="../js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="../js/ActivityDetail.js"></script>
 <script type="text/javascript">
+    $(".delete").click(function(event){
+        return false;
+    });
     
     function doDelete(id){
-        //event.stopPropagation();
-    //event.preventDefault();
-        alert(id);
         <?php
-           // echo"$.post('delete_activity.php',{id:id},function(data){alert(data);});";
+           echo"$.post('delete_activity.php',{id:id},function(data){alert(data);});";
         ?>
+
     }
-    function getInfo(id){
-        //event.stopPropagation();
-    //event.preventDefault();
-        alert(id+"233");
-        <?php
-            echo"$.post('delete_activity.php',{id:id},function(data){alert(data);});";
-        ?>
-    }
+
+    
 
 </script>
 
