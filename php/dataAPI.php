@@ -311,6 +311,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		mysql_query("delete from ticket where activity_id = $activity_id");
 		//删除活动
 		mysql_query("delete from activity where id = $activity_id");
+        return(array("state" => "true", "message" => ""));
 		
 	}
 
