@@ -21,6 +21,9 @@
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css"  media="screen">
+
+
+
 </head>
 
 <body>
@@ -121,7 +124,7 @@
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动配图</label>
                 <div class="col-sm-10">
                     <input type="file" name="pic_upload" class="form-control" id="input-pic_upload" min="0" placeholder="请选择图片">
-                    <div id = "Preview"><img src=""></div>
+                    <div id = "Preview"></div>
                 </div>
             </div>
 
@@ -141,9 +144,9 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" onclick="publishActivity();" class="btn btn-primary" id="publishBtn">发布</button>
-                    <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
+                    <button type="submit" class="btn btn-primary" id="saveBtn">发布</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
+                    <span id = "log"></span>
                 </div>
             </div>
         </form>
@@ -155,6 +158,7 @@
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/ActivityDetail.js"></script>
+<script type="text/javascript" src="./js/sisyphus.min.js"></script>
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
         language:  'zh-CN',
