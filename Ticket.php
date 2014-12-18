@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/jquery.mobile-1.4.5.min.js"></script>
+<link rel="stylesheet" href="./css/v1.3.css" />
+<link rel="stylesheet" href="./css/v1.3.min.css" />
 <script> var tmphref = location.href; </script>
 </head>
 <body>
@@ -76,13 +78,55 @@ EOT;
             //echo "<img src=\"qrcode/2.png\" style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
-        <li> 学号 $studentid </li>
-        <li> 该票状态 $status </li>
-        <li> 活动名称 $activityname </li>
-        <li> 活动地点 $activitystage </li>
-        <li> 座位 $seatInfo </li>
-        <li> 开始时间 $starttime </li>
-        <li> 结束时间 $endtime </li>
+        <li data-icon="false"> 
+            <a>
+                <img src="./img/icon001.png">
+                学号 
+                <p>$studentid </p>
+            </a>
+        </li>
+        <li data-icon="false"> 
+            <a>
+                <img src="./img/icon001.png">
+                该票状态 
+                <p>$status</p>
+            </a>
+        </li>
+        <li data-icon="false"> 
+            <a>
+                <img src="./img/icon001.png">
+                活动名称 
+                <p>$activityname</p>
+            </a>
+        </li>
+        <li data-icon="false"> 
+            <a>
+                <img src="./img/icon003.png">
+                活动地点 
+                <p>$activitystage</p>
+            </a>
+        </li>
+        <li data-icon="false">
+            <a>
+                <img src="./img/icon003.png">
+                座位 
+                <p>$seatInfo</p>
+            </a>
+        </li>
+        <li data-icon="false"> 
+           <a> 
+                <img src="./img/icon002.png">
+                开始时间 
+                <p>$starttime</p>
+            </a>
+        </li>
+        <li data-icon="false"> 
+            <a>
+                <img src="./img/icon002.png">
+                结束时间 
+                <p>$endtime</p>
+            </a>
+        </li>
     </ul>
     <div data-role="controlgroup" data-type="vertical">
         <a href="./Activity.php?id=$activityid" data-ajax="false" data-role="button" data-icon="info">活动详情</a>
@@ -101,7 +145,7 @@ EOT;
 }
 ?>
 
-  <div data-role="footer" data-position="fixed">
+  <div data-role="footer" data-position="fixed" id="Footer">
   <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div> 

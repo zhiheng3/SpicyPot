@@ -11,6 +11,7 @@ body{
 #TicketInfo li{
 	text-align: center;
 
+
 }
 
 #Time-Left{
@@ -51,7 +52,7 @@ body{
 	width: 100%;
 	height: 20%;
 	overflow: hidden;
-	border-radius: 10px;
+	
 	
 }
 
@@ -216,3 +217,39 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 	clear: both;
 }
 
+#TicketInfo
+{
+	padding: 0em;
+	margin:0em 0;
+	font-size: 0.9em;
+}
+
+#TicketInfo ul
+{
+	margin-top: 0em;
+}
+#TicketInfo a
+{
+	padding-left: 5em;
+}
+#Rob-Start, #Rob-End, #Act-Start,
+#Act-End, #END
+{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+#ImgTop h1
+{
+	font-size: 1.2em;
+}
+
+#Footer h1
+{
+	font-size: 0.9em;
+}
+
+#TicketInfo ul li a p 
+{
+	font-size: 1.1em;
+}
