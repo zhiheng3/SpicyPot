@@ -22,6 +22,10 @@ class RequestProcess{
             if ($content == "帮助"){
                 $result = $this->help($data);
             }
+            
+            if ($content == "测试"){
+                $result = $this->test($data);
+            }
 /*
             //pressure test
             else if ($content == "抢票 压力测试"){
@@ -118,6 +122,13 @@ class RequestProcess{
         $result->msgType = "text";
         $result->content = "目前此平台有两个功能，点击用户管理菜单可以进入绑定页面，输入解绑+学号可以解绑微信号。
                             输入抢票X（X为活动编号）。所有的输入忽略空格。";
+        return $result;
+    }
+    
+    private function test($data){
+        $result = new ResponseData();
+        $result->msgType = "text";
+        $result->content = "<a href=\"101.5.97.126/test/Seat.html\">";
         return $result;
     }
     /*
