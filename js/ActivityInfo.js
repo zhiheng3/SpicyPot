@@ -69,6 +69,7 @@ function StartCountDown(){
                 ResetAll();
                 $("#END").css("display","block");
                 $("#Time-Left").css("display","none");
+                $("#Time-Left").parent().css("display","none");
                 return;
             }
             var NY = Math.round(endDate.getTime()/1000);
@@ -83,8 +84,6 @@ function StartCountDown(){
         }
     });
 
-    //var interval = 1000;
-    //window.setInterval("SetCountDown()",interval);
 }
 
 function SetCountDown(){
@@ -129,6 +128,7 @@ function SetCountDown(){
         ResetAll();
         $("#END").css("display","block");
         $("#Time-Left").css("display","none");
+        $("#Time-Left").parent().css("display","none");
         return;
     }
 

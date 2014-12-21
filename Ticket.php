@@ -80,51 +80,42 @@ echo <<< EOT
         </li>
         <li data-icon="false"> 
             <a>
-                <img src="./img/icon001.png">
-                学号 
-                <p>$studentid </p>
+                <img src="./img/User.png">                 
+                <p>学号:$studentid </p>
             </a>
         </li>
         <li data-icon="false"> 
             <a>
-                <img src="./img/icon001.png">
-                该票状态 
-                <p>$status</p>
+                <img src="./img/Ticket.png">               
+                <p>该票状态:$status</p>
             </a>
         </li>
         <li data-icon="false"> 
             <a>
-                <img src="./img/icon001.png">
-                活动名称 
-                <p>$activityname</p>
+                <img src="./img/ActivityName.png">                
+                <p>活动名称:$activityname</p>
             </a>
         </li>
         <li data-icon="false"> 
             <a>
-                <img src="./img/icon003.png">
-                活动地点 
-                <p>$activitystage</p>
+                <img src="./img/Place.png">                 
+                <p>活动地点:$activitystage</p>
             </a>
         </li>
         <li data-icon="false">
             <a>
-                <img src="./img/icon003.png">
-                座位 
-                <p>$seatInfo</p>
+                <img src="./img/Seat.png">                
+                <p>座位:$seatInfo</p>
             </a>
         </li>
         <li data-icon="false"> 
            <a> 
-                <img src="./img/icon002.png">
-                开始时间 
-                <p>$starttime</p>
+                <img src="./img/ActivityTime.png">开始时间:<p>$starttime</p>
             </a>
         </li>
         <li data-icon="false"> 
             <a>
-                <img src="./img/icon002.png">
-                结束时间 
-                <p>$endtime</p>
+                <img src="./img/ActivityTime.png">结束时间:<p>$endtime</p>
             </a>
         </li>
     </ul>

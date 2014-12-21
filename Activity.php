@@ -28,9 +28,7 @@
 <title>活动详情</title>
 </head>
 <body>
-	<div id = "ImgTop">
-		<img src="./img/newlogo.jpg">
-	</div>
+
     <?php
         require_once "./php/dataAPI.php";
         $dataapi = new dataAPI();
@@ -59,44 +57,43 @@
 	    	<li id = "Act-End">离活动结束还有</li>
 	    	<li id = "END">活动已经结束</li>
 	    	<li>
-	    		<div id = "Time-Left">
-					
+	    		<div id = "Time-Left">					
 				</div>
 	    	</li>
 	       <li data-icon="false" >
 	       		<a>
-	       			<img src="./img/icon002.png">抢票开始时间：
+	       			<img src="./img/RobTime.png">抢票开始时间：
 	       			<p><span id = "RobStartTime" ><?php echo $ticketStartTime;?></span></p>
 
 	       		</a>
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
-	       			<img src="./img/icon002.png">抢票结束时间：
+	       			<img src="./img/RobTime.png">抢票结束时间：
 	       			<p><span id = "RobEndTime"><?php echo $ticketEndTime;?></span></p>
 	       		</a>
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
-	       			<img src="./img/icon001.png">当前余票: 
-	       			<p><span id = "TicketLeft"><?php echo $remain;?></span> 张</p>
+	       			<img src="./img/Ticket.png">
+	       			<p id = "TicketLeftNumber">当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</p>
 	       		</a>
 	       	</li>
 	        <li id = "ActivityPlace" data-icon="false">
 	        	<a>
-	        		<img src="./img/icon003.png">活动地点：
-	        		<p><?php echo $location;?></p>
+	        		<img src="./img/Place.png">
+	        		<p>活动地点：<?php echo $location;?></p>
 	        	</a>
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/icon002.png">活动开始时间：
+	        		<img src="./img/ActivityTime.png">活动开始时间：
 	        		<p><span id = "ActivityStartTime"><?php echo $startTime;?></span></p>
 	        	</a>
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/icon002.png">活动结束时间：
+	        		<img src="./img/ActivityTime.png">活动结束时间：
 	        		<p><span id = "ActivityEndTime"><?php echo $endTime;?></span></p>
 	        	</a>
 	        </li>

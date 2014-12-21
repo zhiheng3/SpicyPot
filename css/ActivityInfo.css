@@ -7,12 +7,51 @@ body{
 	font-size: 1.4em;
 }
 
+#TicketLeftNumber{
+	font-size: 1em;
+}
 
 #TicketInfo li{
 	text-align: center;
 
 
 }
+
+#TicketInfo
+{
+	padding: 0em;
+	margin:0em 0;
+	
+}
+
+#TicketInfo ul
+{
+	margin-top: 0em;
+}
+
+#TicketInfo a
+{
+	padding-left: 3.5em;
+	padding-bottom: 0;
+	padding-top: 0.5em;
+	font-size: 0.9em;
+
+}
+#RobStartTime,#RobEndTime,#TicketLeft,#ActivityStartTime,#ActivityEndTime{
+	font-size: 1.5em;
+}
+
+#ActivityPlace p{
+	font-size: 1em;
+}
+
+#Rob-Start, #Rob-End, #Act-Start,
+#Act-End, #END
+{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
 
 #Time-Left{
 	height: auto;
@@ -217,27 +256,8 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 	clear: both;
 }
 
-#TicketInfo
-{
-	padding: 0em;
-	margin:0em 0;
-	font-size: 0.9em;
-}
 
-#TicketInfo ul
-{
-	margin-top: 0em;
-}
-#TicketInfo a
-{
-	padding-left: 5em;
-}
-#Rob-Start, #Rob-End, #Act-Start,
-#Act-End, #END
-{
-	font-size: 1.3em;
-	font-weight: bold;
-}
+
 
 #ImgTop h1
 {
@@ -249,7 +269,4 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 	font-size: 0.9em;
 }
 
-#TicketInfo ul li a p 
-{
-	font-size: 1.1em;
-}
+
