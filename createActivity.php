@@ -4,8 +4,8 @@
   *Author: Feng Zhibin
   *Last modified: 2014.12.10
 **/
-require_once "dataAPI.php";
-require_once "dataformat.php";
+require_once "./php/dataAPI.php";
+require_once "./php/dataformat.php";
 
 //header("Content-Type:text/html; charset=utf-8");
 //$activityCreater = new ActivityCreater();
