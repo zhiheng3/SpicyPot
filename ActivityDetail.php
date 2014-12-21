@@ -21,9 +21,6 @@
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css"  media="screen">
-
-
-
 </head>
 
 <body>
@@ -33,7 +30,7 @@
  
 <div class="container" id="detail-form">
         
-        <form class="form-horizontal" id="activity-form" action="createActivity.php" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" id="activity-form" enctype="multipart/form-data">
             <div class="form-group" id = "Title">“紫荆之声”活动发布系统</div>
 
             <div class="form-group">
@@ -124,7 +121,7 @@
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动配图</label>
                 <div class="col-sm-10">
                     <input type="file" name="pic_upload" class="form-control" id="input-pic_upload" min="0" placeholder="请选择图片">
-                    <div id = "Preview"></div>
+                    <div id = "Preview"><img src=""></div>
                 </div>
             </div>
 
@@ -144,9 +141,9 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-primary" id="saveBtn">发布</button>
+                    <button type="button" class="btn btn-primary" id="publishBtn">发布</button>
+                    <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
-                    <span id = "log"></span>
                 </div>
             </div>
         </form>
@@ -158,7 +155,6 @@
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/ActivityDetail.js"></script>
-<script type="text/javascript" src="./js/sisyphus.min.js"></script>
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
         language:  'zh-CN',
@@ -193,32 +189,47 @@
     });
 </script>
 
-<div>
-<!--
-活动名称 <?php echo $_POST["name"];?> <br> 
-活动代称 <?php echo $_POST["key"];?> <br>
-活动地点 <?php echo $_POST["place"];?> <br>
-活动简介 <?php echo $_POST["description"];?> <br>
-总票数 <?php echo $_POST["total_tickets"];?> <br>
-抢票开始时间 <?php echo $_POST["Rob-Start"];?> <br>
-抢票结束时间 <?php echo $_POST["Rob-End"];?> <br>
-活动开始时间 <?php echo $_POST["Act-Start"];?> <br>
-活动结束时间 <?php echo $_POST["Act-End"];?> <br>
-活动配图 <?php print_r($_FILES["pic_upload"]);?> <br>
-活动配图类型 <?php echo $_FILES["pic_upload"]["type"];?> <br>
-活动配图名称 <?php echo $_FILES["pic_upload"]["name"];?> <br>
-活动配图大小 <?php echo $_FILES["pic_upload"]["size"];?> <br>
-活动配图信息 <?php echo $_FILES["pic_upload"]["error"];?> <br>
-座位分配设置 <?php echo $_POST["seat_status"];?> <br>
--->
-</div>
-
-
 <div class="modal-footer">
     <p class="text-center">共青团清华大学委员会 &copy 2014</p>
 </div>
 
+<script>
+$(document).on("click", "#publishBtn", function(){
+    createActivity();
+    /*
+    $.post("./mask.php", {"method": "createActivity", "name": $("#input-name").val(), "key": $("#input-key").val(), "place": $("#input-place").val(), "description": $("#input-description").val(), "total_tickets": $("#input-total_tickets").val(), "Rob-Start": dateCorrection($("#Rob-Start").val()), "Rob-End": dateCorrection($("#Rob-End").val()), "Act-Start": dateCorrection($("#Act-Start").val()), "Act-End": dateCorrection($("#Act-End").val()), "pic_upload": $("#input-pic_upload").val(), "seat_status": $("#input-seat_status").val() }, function(data){
+        var result = JSON.parse(data);
+        if(result["state"] == "true") $("#test_message").text("成功， id = " + result["message"]);
+        else $("#test_message").text("失败" + result["message"]);
+    });
+    */
+});
 
+function createActivity(){
+    var dest = "mask.php";
+    
+    var form = document.getElementById("activity-form");
+    var formData = new FormData(form);
+    formData.append("method", "createActivity");
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4 && xhr.status == 200){
+            var result = JSON.parse(xhr.responseText);
+            alert(result["message"]);
+        }
+    }
+    xhr.open("post", dest, true);
+    xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
+    xhr.send(formData);
+}
+
+function dateCorrection(date){
+    var newDate1 = date.substr(0, 10);
+    var newDate2 = date.substr(11);
+    return (newDate1.concat(" ", newDate2, ":00"));
+}
+</script>
 
 </body>
 </html>

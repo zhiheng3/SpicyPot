@@ -1,5 +1,7 @@
 <?php
-require_once "./php/dataAPI.php";
+require_once "dataAPI.php";
+require_once "dataformat.php";
+require_once "createActivity.php";
 
 $method = $_POST['method'];
 if ($method == 'unbind'){
@@ -31,5 +33,13 @@ else if ($method == 'seatInfo'){
     $dataapi = new dataAPI();
     $seatInfoResult = $dataapi->getSeatInfo(intval($activityId));
     echo json_encode($seatInfoResult);
+}
+
+//Testing
+else if($method == 'createActivity'){
+    //header("Content-type: text/html; charset=utf-8");
+    $activityCreater = new ActivityCreater();
+    $createResult = $activityCreater->createActivity();
+    echo json_encode($createResult);
 }
 ?>
