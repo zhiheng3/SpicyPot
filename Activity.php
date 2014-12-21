@@ -17,7 +17,8 @@
 <link rel="stylesheet" type="text/css" href="./css/ActivityInfo.css">
 <link rel="stylesheet" type="text/css" href="./css/jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet" type="text/css" href="./css/jquery.flipcountdown.css" />
-
+<link rel="stylesheet" href="./css/v1.3.css" />
+<link rel="stylesheet" href="./css/v1.3.min.css" />
 
 <script type="text/javascript" src = "./js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src = "./js/ActivityInfo.js"></script>
@@ -62,12 +63,43 @@
 					
 				</div>
 	    	</li>
-	       	<li>抢票开始时间：<span id = "RobStartTime"><?php echo $ticketStartTime;?></span></li>
-	       	<li>抢票结束时间：<span id = "RobEndTime"><?php echo $ticketEndTime;?></span></li>
-	       	<li>当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</li>
-	        <li id = "ActivityPlace">活动地点：<?php echo $location;?></li>
-	        <li>活动开始时间：<span id = "ActivityStartTime"><?php echo $startTime;?></span></li>
-	        <li>活动结束时间：<span id = "ActivityEndTime"><?php echo $endTime;?></span></li>
+	       <li data-icon="false" >
+	       		<a>
+	       			<img src="./img/icon002.png">抢票开始时间：
+	       			<p><span id = "RobStartTime" ><?php echo $ticketStartTime;?></span></p>
+
+	       		</a>
+	       	</li>
+	       	<li data-icon="false">
+	       		<a>
+	       			<img src="./img/icon002.png">抢票结束时间：
+	       			<p><span id = "RobEndTime"><?php echo $ticketEndTime;?></span></p>
+	       		</a>
+	       	</li>
+	       	<li data-icon="false">
+	       		<a>
+	       			<img src="./img/icon001.png">当前余票: 
+	       			<p><span id = "TicketLeft"><?php echo $remain;?></span> 张</p>
+	       		</a>
+	       	</li>
+	        <li id = "ActivityPlace" data-icon="false">
+	        	<a>
+	        		<img src="./img/icon003.png">活动地点：
+	        		<p><?php echo $location;?></p>
+	        	</a>
+	        </li>
+	        <li data-icon="false">
+	        	<a>
+	        		<img src="./img/icon002.png">活动开始时间：
+	        		<p><span id = "ActivityStartTime"><?php echo $startTime;?></span></p>
+	        	</a>
+	        </li>
+	        <li data-icon="false">
+	        	<a>
+	        		<img src="./img/icon002.png">活动结束时间：
+	        		<p><span id = "ActivityEndTime"><?php echo $endTime;?></span></p>
+	        	</a>
+	        </li>
 	         <li data-role="collapsible">
 	            <h1>活动预览</h1>
 	            <p>暂无图片</p>
@@ -76,7 +108,7 @@
  
 	 </div>
 
-  <div data-role="footer" data-position="fixed">
+  <div data-role="footer" data-position="fixed" id="Footer">
 	  <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div> 

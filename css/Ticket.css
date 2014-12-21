@@ -3,7 +3,7 @@
 }
 
 #TicketInfo p{
-	text-align: center;
+	
 }
 
 #ActivityName{
@@ -26,3 +26,38 @@
 	font-size: 0.9em;
 }
 
+#ImgTop h1
+{
+	font-size: 1.2em;
+}
+
+#TicketInfo
+{
+	padding: 0em;
+	margin:0em 0;
+	font-size: 0.9em;
+}
+
+#TicketInfo ul
+{
+	margin-top: 0em;
+}
+#Footer h1
+{
+	font-size: 0.9em;
+}
+
+#TicketInfo p 
+{
+	font-size: 1.1em;
+}
+
+#TicketInfo a
+{
+	padding-left: 5.5em;
+}
+
+#Operation a
+{
+	padding-left: 1em;
+}
