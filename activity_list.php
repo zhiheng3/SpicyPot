@@ -32,6 +32,11 @@
         
         <form class="form-horizontal"  id="activity-form">
             <div class="form-group" id = "Title">“紫荆之声”活动管理系统</div>
+            <a href='activity_detail.php'>
+                <botton type='button' class='btn btn-default btn-sm' id='aa'>
+			        <span class='glyphicon glyphicon-plus'> </span> 创建活动
+			    </botton>
+            </a>
 <?php
 	require_once "php/dataAPI.php";
 	$test = new DataAPI();
