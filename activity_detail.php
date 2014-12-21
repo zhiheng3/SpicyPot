@@ -198,6 +198,8 @@
                     <button type="button" onclick="publishActivity();" class="btn btn-primary" id="publishBtn">发布</button>
                     <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
+                    <span id="log"></span>
+
                 </div>
             </div>
         </form>
@@ -209,6 +211,7 @@
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/ActivityDetail.js"></script>
+<script type="text/javascript" src="./js/sisyphus.min.js"></script>
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
         language:  'zh-CN',
