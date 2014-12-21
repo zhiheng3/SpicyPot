@@ -37,8 +37,10 @@ else if ($method == 'seatInfo'){
 
 //Testing
 else if($method == 'createActivity'){
-    $activityCreater = new ActivityCreater();
-    $createResult = $activityCreater->createActivity();
+    $createResult['message'] = $_POST['name'];
+    $createResult['state'] = "true";
+    //$activityCreater = new ActivityCreater();
+    //$createResult = $activityCreater->createActivity();
     echo json_encode($createResult);
 }
 ?>
