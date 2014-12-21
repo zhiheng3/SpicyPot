@@ -4,35 +4,32 @@
   *Author: Feng Zhibin
   *Last modified: 2014.12.10
 **/
-require_once "dataAPI.php";
-require_once "dataformat.php";
+require_once "php/dataAPI.php";
+require_once "php/dataformat.php";
 
-//header("Content-Type:text/html; charset=utf-8");
-//$activityCreater = new ActivityCreater();
-//$result = $activityCreater->createActivity();
-//echo $result;
+header("Content-Type:text/html; charset=utf-8");
+$activityCreater = new ActivityCreater();
+$result = $activityCreater->createActivity();
+echo $result;
 
 class ActivityCreater{
     //Author: Feng Zhibin
     //create an activity with a picture
     //params: none
-    //return: Array["state", "message"], state: "true" or "false", "message": int activityID or string errorMessage
+    //return: string Message
     public function createActivity(){
         $activityResult = $this->addActivity();
         if($activityResult["state"] == "true"){
             $pictureResult = $this->addPicture($activityResult["message"]);
             if($pictureResult["state"] == "true"){
-                $result["state"] = "true";
-                $result["message"] = "活动创建成功，图片上传成功！";
+                $result = "活动创建成功，图片上传成功！";
             }
             else{
-                $result["state"] = "true";
-                $result["message"] = "活动创建成功，图片上传失败，错误信息：" . $pictureResult["message"];
+                $result = "活动创建成功，图片上传失败，错误信息：" . $pictureResult["message"];
             }
         }
         else{
-            $result["state"] = "false";
-            $result["message"] = "活动创建失败，错误信息：" . $activityResult["message"];
+            $result = "活动创建失败，错误信息：" . $activityResult["message"];
         }
         return $result;
     }

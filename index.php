@@ -63,13 +63,14 @@ class WechatCallbackAPI
         //$postStr = file_get_contents("php://input");
 
         //Debug xml request
-		/*$postStr = "<xml>
+/*
+		$postStr = "<xml>
     <ToUserName><![CDATA[gh_c91b78a69c83]]></ToUserName>
     <FromUserName><![CDATA[o9aMOszP5QhMgEWO8GJTOOolWIEM]]></FromUserName>
     <CreateTime>1417336884</CreateTime>
     <MsgType><![CDATA[event]]></MsgType>
     <Event><![CDATA[CLICK]]></Event>
-    <EventKey><![CDATA[TAKE_1]]></EventKey>
+    <EventKey><![CDATA[CHECK_ACTIVITY]]></EventKey>
     <Encrypt><![CDATA[DmVFNgPKsJGTeO5+PFiK+5bLhlqXLLisxSuE/IJiWeR9F9H5jHcVoXgEffSoXIx3JA6muuoMQX3PaxgJIZFckRrAhRW1dfm4H1YTQS8izxi78cMGaAhBF4+5+FLh3ts/aP9w+pAsqHcbcj1BCFBfXg19xkABXChHsE7hvEoLVz9eEVuQSRLr9lwsBp0Tp5jYPbWZ8jIQ50L0hYAuplfJXiepkKbgxPATJI5rzHAkmFzAuqQMvEaJ8CIZhuVy+vaq6cThonhgYLzF8Q4H7gF8wSrLDk28k5gH+UKky3FaHmHVTv8mLuvxPA6uKLKS+die0QzaqpT19Bc/mVOwikznCuW5W0UPd2Iyzn5ZvwfHrYq7wOteSZCdVhYoERKtmI6nWQT2DXNqb37es/nYKFXXBPZhvOkUGprJl7d1pr2Ngro=]]></Encrypt>
 </xml>";
 */
