@@ -6,11 +6,7 @@
 **/
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
-
-//header("Content-Type:text/html; charset=utf-8");
-//$activityCreater = new ActivityCreater();
-//$result = $activityCreater->createActivity();
-//echo $result;
+require_once "./php/token.php";
 
 class ActivityCreater{
     //Author: Feng Zhibin
@@ -34,6 +30,9 @@ class ActivityCreater{
             $result["state"] = "false";
             $result["message"] = "活动创建失败，错误信息：" . $activityResult["message"];
         }
+        $menuResult = $this->updateMenu($activityResult["message"]);
+        if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
+        else $result["message"] .= "微信菜单更新失败！";
         return $result;
     }
     //Author: Feng Zhibin
@@ -91,6 +90,61 @@ class ActivityCreater{
         else{//Invalid file
             return (array("state" => "false", "message" => "文件格式不正确！"));
         }           
+    }
+    
+    //Author: Feng Zhibin
+    //Update the menu on WeChat
+    //params: int $activityId
+    //return: Array["state", "message"], state: "true" or "false", "message": Message
+    public function updateMenu($activityId){
+        $tokenTaker = new AccessToken();
+        $accessToken = $tokenTaker->getAccessToken("access_token", "log/token_log");
+        $menu = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=$accessToken");
+        $result = json_decode($menu, true);
+        
+        $activityList = $result["menu"]["button"][1]["sub_button"];
+
+        if(count($activityList) == 0){
+            $newBtn = array();
+            $newBtn["name"] = $result["menu"]["button"][1]["name"];
+            $newBtn["sub_button"] = array();
+            $newBtn["sub_button"][0]["type"] = "click";
+            $newBtn["sub_button"][0]["name"] = $_POST["name"];
+            $newBtn["sub_button"][0]["key"] = "TAKE_$activityId";
+            $newBtn["sub_button"][0]["sub_button"] = array();
+            $result["menu"]["button"][1] = $newBtn;
+        }
+        else{
+            $count = count($activityList);
+
+            for($i = $count - 1; $i >= 0; $i--){
+                if($i < 4) $activityList[$i + 1] = $activityList[$i];
+            }
+            $activityList[0]["type"] = "click";
+            $activityList[0]["name"] = $_POST["name"];
+            $activityList[0]["key"] = "TAKE_$activityId";
+            $activityList[0]["sub_button"] = array();
+            $result["menu"]["button"][1]["sub_button"] = $activityList;
+        }
+
+        $context = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded'.
+						        '\n'.'Content-length:' . (strlen(json_encode($result["menu"], JSON_UNESCAPED_UNICODE)) + 1),
+                'content' => json_encode($result["menu"], JSON_UNESCAPED_UNICODE))
+            );
+        $stream_context = stream_context_create($context);
+        $updateResult = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$accessToken", false, $stream_context);
+        $finalResult = json_decode($updateResult, true);
+        if($finalResult["errcode"] == 0){
+            $feedback["state"] = "true";
+        }
+        else{
+            $feedback["state"] = "false";
+            $feedback["message"] = $finalResult["errmsg"];
+        }
+        return $feedback;
     }
 }
 ?>
