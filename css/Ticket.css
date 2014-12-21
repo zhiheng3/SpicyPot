@@ -2,8 +2,11 @@
 
 }
 
-#TicketInfo p{
-	
+#TicketInfoBox a{
+	padding-left: 3.5em;
+	padding-bottom: 0;
+	padding-top: 0.5em;
+	font-size: 0.9em;
 }
 
 #ActivityName{
@@ -50,11 +53,6 @@
 #TicketInfo p 
 {
 	font-size: 1.1em;
-}
-
-#TicketInfo a
-{
-	padding-left: 5.5em;
 }
 
 #Operation a
