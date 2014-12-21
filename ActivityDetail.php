@@ -220,7 +220,7 @@ function createActivity(){
         }
     }
     xhr.open("post", dest, true);
-    xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
+    //xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
     xhr.send(formData);
 }
 
