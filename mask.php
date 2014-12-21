@@ -1,6 +1,6 @@
 <?php
-require_once "dataAPI.php";
-require_once "dataformat.php";
+require_once "./php/dataAPI.php";
+require_once "./php/dataformat.php";
 require_once "createActivity.php";
 
 $method = $_POST['method'];
