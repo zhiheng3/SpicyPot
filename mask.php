@@ -43,4 +43,10 @@ else if($method == 'createActivity'){
     //$createResult = $activityCreater->createActivity();
     echo json_encode($createResult);
 }
+
+else{
+    $result['state'] = "false";
+    $result["message"] = "failed to match a method.";
+    echo json_encode($result);
+}
 ?>
