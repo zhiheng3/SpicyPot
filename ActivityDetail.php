@@ -206,7 +206,7 @@ $(document).on("click", "#publishBtn", function(){
 });
 
 function createActivity(){
-    var dest = "mask.php";
+    var dest = "test.php";
     
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
