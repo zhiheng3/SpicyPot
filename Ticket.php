@@ -70,7 +70,7 @@ EOT;
 
 echo <<< EOT
   <div data-role="content" id = "TicketInfo">
-    <ul data-role="listview" data-inset="true">
+    <ul data-role="listview" data-inset="true" id = "TicketInfoBox">
         <li data-role="collapsible">
             <h1>二维码电子票</h1>
 EOT;
