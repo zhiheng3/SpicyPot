@@ -17,6 +17,7 @@
 
 
 <link rel="stylesheet" type="text/css" href="./css/ActivityList.css">
+<link rel="stylesheet" type="text/css" href="./css/ActivityDetail.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
@@ -31,13 +32,33 @@
 <div class="container center">
         
         <form class="form-horizontal"  id="activity-form">
-            <div class="form-group" id = "Title">“紫荆之声”活动管理系统</div>
+           
+            <div class="form-group " id = "Title">
+                    “紫荆之声”活动管理系统&nbsp&nbsp
+                <a href='login.php?action=logout'>
+                    <botton type='button' class='btn btn-default btn-sm' id='aa' title="注销">
+			            <span class='glyphicon glyphicon-log-out'> </span> 
+			        </botton>
+                </a>
+            </div>
             <a href='activity_detail.php'>
                 <botton type='button' class='btn btn-default btn-sm' id='aa'>
 			        <span class='glyphicon glyphicon-plus'> </span> 创建活动
 			    </botton>
             </a>
+            <p></p>
+            
+
 <?php
+
+    //检测是否登录，若没登录则转向登录界面
+    session_start();
+    if(!isset($_SESSION['name'])){
+        header("Location:login.html");
+        exit();
+    }
+    
+
 	require_once "php/dataAPI.php";
 	$test = new DataAPI();
 	$gettingList =$test->getActivityList();
@@ -89,7 +110,7 @@
     
     function doDelete(id){
         <?php
-           echo"$.post('delete_activity.php',{id:id},function(data){alert(data);});";
+           echo"$.post('delete_activity.php',{id:id},function(data){alert(data);location.reload(true);});";
         ?>
 
     }
