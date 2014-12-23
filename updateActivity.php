@@ -1,45 +1,46 @@
 <?php
 /**
-  *Create an activity and get picture
-  *Author: Feng Zhibin
-  *Last modified: 2014.12.10
+  *Update an activity and get picture
+  *Author: Chen Minghai
+  *Last modified: 2014.12.22
 **/
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
 require_once "./php/token.php";
 
-class ActivityCreater{
+class ActivityUpdater{
     //Author: Feng Zhibin
     //create an activity with a picture
     //params: none
     //return: Array["state", "message"], state: "true" or "false", "message": int activityID or string errorMessage
-    public function createActivity(){
-        $activityResult = $this->addActivity();
+    public function updateActivity(){
+        $activityResult = $this->updateActivityInfo();
         if($activityResult["state"] == "true"){
-            $pictureResult = $this->addPicture($activityResult["message"]);
+            $pictureResult = $this->updatePicture();
             if($pictureResult["state"] == "true"){
                 $result["state"] = "true";
-                $result["message"] = "活动创建成功，图片上传成功！";
+                $result["message"] = "活动修改成功，图片上传成功！";
             }
             else{
                 $result["state"] = "true";
-                $result["message"] = "活动创建成功，图片上传失败，错误信息：" . $pictureResult["message"];
+                $result["message"] = "活动修改成功，图片上传失败，错误信息：" . $pictureResult["message"];
             }
         }
         else{
             $result["state"] = "false";
-            $result["message"] = "活动创建失败，错误信息：" . $activityResult["message"];
+            $result["message"] = "活动修改失败，错误信息：" . $activityResult["message"];
         }
         $menuResult = $this->updateMenu($activityResult["message"]);
         if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
         else $result["message"] .= "微信菜单更新失败！";
         return $result;
     }
-    //Author: Feng Zhibin
-    //add an activity (without picture)
+
+    
+    //update an activity (without picture)
     //params: none
     //return: Array["state", "message"], state: "true" or "false", "message": int activityID or string errorMessage
-    public function addActivity(){
+    public function updateActivityInfo(){
         //Initialization
         $activity = new Activity();
         $activity->name = htmlspecialchars($_POST["name"]); //名称
@@ -58,16 +59,17 @@ class ActivityCreater{
 
         //Connect to DB and get response
         $dataapi = new DataAPI();
-        $result = $dataapi->createActivity($activityArray);
+        $result = $dataapi->updateActivity($_POST["activity_id"],$activityArray);
         return $result;
     }
     
-    //Author: Feng Zhibin
-    //Add a picture for an activity
+    
+    //Update a picture for an activity
     //params: int $activityId
     //return: Array["state", "message"], state: "true" or "false", "message": Message
-    public function addPicture($activityId){
+    public function updatePicture(){
         //Path of the file saved
+        $activityId = $_POST["activity_id"];
         $savePath = "upload/activity$activityId";
         if($_FILES["pic_upload"]["size"] == "0"){
             return(array("state" => "false", "message" => "上传图片为空"));        
@@ -79,14 +81,16 @@ class ActivityCreater{
             if ($_FILES["pic_upload"]["error"] > 0){//Upload failed
                 return (array("state" => "false", "message" => $_FILES["pic_upload"]["error"]));
             }
-            else{//File already exists
+            else{
+                //File already exists
                 if (file_exists($savePath)){
-                    return (array("state" => "false", "message" => "同名文件已经存在!"));
+
+                   unlink($savePath);
+                    
                 }
-                else{//All OK
-                    move_uploaded_file($_FILES["pic_upload"]["tmp_name"], $savePath);
-                    return (array("state" => "true", "message" => "上传的图片已经被储存到 $savePath."));
-                }
+                
+                move_uploaded_file($_FILES["pic_upload"]["tmp_name"], $savePath);
+                return (array("state" => "true", "message" => "上传的图片已经被储存到 $savePath."));
             }
         }
         else{//Invalid file
