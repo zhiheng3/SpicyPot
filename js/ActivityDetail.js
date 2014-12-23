@@ -61,12 +61,42 @@ function PreviewPic(file) {
 	}
 }
 
+function CheckContentVaild(){
+	var TicketNumber = $("#input-total_tickets").val();
+	var ActDescription = $("#input-description").val();
+	var ActPlace = $("#input-place").val();
+	var ActKey = $("#input-key").val();
+	var ActName = $("#input-name").val();
+	var flag = true;
+	if(!TicketNumber){
+		InputFocus("#input-total_tickets",'“总票数”不能为空！');
+		flag = false;
+	}
+	if(!ActDescription){
+		InputFocus("#input-description",'“活动简介”不能为空！');
+		flag = false;
+	}
+	if(!ActPlace){
+		InputFocus("#input-place",'“活动地点”不能为空！');
+		flag = false;
+	}
+	if(!ActKey){
+		InputFocus("#input-key",'“活动代称”不能为空！');
+		flag = false;
+	}
+	if(!ActName){
+		InputFocus("#input-name",'“活动名称”不能为空！');
+		flag = false;
+	}
+	return flag;
+}
+
 function CheckTimeVaild(){
 	var RS = $("#Rob-Start").val();
 	var RE = $("#Rob-End").val();
 	var AS = $("#Act-Start").val();
 	var AE = $("#Act-End").val();
-	debugger;
+
 	if(RS && RE && AS && AE){
 		var RobStartTime = parseDate(RS);
 		var RobEndTime = parseDate(RE);
@@ -74,9 +104,10 @@ function CheckTimeVaild(){
 		var ActEndTime = parseDate(AE);
 
 		var now = new Date();
-		debugger;
+
 		if(RobStartTime < now){
-			$("#Rob-Start").popover({
+			InputFocus("#Rob-Start",'“订票开始时间”应晚于“当前时间”');
+			/*$("#Rob-Start").popover({
                     html: true,
                     placement: 'top',
                     title:'',
@@ -84,55 +115,56 @@ function CheckTimeVaild(){
                     trigger: 'focus',
                     container: 'body'
             });
-            $("#Rob-Start").focus();
+            $("#Rob-Start").focus();*/
 
 			return false;
 		}
 
 		if(RobEndTime < RobStartTime){
-			$("#Rob-End").popover({
-                html: true,
-                placement: 'top',
-                title:'',
-                content: '<span style="color:red;">“订票结束时间”应晚于“订票开始时间”</span>',
-                trigger: 'focus',
-                container: 'body'
-            });
-            $("#Rob-End").focus();
+			InputFocus("#Rob-End",'“订票结束时间”应晚于“订票开始时间”');
 			return false;
 		}
 
 		if(ActStartTime < RobEndTime){
-	        $("#Act-Start").popover({
-                html: true,
-                placement: 'top',
-                title:'',
-                content: '<span style="color:red;">“活动开始时间”应晚于“订票结束时间”</span>',
-                trigger: 'focus',
-                container: 'body'
-	        });			
+			InputFocus("#Act-Start",'“活动开始时间”应晚于“订票结束时间”');
 			return false;
 		}
 
 		if(ActEndTime < ActStartTime){
-            $("#Act-End").popover({
-	            html: true,
-	            placement: 'top',
-	            title:'',
-	            content: '<span style="color:red;">“活动结束时间”应晚于“活动开始时间”</span>',
-	            trigger: 'focus',
-	            container: 'body'
-	        });
-         	$("#Act-End").focus();
-
+			InputFocus("#Act-End",'“活动结束时间”应晚于“活动开始时间”');
 			return false;
 		}
 
 		return true;
 	}
 	else{
+		if(!AE){
+			InputFocus("#Act-End",'“活动结束时间”不能为空！');
+		}	
+		if(!AS){
+			InputFocus("#Act-Start",'“活动开始时间”不能为空！');
+		}	
+		if(!RE){
+			InputFocus("#Rob-End",'“订票结束时间”不能为空！');
+		}				
+		if(!RS){
+			InputFocus("#Rob-Start",'“订票开始时间”不能为空！');
+		}
 		return false;
 	}
+}
+
+function InputFocus(id,text){
+	var waring = '<span style="color:red;">' + text + '</span>'
+	$(id).popover({
+        html: true,
+        placement: 'top',
+        title:'',
+        content: waring,
+        trigger: 'focus',
+        container: 'body'
+    });
+    $(id).focus();	
 }
 
 function parseDate(date){
