@@ -279,6 +279,7 @@ function createActivity(){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
                 alert(result["message"]);
+                window.location.href ="activity_list.php";
             }
         }
     }
