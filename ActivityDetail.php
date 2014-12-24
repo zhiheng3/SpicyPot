@@ -185,7 +185,7 @@
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动配图</label>
                 <div class="col-sm-10">
                     <input type="file" name="pic_upload" class="form-control" id="input-pic_upload" min="0" placeholder="请选择图片">
-                    <div id = "Preview"><img src=<?php echo "$image";?>></div>
+                    <div id = "Preview"><?php if(file_exists($image)) {echo "<img src=$image>";} ?></div>
                 </div>
             </div>
 
