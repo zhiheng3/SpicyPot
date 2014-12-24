@@ -28,11 +28,11 @@ class ActivityUpdater{
         }
         else{
             $result["state"] = "false";
-            $result["message"] = "活动修改失败，错误信息：" . $activityResult["message"];
+            $result["message"] = "活动修改失败，错误信息：" . $_POST["activity_id"];
         }
-        $menuResult = $this->updateMenu($activityResult["message"]);
+        $menuResult = $this->updateMenu($_POST["activity_id"]);
         if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
-        else $result["message"] .= "微信菜单更新失败！";
+        else $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
         return $result;
     }
 
@@ -124,8 +124,9 @@ class ActivityUpdater{
             $count = count($activityList);
             $i = 0;
             for($i; $i < $count; $i++){
-                if($activityList[0]["key"] == "TAKE_$activityId"){
-                    $activityList[0]["name"] = $_POST["name"];
+                echo $activityList[$i]["key"];
+                if($activityList[$i]["key"] == "TAKE_$activityId"){
+                    $activityList[$i]["name"] = $_POST["name"];
                     break;
                 }
             }
@@ -134,12 +135,6 @@ class ActivityUpdater{
                 $feedback["message"] = "Activity not found in menu!";
                 return $feedback;
             }
-            /*
-            $activityList[0]["type"] = "click";
-            $activityList[0]["name"] = $_POST["name"];
-            $activityList[0]["key"] = "TAKE_$activityId";
-            $activityList[0]["sub_button"] = array();
-            */
             $result["menu"]["button"][1]["sub_button"] = $activityList;
         }
 
