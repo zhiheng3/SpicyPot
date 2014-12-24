@@ -205,7 +205,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-primary" <?php if ($activity_id != '') {echo "id='updateBtn'>修改";}else{echo "id='publishBtn'>发布";} ?></button>
+                    <button type="button" class="btn btn-primary" name ='<?php echo $activity_id ?>' <?php if ($activity_id != '') {echo "id='updateBtn'>修改";}else{echo "id='publishBtn'>发布";} ?></button>
                     <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
                     <span id="log"></span>
@@ -259,30 +259,7 @@
     <p class="text-center">共青团清华大学委员会 &copy 2014</p>
 </div>
 </script>
-<?php echo "<script>$(document).on('click', '#updateBtn', function(){
-    var timeValid = CheckTimeValid();
-    var contentValid = CheckContentValid();
-    if(!timeValid || !contentValid) return;
-    var dest = 'mask.php';
-    var form = document.getElementById('activity-form');
-    var formData = new FormData(form);
-    formData.append('method', 'updateActivity');
-    formData.append('activity_id',$activity_id);
-    
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4){
-            if(xhr.status == 200){
-                var result = JSON.parse(xhr.responseText);
-                alert(result['message']);
-            }
-        }
-    }
-    xhr.open('post', dest, true);
-    xhr.setRequestHeader('context-type','text/xml;charset=utf-8');
-    xhr.send(formData);
-});</script>"
-?>
+
 <script>
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
