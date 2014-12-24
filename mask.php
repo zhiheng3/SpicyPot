@@ -52,8 +52,9 @@ else if($method == 'deleteActivity'){
     $menuManager = new MenuManager();
     $menuManager->clearActivity($activityId);
     
-    if($result["state"] == "true") $result["message"] = "success";
-    echo json_encode($result);
+    if($result["state"] == "true") echo "success";
+    else echo "failed";
+    //echo json_encode($result);
 }
 
 else if($method == 'updateActivity'){
