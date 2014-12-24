@@ -5,6 +5,9 @@ require_once "dataformat.php";
 require_once "menu.php";
 require_once "activity.php";
 
+$timer = new Timer();
+$timer->runTimer();
+
 class Timer{
 
     //Author: Feng Zhibin
