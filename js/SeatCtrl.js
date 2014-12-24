@@ -103,7 +103,6 @@ function AddMoveListener(Dom){
 Mouse Handler
 */
 function MousedownHandler(e){
-    alert("Mousedown");
     StartMove(e.clientX, e.clientY);
     e.preventDefault();
 }
@@ -127,7 +126,6 @@ function MouseleaveHandler(e){
 Touch Handler
 */
 function TouchstartHandler(e){
-    alert("Touchdown");
     var touches = e.originalEvent.targetTouches;
     if (touches.length == 1){
         StartMove(touches[0].clientX, touches[0].clientY);
@@ -152,6 +150,8 @@ function TouchendHandler(e){
 Move Event
 */
 function StartMove(x, y){
+    if (Args.move.start)
+        return ;
     Args.move.x = x;
     Args.move.y = y;
     Args.move.start = true;
@@ -173,6 +173,8 @@ function ProcessMove(x, y, Dom){
 }
 
 function EndMove(e){
+    if (!Args.move.start)
+        return ;
     Args.move.start = false;
     if (typeof(e) == "undefined")
         return ;
