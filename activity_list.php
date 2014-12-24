@@ -114,7 +114,7 @@
         ?>
     */
         <?php
-            echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){var result = JSON.parse(data); alert(result[\"message\"]); location.reload(true);});";
+            echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){alert(data); location.reload(true);});";
         ?>
     }
 

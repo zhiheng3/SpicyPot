@@ -3,7 +3,7 @@ require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
 require_once "createActivity.php";
 require_once "updateActivity.php";
-require_once "./php/activity.php";
+require_once "./php/menu.php";
 
 $method = $_POST['method'];
 if ($method == 'unbind'){
@@ -49,11 +49,12 @@ else if($method == 'deleteActivity'){
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
     
-    $activityManager = new ActivityManager();
-    $activityManager->clearActivity($activityId);
+    $menuManager = new MenuManager();
+    $menuManager->clearActivity($activityId, "access_token", "./log/token_log");
     
-    if($result["state"] == "true") $result["message"] = "success";
-    echo json_encode($result);
+    if($result["state"] == "true") echo "success";
+    else echo "failed";
+    //echo json_encode($result);
 }
 
 else if($method == 'updateActivity'){

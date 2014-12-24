@@ -18,7 +18,7 @@ class MenuManager{
             $activityNumber = count($activityList["message"]);
             for($i = 0; $i < $activityNumber; $i++){ //get state for all activities
                 $status = $activityManager->timeStatus($activityList["message"][$i]);
-                if($status == 2) $this->clearActivity($activityList["message"][$i]);//clean up when expired
+                if($status == 2) $this->clearActivity($activityList["message"][$i], "../access_token", "../log/token_log");//clean up when expired
             }
         }
     }
@@ -27,9 +27,9 @@ class MenuManager{
     //Drop an activity on the menu
     //params: int $activityId
     //return: array, ["state"]: "true" or "false", ["message"]: message
-    public function clearActivity($activityId){
+    public function clearActivity($activityId, $tokenPath, $logPath){
         $tokenTaker = new AccessToken();//Get token for operating the menu
-        $accessToken = $tokenTaker->getAccessToken("../access_token", "../log/token_log");//Specify the path of token files
+        $accessToken = $tokenTaker->getAccessToken($tokenPath, $logPath);//Specify the path of token files
         $menu = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=$accessToken");//Request for menu
         $result = json_decode($menu, true);
         
@@ -70,7 +70,7 @@ class MenuManager{
         if($finalResult["errcode"] == 0){
             $feedback["state"] = "true";
             $feedback["message"] = "succeed!";
-            echo "$activityId: Menu updated!\n";
+            //echo "$activityId: Menu updated!\n";
         }
         else{
             $feedback["state"] = "false";
