@@ -111,7 +111,7 @@ class TimeHandler{
     
     public function updateActivityState(){
         $dataapi = new DataAPI();
-        $updateResult = $dataapi->getActivityList(date("Y-m-d H:i:s"));
+        $updateResult = $dataapi->updateActivityState(date("Y-m-d H:i:s"));
         return $updateResult;
     }
     
