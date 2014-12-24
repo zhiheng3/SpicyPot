@@ -264,7 +264,7 @@
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
-    if(timeValid && contetnValid) createActivity();
+    if(timeValid && contentValid) createActivity();
 });
 
 function createActivity(){
