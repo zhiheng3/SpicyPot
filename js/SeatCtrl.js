@@ -152,6 +152,7 @@ Move Event
 function StartMove(x, y){
     if (Args.move.start)
         return ;
+    alert(x + " " + y);
     Args.move.x = x;
     Args.move.y = y;
     Args.move.start = true;
