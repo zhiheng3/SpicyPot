@@ -1,8 +1,13 @@
 <?php
 require_once "dataAPI.php";
 $test = new DataAPI();
-
-
+$list = array();
+for ($i=1;$i<32;$i++){
+    $item = array("capability"=>1,"location"=>"1R".$i."C");
+    array_push($list,$item);
+}
+//print_r($list);
+print_r($test->createSeats(84,$list));
 //echo($test->getStudentId("openid000000000000000003")["message"]."\n");
 /*for($i = 10001; $i <13001;$i++){
 	$s ="test".substr((""+$i),1);

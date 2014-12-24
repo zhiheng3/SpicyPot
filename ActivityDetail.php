@@ -46,7 +46,8 @@
     $end_time = "";
     $ticket_start_time = "";
     $ticket_end_time ="";
-    $image ="";
+    $image = "";
+    $ticket_per_student = 1;
 /*
     $is_seat_selectable;*/
 
@@ -68,6 +69,7 @@
             $end_time = substr(str_replace(" ", "-",$activity["end_time"]),0,16);
             $ticket_start_time = substr(str_replace(" ", "-",$activity["ticket_start_time"]),0,16);
             $ticket_end_time = substr(str_replace(" ", "-",$activity["ticket_end_time"]),0,16);
+            $ticket_per_student = $activity["ticket_per_student"];
             //if (file_exists)
             $image="upload/activity".$activity_id;
         }
@@ -125,6 +127,13 @@
                 <label for="input-total_tickets" class="col-sm-2 control-label">总票数</label>
                 <div class="col-sm-10">
                     <input type="number" name="total_tickets" class="form-control" id="input-total_tickets" min="1" value=<?php echo "$ticket_number";?>>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-ticket_per_student" class="col-sm-2 control-label">每人最大可选票数</label>
+                <div class="col-sm-10">
+                    <input type="number" name="ticket_per_student" class="form-control" id="input-ticket_per_student" min="1" value=<?php echo "$ticket_per_student";?>>
                 </div>
             </div>
 

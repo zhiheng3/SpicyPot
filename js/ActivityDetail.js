@@ -39,9 +39,6 @@ function ClearTimeChoosen(){
 	});			
 }
 
-function AdjustInput(){
-	$("#input-total_tickets").css("width","40%");
-}
 
 function PreviewImg(){
 	$('[type=file]').change(function(e) {

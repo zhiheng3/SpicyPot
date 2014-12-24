@@ -21,6 +21,13 @@
     width: 3%;
 }
 
+#input-total_tickets {
+    width : 40%;
+}
+#input-ticket_per_student {
+    width : 40%;
+}
+
 .form-group.date-label>label {
     padding-top: 0;
     padding-left: 5px;

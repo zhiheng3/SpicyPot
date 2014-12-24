@@ -50,7 +50,7 @@ class ActivityCreater{
         $activity->stage = htmlspecialchars($_POST["place"]);  //活动地点
         $activity->information = htmlspecialchars($_POST["description"]);  //详细信息
         $activity->ticket_number = htmlspecialchars($_POST["total_tickets"]);  //总票数
-        $activity->ticket_per_student = 1;  //每人最大抢票数
+        $activity->ticket_per_student = htmlspecialchars($_POST["ticket_per_student"]);   //每人最大抢票数
         $activity->is_seat_selectable = htmlspecialchars($_POST["seat_status"]);  //是否可选座：0不可选，1可选
 
         //Convert to an array
