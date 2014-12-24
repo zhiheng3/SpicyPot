@@ -260,8 +260,8 @@
 </div>
 </script>
 <?php echo "<script>$(document).on('click', '#updateBtn', function(){
-    var timeValid = checkTimeValid();
-    var contentValid = checkContentValid();
+    var timeValid = CheckTimeValid();
+    var contentValid = CheckContentValid();
     if(!timeValid || !contetnValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
@@ -285,8 +285,8 @@
 ?>
 <script>
 $(document).on("click", "#publishBtn", function(){
-    var timeValid = checkTimeValid();
-    var contentValid = checkContentValid();
+    var timeValid = CheckTimeValid();
+    var contentValid = CheckContentValid();
     if(timeValid && contetnValid) createActivity();
 });
 
