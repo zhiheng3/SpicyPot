@@ -1,15 +1,20 @@
 <?php
 require_once "dataAPI.php";
 $test = new DataAPI();
-
-/*$list = array();
+/*
+$list = array();
 for ($i=1;$i<32;$i++){
     $item = array("capability"=>1,"location"=>"1R".$i."C");
     array_push($list,$item);
 }
 */
 //print_r($list);
-print_r($test->createSeats(84,$list));
+//print_r($test->createSeats(90,$list));
+
+//print_r($test->updateActivityState(87,2));
+print_r($test->updateActivityState("2015-01-01 08:00:00"));
+
+
 //echo($test->getStudentId("openid000000000000000003")["message"]."\n");
 /*for($i = 10001; $i <13001;$i++){
 	$s ="test".substr((""+$i),1);
@@ -18,7 +23,7 @@ print_r($test->createSeats(84,$list));
 //$test->binding("openid000000000000000001", 2012010001, "binding");
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
-
+/*
 echo($test->updateActivity(86,array(
 	"name" => "马兰花开100场献礼",
     "brief_name" => "马兰花开!",
@@ -32,6 +37,7 @@ echo($test->updateActivity(86,array(
 	"ticket_per_student" => 3,
 	"is_seat_selectable" => 1
 ))['message']);
+*/
 
 /*
 echo($test->createActivity(array(

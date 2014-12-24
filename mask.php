@@ -58,6 +58,13 @@ else if($method == 'createSeats'){
     echo json_encode($result);
 }
 
+else if($method == 'assignSeats'){
+    $activity_id = $_POST['activity_id'];
+    $data = new dataAPI();
+    $result = $data -> assginSeats($activity_id);
+    echo json_encode($result);
+}
+
 else{
     $result['state'] = "false";
     $result["message"] = "failed to match a method.";

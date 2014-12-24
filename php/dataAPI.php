@@ -277,9 +277,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 
 
 	//更新活动状态
-	//参数： int activity_id, int state
+	//参数： string time 格式如"2014-11-11 08:00:00"
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
-	public function updateActivityState($activity_id, $state){
+	public function updateActivityState($time){
 		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));
@@ -287,13 +287,23 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		mysql_select_db("wx9_db", $con);
 		mysql_query("SET NAMES UTF8");
 		
-		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
-			return(array("state" => "false", "message" => "没有这个活动"));
+        $activity_set = mysql_query("select id, start_time, end_time, ticket_start_time, ticket_end_time, state from activity");
+		while($activity=mysql_fetch_assoc($activity_set)){
+            $state = 0;
+            $activity_id = $activity["id"];
+			if ($time>=$activity["ticket_start_time"])
+                $state = 1;
+			if ($time>=$activity["ticket_end_time"])
+                $state = 2;            
+			if ($time>=$activity["start_time"])
+                $state = 3;
+			if ($time>=$activity["end_time"])
+                $state = 4;
+            if(!mysql_query("update activity set state=$state where id=$activity_id")){
+			    return(array("state" => "false", "message" => "更新失败"));
+ 		    }    
  		}
 		
-		if(!mysql_query("update activity set state=$state where id=$activity_id")){
-			return(array("state" => "false", "message" => "更新失败"));
- 		}
 		return(array("state" => "true", "message" => ""));
 	}
 
@@ -402,6 +412,11 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		mysql_select_db("wx9_db", $con);
 		mysql_query("SET NAMES UTF8");
         
+        //清空已有的座位
+        if (!mysql_query("delete from seat where activity_id = $activity_id")){
+            return(array("state" =>"false", "message" => "清空座位出错"));           
+        }
+
 		//插入座位   
 		foreach($seatList as $seat){         
         	if (!mysql_query("INSERT INTO seat (activity_id, location, capability,resitual_capability) VALUES (".$activity_id.","."'".$seat['location']."',".$seat['capability'].",".$seat['capability'].")")){
@@ -833,5 +848,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		}
         return(array("state" =>"true", "message" => $result));  
     }	
+    
+    
 }
 ?>
