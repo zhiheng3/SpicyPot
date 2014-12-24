@@ -7,7 +7,7 @@
 
 require_once "dataformat.php";
 require_once "dataAPI.php";
-require_once "timer.php";
+//require_once "timer.php";
 
 class ticketHandler{
     //Author: Feng Zhibin
@@ -42,9 +42,10 @@ class ticketHandler{
         $dataapi = new DataAPI();
       
         //Check if the activity is expired
+/*
         $timer = new Timer();
         $status = $timer->timeStatus($eventId);
-/*
+
         if($status == 2){
             $result->msgType = "text";
             $result->content = "抢票时间已过，请下次再来～";
