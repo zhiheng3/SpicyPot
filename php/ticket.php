@@ -40,10 +40,11 @@ class ticketHandler{
         $openId = $data->fromUserName;
         $eventId = intval(substr($data->eventKey, 5));
         $dataapi = new DataAPI();
-/*       
+      
         //Check if the activity is expired
         $timer = new Timer();
         $status = $timer->timeStatus($eventId, "ticket");
+
         if($status == "Expired"){
             $result->msgType = "text";
             $result->content = "抢票时间已过，请下次再来～";
@@ -54,7 +55,7 @@ class ticketHandler{
             $result->content = "还没到时间呢，你急什么～";
             return $result;
         }
-*/      
+      
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         //Return a 'text' message, consists of a page for ticket information
         $result->msgType = "text";
