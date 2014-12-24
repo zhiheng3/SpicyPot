@@ -44,10 +44,18 @@ else if($method == 'createActivity'){
 }
 
 else if($method == 'updateActivity'){
-//echo json_encode(array("state"=>"false","message"=>$_POST['name']));
+
     $activityUpdater = new ActivityUpdater();
     $updateResult = $activityUpdater->updateActivity();
     echo json_encode($updateResult);
+}
+
+else if($method == 'createSeats'){
+    $activity_id = $_POST['activity_id'];
+    $seatList = $_POST["seatList"];
+    $data = new dataAPI();
+    $result=$data -> createSeats($activity_id, $seatList);
+    echo json_encode($result);
 }
 
 else{

@@ -10,8 +10,6 @@
 $(document).ready(function(){
 	ClearTimeChoosen();
 
-	AdjustInput();
-
 	PreviewImg();
 
 	AutoStorage();
@@ -21,6 +19,10 @@ $(document).ready(function(){
 	});
 });
 
+$(document).on("click", "#publishBtn", function(){
+    CheckContentVaild();   
+    CheckTimeVaild();
+}); 
 
 
 
@@ -42,7 +44,7 @@ function ClearTimeChoosen(){
 
 function PreviewImg(){
 	$('[type=file]').change(function(e) {
-		var file = e.target.files[0]
+		var file = e.target.files[0];
 		PreviewPic(file);
 	});
 }
@@ -64,26 +66,37 @@ function CheckContentVaild(){
 	var ActPlace = $("#input-place").val();
 	var ActKey = $("#input-key").val();
 	var ActName = $("#input-name").val();
+    var TicketPerStudent = $('#input-ticket_per_student').val();
 	var flag = true;
 	if(!TicketNumber){
 		InputFocus("#input-total_tickets",'“总票数”不能为空！');
 		flag = false;
+        return false;
+	}
+    if(!TicketPerStudent){
+		InputFocus("#input-total_tickets",'“每人可选票数”不能为空！');
+		flag = false;
+        return false;
 	}
 	if(!ActDescription){
 		InputFocus("#input-description",'“活动简介”不能为空！');
 		flag = false;
+        return false;
 	}
 	if(!ActPlace){
 		InputFocus("#input-place",'“活动地点”不能为空！');
 		flag = false;
+        return false;
 	}
 	if(!ActKey){
 		InputFocus("#input-key",'“活动代称”不能为空！');
 		flag = false;
+        return false;
 	}
 	if(!ActName){
 		InputFocus("#input-name",'“活动名称”不能为空！');
 		flag = false;
+        return false;
 	}
 	return flag;
 }
@@ -137,15 +150,19 @@ function CheckTimeVaild(){
 	else{
 		if(!AE){
 			InputFocus("#Act-End",'“活动结束时间”不能为空！');
+            return false;
 		}	
 		if(!AS){
 			InputFocus("#Act-Start",'“活动开始时间”不能为空！');
+            return false;
 		}	
 		if(!RE){
 			InputFocus("#Rob-End",'“订票结束时间”不能为空！');
+            return false;
 		}				
 		if(!RS){
 			InputFocus("#Rob-Start",'“订票开始时间”不能为空！');
+            return false;
 		}
 		return false;
 	}
