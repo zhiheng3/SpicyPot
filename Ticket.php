@@ -30,6 +30,7 @@
     $activityid = $result['message']['activity_id'];
     $result2 = $dataapi->getActivityInfo($activityid);
     $studentid = $result['message']['student_id'];
+    
     if ($result['state'] == 'false' || $result2['state'] == 'false' || $studentid != $verify['message']){
 echo <<< EOT
     <div data-role="content" id = "Error">
@@ -44,14 +45,12 @@ EOT;
         else{
             $status = "已使用";
         }
-
         $qrfile = "qrcode/$ticketId.png";
         if(!file_exists($qrfile)){
             //Generate a QR Code if file doesn't exist
             $qrcode = new QRCodeGenerator();
             $qrcode->generate($studentid, $ticketId);
         }
-
         $activityname = $result2['message']['name'];
         $activitystage = $result2['message']['stage'];
         $starttime = $result2['message']['start_time'];
@@ -122,7 +121,7 @@ echo <<< EOT
     <div data-role="controlgroup" data-type="vertical">
         <a href="./Activity.php?id=$activityid" data-ajax="false" data-role="button" data-icon="info">活动详情</a>
 EOT;
-        if(!$result['message']['seat_location'] && $result2['message']['is_seat_selectable'] == 1){
+        if(!$result['message']['seat_location'] && $result2['message']['is_seat_selectable']){
 echo <<< EOT
         <a href="./Seat.php?activityid=$activityid&ticketid=$ticket_id&openid=$open_id" data-ajax="false" data-role="button" data-icon="grid">选座</a>
 EOT;
@@ -136,7 +135,7 @@ EOT;
 }
 ?>
 
-  <div data-role="footer" data-position="fixed" id="Footer">
+  <div data-role="footer" id="Footer">
   <h1>共青团清华大学委员会 &copy 2014</h1>
   </div>
 </div> 

@@ -57,7 +57,8 @@ function CreateSeat(Dom, args){
     SetSVGAttr(rect, "fill", args.fill);
     
     var r = parseInt(Math.min(args.width, args.height) / 4);
-    SetSVGAttr(rect, "stroke", "#ffffff");
+    //SetSVGAttr(rect, "stroke", "#000000");
+    SetSVGAttr(rect, "stroke-width", 0);
     SetSVGAttr(rect, "rx", r);
     SetSVGAttr(rect, "ry", r);
     

@@ -160,11 +160,9 @@ function EndMove(e){
     Args.move.start = false;
     if (typeof(e) == "undefined")
         return ;
-    if (!Args.move.moved){
+    if (!Args.move.moved && e.target.tagName != "svg"){
         Args.clickHandler(e.target.id);
     }
-    else
-        alert("moved");
 }
 
 function updateThumb(canvas, viewbox){
