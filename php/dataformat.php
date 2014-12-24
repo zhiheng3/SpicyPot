@@ -52,6 +52,7 @@ class Article{
 
 class Activity{
     var $name; //名称
+    var $brief_name;//简称
     var $start_time; //活动开始时间
     var $end_time; //活动结束时间
     var $ticket_start_time; //抢票开始时间

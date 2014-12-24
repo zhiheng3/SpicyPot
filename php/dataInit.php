@@ -1,11 +1,13 @@
 <?php
 require_once "dataAPI.php";
 $test = new DataAPI();
-$list = array();
+
+/*$list = array();
 for ($i=1;$i<32;$i++){
     $item = array("capability"=>1,"location"=>"1R".$i."C");
     array_push($list,$item);
 }
+*/
 //print_r($list);
 print_r($test->createSeats(84,$list));
 //echo($test->getStudentId("openid000000000000000003")["message"]."\n");
@@ -17,9 +19,24 @@ print_r($test->createSeats(84,$list));
 //echo($test->binding("openid000000000000000003", 2012010002)."\n");
 //echo($test->binding("openid000000000000000001", 2012010003, "binding")."\n");
 
+echo($test->updateActivity(86,array(
+	"name" => "马兰花开100场献礼",
+    "brief_name" => "马兰花开!",
+	"start_time" => "2014-11-11 08:00:00",
+	"end_time" => "2014-11-11 09:00:00",
+	"ticket_start_time" => "2014-11-2 19:00:00",
+	"ticket_end_time" =>  "2014-11-2 19:00:00",
+	"stage" => "新清华学堂",
+	"information" => "第五十场献礼！",
+	"ticket_number" => 500,
+	"ticket_per_student" => 3,
+	"is_seat_selectable" => 1
+))['message']);
+
 /*
 echo($test->createActivity(array(
-	"name" => "马兰花开",
+	"name" => "马兰花开100场献礼",
+    "brief_name" => "马兰花开",
 	"start_time" => "2014-11-11 08:00:00",
 	"end_time" => "2014-11-11 09:00:00",
 	"ticket_start_time" => "2014-11-2 19:00:00",
