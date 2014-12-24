@@ -124,7 +124,6 @@ class ActivityUpdater{
             $count = count($activityList);
             $i = 0;
             for($i; $i < $count; $i++){
-                echo $activityList[$i]["key"];
                 if($activityList[$i]["key"] == "TAKE_$activityId"){
                     $activityList[$i]["name"] = $_POST["name"];
                     break;
