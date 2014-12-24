@@ -152,7 +152,7 @@ Move Event
 function StartMove(x, y){
     if (Args.move.start)
         return ;
-    alert(x + " " + y);
+    //alert(x + " " + y);
     Args.move.x = x;
     Args.move.y = y;
     Args.move.start = true;
@@ -184,10 +184,47 @@ function EndMove(e){
     }
 }
 
-function updateThumb(canvas, viewbox){
-    var tmp = $("#svg_seat").clone();
+function CreateThumb(CanvasDom, SourceDom, x, y, width){
+    var canvas = $("<div></div>");
+    canvas.css("position", "absolute");
+    canvas.css("left", x);
+    canvas.css("top", y);
+    
+    var w = $(SourceDom).attr("maxw");
+    var h = $(SourceDom).attr("maxh");
+    
+    canvas.css("width", width);
+    canvas.css("height", parseInt(h * width / w));
+    canvas.css("background-color", "white");
+    canvas.css("border", "1px solid");
+    canvas.css("z-index", 100);
+    canvas.css("overflow", "hidden");
+    $(CanvasDom).append(canvas);
+    
+    var tmp = $(SourceDom).parent().html();
+    $(canvas).html(tmp);
+    var thumb = $(canvas).children();
+    thumb[0].id = "svg_thumb";
+    thumb.width("100%");
+    thumb.height("100%");
+    ViewBox(thumb[0], 0, 0, thumb.attr("maxw"), thumb.attr("maxh"));
+}
+
+/*
+viewbox : Object() x y width height
+*/
+
+function UpdateThumb(SourceDom, ThumbDom, viewbox){
+    var tmp = $(SourceDom).parent().html();
+    $(ThumbDom).html(tmp);
+    var thumb = $(ThumbDom).children();
+    thumb.width("100%");
+    thumb.height("100%");
+    ViewBox(thumb[0], 0, 0, thumb.attr("maxw"), thumb.attr("maxh"));
+    
+    /*
     $("#test").empty();
-    $("#test").append(tmp);
+    $("#test").append(tmp);*/
 }
 
 $(document).ready(function(){
