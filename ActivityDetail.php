@@ -260,6 +260,9 @@
 </div>
 </script>
 <?php echo "<script>$(document).on('click', '#updateBtn', function(){
+    var timeValid = checkTimeValid();
+    var contentValid = checkContentValid();
+    if(!timeValid || !contetnValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
@@ -282,15 +285,9 @@
 ?>
 <script>
 $(document).on("click", "#publishBtn", function(){
- 
-    createActivity();
-    /*
-    $.post("./mask.php", {"method": "createActivity", "name": $("#input-name").val(), "key": $("#input-key").val(), "place": $("#input-place").val(), "description": $("#input-description").val(), "total_tickets": $("#input-total_tickets").val(), "Rob-Start": dateCorrection($("#Rob-Start").val()), "Rob-End": dateCorrection($("#Rob-End").val()), "Act-Start": dateCorrection($("#Act-Start").val()), "Act-End": dateCorrection($("#Act-End").val()), "pic_upload": $("#input-pic_upload").val(), "seat_status": $("#input-seat_status").val() }, function(data){
-        var result = JSON.parse(data);
-        if(result["state"] == "true") $("#test_message").text("成功， id = " + result["message"]);
-        else $("#test_message").text("失败" + result["message"]);
-    });
-    */
+    var timeValid = checkTimeValid();
+    var contentValid = checkContentValid();
+    if(timeValid && contetnValid) createActivity();
 });
 
 function createActivity(){
