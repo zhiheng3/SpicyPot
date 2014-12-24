@@ -20,8 +20,8 @@ $(document).ready(function(){
 });
 
 $(document).on("click", "#publishBtn", function(){
-    CheckContentVaild();   
-    CheckTimeVaild();
+    CheckContentValid();   
+    CheckTimeValid();
 }); 
 
 
@@ -60,7 +60,7 @@ function PreviewPic(file) {
 	}
 }
 
-function CheckContentVaild(){
+function CheckContentValid(){
 	var TicketNumber = $("#input-total_tickets").val();
 	var ActDescription = $("#input-description").val();
 	var ActPlace = $("#input-place").val();
@@ -104,7 +104,7 @@ function CheckContentVaild(){
 	return flag;
 }
 
-function CheckTimeVaild(){
+function CheckTimeValid(){
 	var RS = $("#Rob-Start").val();
 	var RE = $("#Rob-End").val();
 	var AS = $("#Act-Start").val();
