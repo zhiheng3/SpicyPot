@@ -3,6 +3,7 @@ require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
 require_once "createActivity.php";
 require_once "updateActivity.php";
+require_once "./php/activity.php";
 
 $method = $_POST['method'];
 if ($method == 'unbind'){
@@ -47,6 +48,10 @@ else if($method == 'deleteActivity'){
 	$data = new DataAPI();
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
+    
+    $activityManager = new ActivityManager();
+    $activityManager->clearActivity($activityId);
+    
     if($result["state"] == "true") $result["message"] = "success";
     echo json_encode($result);
 }

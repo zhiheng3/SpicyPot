@@ -83,9 +83,9 @@
             <div class="form-group " id = "Title">
                     “紫荆之声”活动管理系统&nbsp&nbsp
                 <a href='login.php?action=logout'>
-                    <botton type='button' class='btn btn-default btn-sm' id='aa' title="注销">
+                    <button type='button' class='btn btn-default btn-sm' id='aa' title="注销">
 			            <span class='glyphicon glyphicon-log-out'> </span> 
-			        </botton>
+			        </button>
                 </a>
             </div>
             <div class="form-group">

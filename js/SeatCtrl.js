@@ -150,6 +150,8 @@ function TouchendHandler(e){
 Move Event
 */
 function StartMove(x, y){
+    if (Args.move.start)
+        return ;
     Args.move.x = x;
     Args.move.y = y;
     Args.move.start = true;
@@ -171,6 +173,8 @@ function ProcessMove(x, y, Dom){
 }
 
 function EndMove(e){
+    if (!Args.move.start)
+        return ;
     Args.move.start = false;
     if (typeof(e) == "undefined")
         return ;
