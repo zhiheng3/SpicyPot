@@ -2,12 +2,12 @@ body{
 	background-color: #E0E0E0;
 }
 
-#TicketLeft{
+#TicketLeft,#TicketPerStudent{
 	color: red;
 	font-size: 1.4em;
 }
 
-#TicketLeftNumber{
+#TicketLeftNumber,#Ticket_PerStudent{
 	font-size: 1em;
 }
 
@@ -52,7 +52,7 @@ body{
 	font-size: 0.8em;
 }
 
-#RobStartTime,#RobEndTime,#TicketLeft,#ActivityStartTime,#ActivityEndTime,#ActivityPlace{
+#RobStartTime,#RobEndTime,#TicketLeft,#ActivityStartTime,#ActivityEndTime,#ActivityPlace,#TicketPerStudent{
 	font-size: 1em;
 }
 

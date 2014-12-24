@@ -42,6 +42,7 @@
             $location = $result['message']['stage'];
             $ticketStartTime = $result['message']['ticket_start_time'];
             $ticketEndTime = $result['message']['ticket_end_time'];
+            $ticketPerStudent = $result['message']['ticket_per_student'];
         }
     ?>
 	<div data-role="page" data-theme="a" id="pageone">
@@ -84,6 +85,17 @@
 	       			</p>
 	       		</a>
 	       	</li>
+
+            <li data-icon="false">
+	       		<a>
+	       			<img src="./img/Ticket.png">
+	       			<p id = "Ticket_PerStudent">
+	       				<span>每人可选: </span>
+	       				<span id = "TicketPerStudent"><?php echo $ticketPerStudent;?></span> 张
+	       			</p>
+	       		</a>
+	       	</li>
+
 	        <li data-icon="false">
 	        	<a>
 	        		<img src="./img/Place.png">
