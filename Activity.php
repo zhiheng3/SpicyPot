@@ -62,41 +62,55 @@
 	    	</li>
 	       <li data-icon="false" >
 	       		<a>
-	       			<img src="./img/RobTime.png">抢票开始时间：
-	       			<p><span id = "RobStartTime" ><?php echo $ticketStartTime;?></span></p>
+	       			<img src="./img/RobTime.png">
+	       			<span>抢票开始时间：</span>
+	       			<p id = "RobStartTime" ><?php echo $ticketStartTime;?></p>
 
 	       		</a>
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
-	       			<img src="./img/RobTime.png">抢票结束时间：
-	       			<p><span id = "RobEndTime"><?php echo $ticketEndTime;?></span></p>
+	       			<img src="./img/RobTime.png">
+	       			<span>抢票结束时间：</span>
+	       			<p id = "RobEndTime"><?php echo $ticketEndTime;?></p>
 	       		</a>
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
 	       			<img src="./img/Ticket.png">
-	       			<p id = "TicketLeftNumber">当前余票: <span id = "TicketLeft"><?php echo $remain;?></span> 张</p>
+	       			<p id = "TicketLeftNumber">
+	       				<span>当前余票: </span>
+	       				<span id = "TicketLeft"><?php echo $remain;?></span> 张
+	       			</p>
 	       		</a>
 	       	</li>
-	        <li id = "ActivityPlace" data-icon="false">
+	        <li data-icon="false">
 	        	<a>
 	        		<img src="./img/Place.png">
-	        		<p>活动地点：<?php echo $location;?></p>
+	        		<p id = "ActivityPlace">
+	        			<span>活动地点：</span><?php echo $location;?>
+	        		</p>
 	        	</a>
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/ActivityTime.png">活动开始时间：
-	        		<p><span id = "ActivityStartTime"><?php echo $startTime;?></span></p>
+	        		<img src="./img/ActivityTime.png">
+	        		<span>活动开始时间：</span>
+	        		<p id = "ActivityStartTime"><?php echo $startTime;?></p>
 	        	</a>
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/ActivityTime.png">活动结束时间：
-	        		<p><span id = "ActivityEndTime"><?php echo $endTime;?></span></p>
+	        		<img src="./img/ActivityTime.png">
+	        		<span>活动结束时间：</span>
+	        		<p id = "ActivityEndTime"><?php echo $endTime;?></p>
 	        	</a>
 	        </li>
+	         <li data-role="collapsible">
+	            <h1>活动简述</h1>
+	            <textarea readonly="readonly" id = "ActDescription">&nbsp;&nbsp;&nbsp;&nbsp;
+	            </textarea>
+	        </li>	        
 	         <li data-role="collapsible">
 	            <h1>活动预览</h1>
 	            <p>暂无图片</p>
