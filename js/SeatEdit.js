@@ -69,6 +69,25 @@ function CreateSeat(Dom, args){
     return rect;
 }
 
+function CreateViewRect(Dom){
+    var svgns = "http://www.w3.org/2000/svg";
+    var rect = document.createElementNS(svgns, "rect");
+    
+    SetSVGAttr(rect, "stroke", "#FF0000");
+    SetSVGAttr(rect, "stroke-width", 1);
+    SetSVGAttr(rect, "fill", "none");
+    SetSVGAttr(rect, "id", "thumb_viewrect");
+    
+    $(Dom).append(rect);
+}
+
+function ModifyViewRect(x, y, w, h){
+    var Dom = $("#thumb_viewrect")[0];
+    SetSVGAttr(Dom, "x", x + 2);
+    SetSVGAttr(Dom, "y", y + 2);
+    SetSVGAttr(Dom, "width", w - 4);
+    SetSVGAttr(Dom, "height", h - 4);
+}
 /*
 Save Seats SVG
 Param: DOM
@@ -85,10 +104,9 @@ Param: DOM, string
 function LoadSVG(Dom, svgtext){
     $(Dom).html(svgtext);
     var svg = $(Dom).children();
-    AddMoveListener(svg);
+    //AddMoveListener(svg);
     return svg;
 }
-
 
 /*
 

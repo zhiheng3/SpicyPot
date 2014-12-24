@@ -14,7 +14,9 @@ function ViewBox(Dom, x, y, w, h){
         viewbox.baseVal.y = y;
         viewbox.baseVal.width = w;
         viewbox.baseVal.height = h;
-        $(Dom).prop("viewBox", viewbox); 
+        $(Dom).prop("viewBox", viewbox);
+        if (Args.thumb)
+            ModifyViewRect(x, y, w, h);
     }
 }
 
@@ -185,6 +187,7 @@ function EndMove(e){
 }
 
 function CreateThumb(CanvasDom, SourceDom, x, y, width){
+    
     var canvas = $("<div></div>");
     canvas.css("position", "absolute");
     canvas.css("left", x);
@@ -196,7 +199,6 @@ function CreateThumb(CanvasDom, SourceDom, x, y, width){
     canvas.css("width", width);
     canvas.css("height", parseInt(h * width / w));
     canvas.css("background-color", "white");
-    canvas.css("border", "1px solid");
     canvas.css("z-index", 100);
     canvas.css("overflow", "hidden");
     $(CanvasDom).append(canvas);
@@ -208,6 +210,13 @@ function CreateThumb(CanvasDom, SourceDom, x, y, width){
     thumb.width("100%");
     thumb.height("100%");
     ViewBox(thumb[0], 0, 0, thumb.attr("maxw"), thumb.attr("maxh"));
+    
+    CreateViewRect(thumb[0]);
+    Args.thumb = true;
+}
+
+function ViewBoxThumb(x, y, w, h){
+    
 }
 
 /*
@@ -238,4 +247,5 @@ $(document).ready(function(){
     Args.zoom = Object();
     Args.zoom.minscale = 1;
     Args.zoom.maxscale = 1;
+    Args.thumb = false;
 });

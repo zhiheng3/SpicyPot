@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/jquery.mobile-1.4.5.min.js"></script>
-<script src="./js/SeatCtrl.js"></script>
 <script src="./js/SeatEdit.js"></script>
+<script src="./js/SeatCtrl.js"></script>
 <script src="./js/Seat.js"></script>
 </head>
 <body>
