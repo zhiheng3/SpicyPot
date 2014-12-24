@@ -12,7 +12,7 @@ $(document).ready(function(){
 
 	PreviewImg();
 
-	AutoStorage();
+	//AutoStorage();
 
 	$("#resetBtn").click(function(e){
 		$("#Preview").empty();

@@ -43,6 +43,14 @@ else if($method == 'createActivity'){
     echo json_encode($createResult);
 }
 
+else if($method == 'deleteActivity'){
+	$data = new DataAPI();
+    $activityId = $_POST['id'];
+    $result = $data->dropActivity($activityId);
+    if($result["state"] == "true") $result["message"] = "success";
+    echo json_encode($result);
+}
+
 else if($method == 'updateActivity'){
 
     $activityUpdater = new ActivityUpdater();

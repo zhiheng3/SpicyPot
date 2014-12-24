@@ -108,10 +108,14 @@
     });
     
     function doDelete(id){
+    /*
         <?php
            echo"$.post('delete_activity.php',{id:id},function(data){alert(data);location.reload(true);});";
         ?>
-
+    */
+        <?php
+            echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){var result = JSON.parse(data); alert(result[\"message\"]); location.reload(true);});";
+        ?>
     }
 
     

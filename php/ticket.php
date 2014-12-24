@@ -43,19 +43,19 @@ class ticketHandler{
       
         //Check if the activity is expired
         $timer = new Timer();
-        $status = $timer->timeStatus($eventId, "ticket");
-
-        if($status == "Expired"){
+        $status = $timer->timeStatus($eventId);
+/*
+        if($status == 2){
             $result->msgType = "text";
             $result->content = "抢票时间已过，请下次再来～";
             return $result;
         }
-        else if($status == "Premature"){
+        else if($status == 0){
             $result->msgType = "text";
             $result->content = "还没到时间呢，你急什么～";
             return $result;
         }
-      
+*/     
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         //Return a 'text' message, consists of a page for ticket information
         $result->msgType = "text";
