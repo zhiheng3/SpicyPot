@@ -31,9 +31,9 @@
         ?>
         </div>
         <div data-role="controlgroup" data-type="horizontal">
-            <a href="javascript:Zoom($('#svg_seat')[0], 0.9);" data-role="button" id="zoomin">放大</a>
-            <a href="javascript:Zoom($('#svg_seat')[0], 1.1);" data-role="button" id="zoomout">缩小</a>
-            <a href="javascript:Zoom($('#svg_seat')[0], 1000);" data-role="button" id="reset">恢复</a>
+            <a href="javascript:Zoom($('#svg_seat')[0], -0.25);" data-role="button" id="zoomin">放大</a>
+            <a href="javascript:Zoom($('#svg_seat')[0], 0.25);" data-role="button" id="zoomout">缩小</a>
+            <a href="javascript:InitViewBox($('#svg_seat')[0]);" data-role="button" id="reset">恢复</a>
         </div>
     </div>
     <ul data-role="listview" data-inset="true">

@@ -18,6 +18,11 @@ function ViewBox(Dom, x, y, w, h){
     }
 }
 
+function InitViewBox(Dom){
+    var svg = $(Dom)[0];
+    ViewBox(svg, 0, 0, parseInt($(svg).width()), parseInt($(svg).height()));
+}
+
 /*
 Move SVG
 Param: DOM, int, int, Bool
@@ -48,13 +53,31 @@ Param: DOM, double, int, int
 */
 function Zoom(Dom, rate, centerX, centerY){
     var viewbox = ViewBox(Dom);
-    var width = viewbox.width * rate;
-    var height = viewbox.height * rate;
-    var maxW = $(Dom).attr("maxw");
-    var maxH = $(Dom).attr("maxh");
+    var viewW = $(Dom).width();
+    var viewH = $(Dom).height();
+    var width = viewbox.width + viewW * rate;
+    var height = viewbox.height + viewH * rate;
     
-    if (width > maxW || height > maxH){
-        ViewBox(Dom, 0, 0, maxW, maxH);
+    centerX = viewbox.x + viewbox.width / 2;
+    centerY = viewbox.y + viewbox.height / 2;
+    
+    var aspect = width / height;
+    
+    if (width * Args.zoom.minscale > viewW){
+        width = viewW / Args.zoom.minscale;
+        height = width / aspect;
+    }
+    if (height * Args.zoom.minscale > viewH){
+        height = viewH / Args.zoom.minscale;
+        width = height * aspect;
+    }
+    if (width * Args.zoom.maxscale < viewW){
+        width = viewW / Args.zoom.maxscale;
+        height = width / aspect;
+    }
+    if (height * Args.zoom.maxscale < viewH){
+        height = viewH / Args.zoom.maxscale;
+        width = height * aspect;
     }
     else if (centerX == undefined || centerY == undefined){
         ViewBox(Dom, viewbox.x, viewbox.y, width, height);
@@ -62,6 +85,7 @@ function Zoom(Dom, rate, centerX, centerY){
     else{
         ViewBox(Dom, centerX - width / 2, centerY - height / 2, width, height);
     }
+    Move(Dom, 0, 0);
 }
 
 function AddMoveListener(Dom){
@@ -74,16 +98,6 @@ function AddMoveListener(Dom){
     $(Dom).on("touchmove", TouchmoveHandler);
     $(Dom).on("touchend", TouchendHandler);
 }
-
-/*
-callback: function, param: seatname
-*/
-function AddSeatClickListener(Dom, callback){
-    $(Dom).on("click", ".seat_able", function(e){
-        if (Args.move.moved)
-            return false;
-    });
-} 
 
 /*
 Mouse Handler
@@ -171,9 +185,6 @@ function updateThumb(canvas, viewbox){
     $("#test").append(tmp);
 }
 
-function drawViewBox(canvas, viewbox){
-}
-
 $(document).ready(function(){
     //Init
     Args = Object();
@@ -182,5 +193,7 @@ $(document).ready(function(){
     Args.move.moved = false;
     Args.move.x = 0;
     Args.move.y = 0;
-    Args.clickHandler = function (id) {alert(id);};
+    Args.zoom = Object();
+    Args.zoom.minscale = 1;
+    Args.zoom.maxscale = 1;
 });
