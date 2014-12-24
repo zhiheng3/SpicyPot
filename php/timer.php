@@ -2,26 +2,36 @@
 
 require_once "dataAPI.php";
 require_once "dataformat.php";
+require_once "menu.php";
+require_once "activity.php";
 
-class Timer{  
-    public function timeStatus($activityId, $mode){
-        date_default_timezone_set("Asia/Shanghai");
-        $dataapi = new DataAPI();
-        $activity = $dataapi->getActivityInfo($activityId);
-        if($activity["state"] == "true"){
-            if($mode == "ticket"){
-                $expireTime = $activity["message"]["ticket_end_time"];
-                $prematureTime = $activity["message"]["ticket_start_time"];
-            }
-            else if($mode == "activity"){
-                $expireTime = $activity["message"]["end_time"];
-                $prematureTime = $activity["message"]["start_time"];
-            }
+$timer = new Timer();
+$timer->runTimer();
 
-            if(strtotime(date("Y-m-d H:i:s")) > strtotime($expireTime)) return "Expired";
-            else if(strtotime(date("Y-m-d H:i:s")) < strtotime($prematureTime)) return "Premature";
-            else return "OK";
-        }
+class Timer{
+
+    //Author: Feng Zhibin
+    //Run the timer
+    //params: none
+    //return: none
+    public function runTimer(){
+        ignore_user_abort();
+        set_time_limit(0);
+        $timer = new Timer();
+        $start = time();
+        $interval = 30;//Run every $interval seconds
+        $count = 1;
+        $menuManager = new MenuManager();
+        $activityManager = new ActivityManager();
+        do{
+            if(time() - $start > 600) break;
+            echo "Scan $count\n";
+            $count++;
+            $menuManager->clearMenu();
+            $activityManager->updateActivityState();
+            $activityManager->distributeSeat();
+            sleep($interval);//Wait for $interval seconds
+        }while(true);
     }
 }
 ?>
