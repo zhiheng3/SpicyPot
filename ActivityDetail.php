@@ -262,7 +262,7 @@
 <?php echo "<script>$(document).on('click', '#updateBtn', function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
-    if(!timeValid || !contetnValid) return;
+    if(!timeValid || !contentValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
