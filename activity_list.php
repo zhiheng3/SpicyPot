@@ -41,7 +41,7 @@
 			        </botton>
                 </a>
             </div>
-            <a href='activity_detail.php'>
+            <a href='ActivityDetail.php'>
                 <botton type='button' class='btn btn-default btn-sm' id='aa'>
 			        <span class='glyphicon glyphicon-plus'> </span> 创建活动
 			    </botton>
@@ -77,7 +77,7 @@
 				$state = $stateList[$activity['state']];
                 $stateLabel = $labelList[$activity['state']];
 				echo "
-						<a href='activity_detail.php?id=$activity_id' class='list-group-item'>
+						<a href='ActivityDetail.php?id=$activity_id' class='list-group-item'>
          
 							<span class='col-lg-2'>$name</span>
 							<span class='col-sm-2'><span class='label label-$stateLabel'>$state</span></span>
@@ -102,7 +102,6 @@
 <script type="text/javascript" src="../js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="../js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
 <script type="text/javascript" src="../js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../js/ActivityDetail.js"></script>
 <script type="text/javascript">
     $(".delete").click(function(event){
         return false;

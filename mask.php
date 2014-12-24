@@ -2,6 +2,7 @@
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
 require_once "createActivity.php";
+require_once "updateActivity.php";
 
 $method = $_POST['method'];
 if ($method == 'unbind'){
@@ -40,6 +41,13 @@ else if($method == 'createActivity'){
     $activityCreater = new ActivityCreater();
     $createResult = $activityCreater->createActivity();
     echo json_encode($createResult);
+}
+
+else if($method == 'updateActivity'){
+//echo json_encode(array("state"=>"false","message"=>$_POST['name']));
+    $activityUpdater = new ActivityUpdater();
+    $updateResult = $activityUpdater->updateActivity();
+    echo json_encode($updateResult);
 }
 
 else{
