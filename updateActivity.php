@@ -122,14 +122,24 @@ class ActivityUpdater{
         }
         else{
             $count = count($activityList);
-
-            for($i = $count - 1; $i >= 0; $i--){
-                if($i < 4) $activityList[$i + 1] = $activityList[$i];
+            $i = 0;
+            for($i; $i < $count; $i++){
+                if($activityList[0]["key"] == "TAKE_$activityId"){
+                    $activityList[0]["name"] = $_POST["name"];
+                    break;
+                }
             }
+            if($i == $count){
+                $feedback["state"] = "false";
+                $feedback["message"] = "Activity not found in menu!";
+                return $feedback;
+            }
+            /*
             $activityList[0]["type"] = "click";
             $activityList[0]["name"] = $_POST["name"];
             $activityList[0]["key"] = "TAKE_$activityId";
             $activityList[0]["sub_button"] = array();
+            */
             $result["menu"]["button"][1]["sub_button"] = $activityList;
         }
 
