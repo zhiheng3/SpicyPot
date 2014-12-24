@@ -2,11 +2,12 @@
 /**
   * Deal with requests for tickets
   * Author: Feng Zhibin
-  * Last modified: 2014.12.16
+  * Last modified: 2014.12.24
   */
 
 require_once "dataformat.php";
 require_once "dataAPI.php";
+require_once "timer.php";
 
 class ticketHandler{
     //Author: Feng Zhibin
@@ -39,6 +40,22 @@ class ticketHandler{
         $openId = $data->fromUserName;
         $eventId = intval(substr($data->eventKey, 5));
         $dataapi = new DataAPI();
+      
+        //Check if the activity is expired
+        $timer = new Timer();
+        $status = $timer->timeStatus($eventId, "ticket");
+
+        if($status == "Expired"){
+            $result->msgType = "text";
+            $result->content = "抢票时间已过，请下次再来～";
+            return $result;
+        }
+        else if($status == "Premature"){
+            $result->msgType = "text";
+            $result->content = "还没到时间呢，你急什么～";
+            return $result;
+        }
+      
         $ticketResult = $dataapi->takeTicket($openId, $eventId);
         //Return a 'text' message, consists of a page for ticket information
         $result->msgType = "text";

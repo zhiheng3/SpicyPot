@@ -68,18 +68,16 @@ function CheckContentVaild(){
 	var ActName = $("#input-name").val();
     var TicketPerStudent = $('#input-ticket_per_student').val();
 	var flag = true;
-	if(!TicketNumber){
-		InputFocus("#input-total_tickets",'“总票数”不能为空！');
+
+
+	if(!ActName){
+		InputFocus("#input-name",'“活动全称”不能为空！');
 		flag = false;
         return false;
 	}
-    if(!TicketPerStudent){
-		InputFocus("#input-total_tickets",'“每人可选票数”不能为空！');
-		flag = false;
-        return false;
-	}
-	if(!ActDescription){
-		InputFocus("#input-description",'“活动简介”不能为空！');
+
+	if(!ActKey){
+		InputFocus("#input-key",'“活动简称”不能为空！');
 		flag = false;
         return false;
 	}
@@ -87,17 +85,22 @@ function CheckContentVaild(){
 		InputFocus("#input-place",'“活动地点”不能为空！');
 		flag = false;
         return false;
-	}
-	if(!ActKey){
-		InputFocus("#input-key",'“活动代称”不能为空！');
+	}	
+	if(!ActDescription){
+		InputFocus("#input-description",'“活动简介”不能为空！');
 		flag = false;
         return false;
-	}
-	if(!ActName){
-		InputFocus("#input-name",'“活动名称”不能为空！');
+	}	
+    if(!TicketPerStudent){
+		InputFocus("#input-ticket_per_student",'“每人可选票数”不能为空！');
 		flag = false;
         return false;
-	}
+	}			
+	if(!TicketNumber){
+		InputFocus("#input-total_tickets",'“总票数”不能为空！');
+		flag = false;
+        return false;
+	}	
 	return flag;
 }
 
@@ -170,6 +173,7 @@ function CheckTimeVaild(){
 
 function InputFocus(id,text){
 	var waring = '<span style="color:red;">' + text + '</span>'
+	$(id).popover('destroy');
 	$(id).popover({
         html: true,
         placement: 'top',
@@ -178,6 +182,7 @@ function InputFocus(id,text){
         trigger: 'focus',
         container: 'body'
     });
+    $(id).popover('show');
     $(id).focus();	
 }
 
