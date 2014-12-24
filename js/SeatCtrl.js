@@ -186,34 +186,7 @@ function EndMove(e){
     }
 }
 
-function CreateThumb(CanvasDom, SourceDom, x, y, width){
-    
-    var canvas = $("<div></div>");
-    canvas.css("position", "absolute");
-    canvas.css("left", x);
-    canvas.css("top", y);
-    
-    var w = $(SourceDom).attr("maxw");
-    var h = $(SourceDom).attr("maxh");
-    
-    canvas.css("width", width);
-    canvas.css("height", parseInt(h * width / w));
-    canvas.css("background-color", "white");
-    canvas.css("z-index", 100);
-    canvas.css("overflow", "hidden");
-    $(CanvasDom).append(canvas);
-    
-    var tmp = $(SourceDom).parent().html();
-    $(canvas).html(tmp);
-    var thumb = $(canvas).children();
-    thumb[0].id = "svg_thumb";
-    thumb.width("100%");
-    thumb.height("100%");
-    ViewBox(thumb[0], 0, 0, thumb.attr("maxw"), thumb.attr("maxh"));
-    
-    CreateViewRect(thumb[0]);
-    Args.thumb = true;
-}
+
 
 function ViewBoxThumb(x, y, w, h){
     
@@ -248,4 +221,6 @@ $(document).ready(function(){
     Args.zoom.minscale = 1;
     Args.zoom.maxscale = 1;
     Args.thumb = false;
+    
+    Args.timeout = 0;
 });

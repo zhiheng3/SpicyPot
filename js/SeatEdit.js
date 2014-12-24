@@ -69,6 +69,36 @@ function CreateSeat(Dom, args){
     return rect;
 }
 
+function CreateThumb(CanvasDom, SourceDom, x, y, width){
+    
+    var canvas = $("<div id='canvas_thumb'></div>");
+    canvas.css("position", "absolute");
+    canvas.css("display", "none");
+    canvas.css("left", x);
+    canvas.css("top", y);
+    
+    var w = $(SourceDom).attr("maxw");
+    var h = $(SourceDom).attr("maxh");
+    
+    canvas.css("width", width);
+    canvas.css("height", parseInt(h * width / w));
+    canvas.css("background-color", "white");
+    canvas.css("z-index", 100);
+    canvas.css("overflow", "hidden");
+    $(CanvasDom).append(canvas);
+    
+    var tmp = $(SourceDom).parent().html();
+    $(canvas).html(tmp);
+    var thumb = $(canvas).children();
+    thumb[0].id = "svg_thumb";
+    thumb.width("100%");
+    thumb.height("100%");
+    ViewBox(thumb[0], 0, 0, thumb.attr("maxw"), thumb.attr("maxh"));
+    
+    CreateViewRect(thumb[0]);
+    Args.thumb = true;
+}
+
 function CreateViewRect(Dom){
     var svgns = "http://www.w3.org/2000/svg";
     var rect = document.createElementNS(svgns, "rect");
@@ -87,6 +117,10 @@ function ModifyViewRect(x, y, w, h){
     SetSVGAttr(Dom, "y", y + 2);
     SetSVGAttr(Dom, "width", w - 4);
     SetSVGAttr(Dom, "height", h - 4);
+    
+    $("#canvas_thumb").css("display", "block");
+    clearTimeout(Args.timeout);
+    Args.timeout = setTimeout(function(){$("#canvas_thumb").css("display", "none");}, 2000);
 }
 /*
 Save Seats SVG

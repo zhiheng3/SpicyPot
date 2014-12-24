@@ -22,7 +22,7 @@
         <h1>座位示意图</h1>
         <img src="./img/seat2.png" style="width:100%;height:auto"/>
     </div>
-    <div data-role="collapsible" data-collapsed="false">
+    <div data-role="collapsible" data-collapsed="false" id="thumbpos">
         <h1>选座</h1>
         <div id="canvas">
         <?php

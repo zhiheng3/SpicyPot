@@ -15,7 +15,7 @@ $(document).ready(function(){
     
     Args.clickHandler = ClickHandler;
     
-    CreateThumb($("#canvas").parent()[0], $("#svg_seat")[0], 20, 60, 312)
+    CreateThumb($("#thumbpos")[0], $("#svg_seat")[0], $("#thumbpos")[0].offsetLeft, $("#thumbpos")[0].offsetTop - 30, $("#thumbpos").width());
     Update("请选择座位后点击确定");
     
 });
