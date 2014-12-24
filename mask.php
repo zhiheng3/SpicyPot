@@ -50,7 +50,7 @@ else if($method == 'deleteActivity'){
     $result = $data->dropActivity($activityId);
     
     $menuManager = new MenuManager();
-    $menuManager->clearActivity($activityId);
+    $menuManager->clearActivity($activityId, "access_token", "./log/token_log");
     
     if($result["state"] == "true") echo "success";
     else echo "failed";
