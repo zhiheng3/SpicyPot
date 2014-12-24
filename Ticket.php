@@ -103,8 +103,8 @@ echo <<< EOT
         </li>
         <li data-icon="false">
             <a>
-                <img src="./img/Seat.png"><span>座位: </span>
-                <p>$seatInfo</p>
+                <img src="./img/Seat.png">
+                <p><span>座位</span>: $seatInfo</p>
             </a>
         </li>
         <li data-icon="false"> 

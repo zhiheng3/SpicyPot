@@ -1,15 +1,22 @@
 $(document).ready(function(){
-    AddMoveListener($("#svg_seat"));
+    var svg = $("#svg_seat")[0];
+    SetSVGAttr(svg, "width", "100%");
+    InitViewBox(svg);
+    
+    AddMoveListener(svg);
     Args.remain = Array();
     Args.color = Object();
     Args.color.valid = "#88ff88";
     Args.color.invalid = "#bbbbbb";
     Args.color.selected = "#ff8888";
     Args.selected = "";
+    Args.zoom.maxscale = 2;
+    Args.zoom.minscale = 1;
     
     Args.clickHandler = ClickHandler;
     
     Update("请选择座位后点击确定");
+    
 });
 
 function ClickHandler(seatname){
@@ -70,7 +77,7 @@ function Update(successMsg){
                 }
                 Unselect();
                 Draw();
-                Zoom($('#svg_seat')[0], 1000);
+                InitViewBox($("#svg_seat")[0]);
             }
             else{
                 Message(result["message"]);
