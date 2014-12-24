@@ -59,7 +59,7 @@ class TimeHandler{
     
     public function clearActivity($activityId){
         $tokenTaker = new AccessToken();
-        $accessToken = $tokenTaker->getAccessToken("access_token", "log/token_log");
+        $accessToken = $tokenTaker->getAccessToken("../access_token", "../log/token_log");
         $menu = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=$accessToken");
         $result = json_decode($menu, true);
         
@@ -112,6 +112,7 @@ class TimeHandler{
     public function updateActivityState(){
         $dataapi = new DataAPI();
         $updateResult = $dataapi->updateActivityState(date("Y-m-d H:i:s"));
+        echo "State updated.\n";
         return $updateResult;
     }
     
