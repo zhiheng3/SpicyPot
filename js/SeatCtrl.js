@@ -103,7 +103,7 @@ function AddMoveListener(Dom){
 Mouse Handler
 */
 function MousedownHandler(e){
-    console.log("Mousedown");
+    alert("Mousedown");
     StartMove(e.clientX, e.clientY);
     e.preventDefault();
 }
@@ -127,7 +127,7 @@ function MouseleaveHandler(e){
 Touch Handler
 */
 function TouchstartHandler(e){
-    console.log("Touchdown");
+    alert("Touchdown");
     var touches = e.originalEvent.targetTouches;
     if (touches.length == 1){
         StartMove(touches[0].clientX, touches[0].clientY);
