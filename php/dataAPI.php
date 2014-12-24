@@ -151,6 +151,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//参数: 一个数组，各项分别是：
 		/*
   		name char(60),  			#活动名称
+        brief_name char(50),  		#活动简称
 		start_time datetime,		#活动开始时间
 		end_time datetime,			#活动结束时间
 		ticket_start_time datetime,	#抢票开始时间
@@ -174,6 +175,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		mysql_query("SET NAMES UTF8");
 		mysql_select_db("wx9_db", $con);
         $name = $activity["name"];
+        $brief_name = $activity["brief_name"];
 		$start_time = $activity["start_time"];
 		$end_time = $activity["end_time"];
 		$ticket_start_time = $activity["ticket_start_time"];
@@ -187,7 +189,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		$is_seat_selectable = $activity["is_seat_selectable"];
 
         //插入活动    
-        if (!mysql_query("INSERT INTO activity 	(name,start_time,end_time,ticket_start_time,ticket_end_time,state,stage,information,ticket_number,ticket_available_number,ticket_per_student,is_seat_selectable)  VALUES ('".$name."','".$start_time."','".$end_time."','".$ticket_start_time."','".$ticket_end_time."',$state,'".$stage."','".$information."',$ticket_number,$ticket_available_number,$ticket_per_student,$is_seat_selectable)")){
+        if (!mysql_query("INSERT INTO activity 	(name,brief_name,start_time,end_time,ticket_start_time,ticket_end_time,state,stage,information,ticket_number,ticket_available_number,ticket_per_student,is_seat_selectable)  VALUES ('".$name."','".$brief_name."','".$start_time."','".$end_time."','".$ticket_start_time."','".$ticket_end_time."',$state,'".$stage."','".$information."',$ticket_number,$ticket_available_number,$ticket_per_student,$is_seat_selectable)")){
              return(array("state" =>"false", "message" => "插入活动出错"));           
         }
 
@@ -213,6 +215,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		// 第一个参数为要修改的活动id，第二个参数为活动信息，是一个数组，各项分别是：
 		/* 
   		name char(60),  			#活动名称
+        brief_name char(50),  		#活动简称
 		start_time datetime,		#活动开始时间
 		end_time datetime,			#活动结束时间
 		ticket_start_time datetime,	#抢票开始时间
@@ -236,11 +239,14 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		mysql_query("SET NAMES UTF8");
 		mysql_select_db("wx9_db", $con);
 		
-		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
+		if(!$item=mysql_fetch_row(mysql_query("select ticket_number from activity where id=$activity_id"))){
 			return(array("state" => "false", "message" => "没有这个活动"));
- 		}
+ 		}else{
+             $origin_ticket_number = $item[0]; 
+        }
 
         $name = $activity["name"];
+        $brief_name = $activity["brief_name"];
 		$start_time = $activity["start_time"];
 		$end_time = $activity["end_time"];
 		$ticket_start_time = $activity["ticket_start_time"];
@@ -252,18 +258,19 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		$ticket_available_number = $activity["ticket_number"];
 		$ticket_per_student = $activity["ticket_per_student"];
 		$is_seat_selectable = $activity["is_seat_selectable"];
-
+       
         //更新活动    
-        if (!mysql_query("UPDATE activity SET name='".$name."',start_time='".$start_time."',end_time='".$end_time."',ticket_start_time='".$ticket_start_time."',ticket_end_time='".$ticket_end_time."',state=$state,stage='".$stage."',information='".$information."',ticket_number=$ticket_number,ticket_available_number=$ticket_available_number,ticket_per_student=$ticket_per_student,is_seat_selectable=$is_seat_selectable where id = $activity_id")){
+        if (!mysql_query("UPDATE activity SET name='".$name."',brief_name='".$brief_name."',start_time='".$start_time."',end_time='".$end_time."',ticket_start_time='".$ticket_start_time."',ticket_end_time='".$ticket_end_time."',state=$state,stage='".$stage."',information='".$information."',ticket_number=$ticket_number,ticket_available_number=$ticket_available_number,ticket_per_student=$ticket_per_student,is_seat_selectable=$is_seat_selectable where id = $activity_id")){
              return(array("state" =>"false", "message" => "更新活动出错"));           
         }
 
+        if ($origin_ticket_number!=$ticket_number){
+		    //删除原有的票
+		    mysql_query("delete from ticket where activity_id = $activity_id");
 
-		//删除原有的票
-		mysql_query("delete from ticket where activity_id = $activity_id");
-
-		//添加新的票
-		$this->initTicket($ticket_number, $activity_id);
+		    //添加新的票
+		    $this->initTicket($ticket_number, $activity_id);
+        }
 
         return(array("state" => "true", "message" => ""));
     }

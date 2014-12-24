@@ -20,7 +20,8 @@ openid char(50),		#openid
 create table activity(
 id int(4) not null primary key auto_increment,
 name char(60),			#活动名称
-start_time datetime,		#活动开始时间
+brief_name char(50),    #活动简称
+start_time datetime,	#活动开始时间
 end_time datetime,		#活动结束时间
 state int(4),			#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
 stage char(50),			#活动地点 "大礼堂"  "新清华学堂"  "综体"

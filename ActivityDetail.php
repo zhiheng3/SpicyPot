@@ -61,7 +61,7 @@
         
             $activity = $get_activity["message"];
             $name = $activity["name"];   
-            $brief_name= "??";
+            $brief_name= $activity["brief_name"];
             $stage = $activity["stage"];
             $information = $activity["information"];
             $ticket_number = $activity["ticket_number"]; 
