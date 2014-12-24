@@ -37,11 +37,11 @@
     require_once "php/dataAPI.php";
 	$data = new DataAPI();
     
-    $name= "活动全称，如马兰花开第一百场纪念演出";
-    $brief_name= "用户用于订票的活动代称，推荐使用中文(少于7个字)，如马兰花开";
-    $stage = "活动地点，如大礼堂";
-    $information = "描述，如好看的舞台剧";
-    $ticket_number = "此次活动通过“紫荆之声”的发票总数，如1000";
+    $name= "";
+    $brief_name= "";
+    $stage = "";
+    $information = "";
+    $ticket_number = "";
     $start_time = "";
     $end_time = "";
     $ticket_start_time = "";
@@ -91,7 +91,7 @@
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label" id="label-input-name">活动全称</label>
                 <div class="col-sm-10">
-                    <input type='text' maxlength='26' name='name' class='form-control' id='input-name' value=<?php echo "$name"; ?> autofocus>
+                    <input type='text' maxlength='26' name='name' class='form-control' id='input-name' placeholder="活动全称，如马兰花开第一百场纪念演出" value='<?php echo "$name"; ?>' autofocus>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
             <div class="form-group">
                 <label for="input-key" class="col-sm-2 control-label">活动简称</label>
                 <div class="col-sm-10">
-                    <input type="text" maxlength="12" name="key" class="form-control" id="input-key" value=<?php echo "$brief_name"; ?>>
+                    <input type="text" maxlength="12" name="key" class="form-control" id="input-key" placeholder="用户用于订票的活动代称，推荐使用中文(少于7个字)，如马兰花开" value='<?php echo "$brief_name"; ?>'>
                 </div>
             </div>
 
@@ -109,14 +109,14 @@
             <div class="form-group">
                 <label for="input-place" class="col-sm-2 control-label">活动地点</label>
                 <div class="col-sm-10">
-                    <input type="text" name="place" class="form-control" id="input-place" value=<?php echo "$stage"; ?>>
+                    <input type="text" name="place" class="form-control" id="input-place" placeholder = '活动地点，如大礼堂' value='<?php echo "$stage"; ?>'>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input-description" class="col-sm-2 control-label">活动简介</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="description" rows="3" id="input-description"  row="3" style="resize: none;"><?php echo "$information"; ?></textarea>
+                    <textarea class="form-control" name="description" rows="3" id="input-description"  placeholder = '描述，如好看的舞台剧' row="3" style="resize: none;"><?php echo "$information"; ?></textarea>
                 </div>
             </div>
 
@@ -126,14 +126,14 @@
             <div class="form-group">
                 <label for="input-total_tickets" class="col-sm-2 control-label">总票数</label>
                 <div class="col-sm-10">
-                    <input type="number" name="total_tickets" class="form-control" id="input-total_tickets" min="1" value=<?php echo "$ticket_number";?>>
+                    <input type="number" name="total_tickets" class="form-control" id="input-total_tickets" placeholder = '此次活动通过“紫荆之声”的发票总数，如300' min="1" value='<?php echo "$ticket_number";?>'>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input-ticket_per_student" class="col-sm-2 control-label">每人最大可选票数</label>
                 <div class="col-sm-10">
-                    <input type="number" name="ticket_per_student" class="form-control" id="input-ticket_per_student" min="1" value=<?php echo "$ticket_per_student";?>>
+                    <input type="number" name="ticket_per_student" class="form-control" id="input-ticket_per_student" min="1" placeholder = '此次活动每人最多可抢票数，如2' value='<?php echo "$ticket_per_student";?>'>
                 </div>
             </div>
 
@@ -205,7 +205,7 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="button" class="btn btn-primary" <?php if ($activity_id != '') {echo "id='updateBtn'>修改";}else{echo "id='publishBtn'>发布";} ?></button>
+                    <button type="button" class="btn btn-primary" name ='<?php echo $activity_id ?>' <?php if ($activity_id != '') {echo "id='updateBtn'>修改";}else{echo "id='publishBtn'>发布";} ?></button>
                     <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
                     <span id="log"></span>
@@ -259,30 +259,7 @@
     <p class="text-center">共青团清华大学委员会 &copy 2014</p>
 </div>
 </script>
-<?php echo "<script>$(document).on('click', '#updateBtn', function(){
-    var timeValid = CheckTimeValid();
-    var contentValid = CheckContentValid();
-    if(!timeValid || !contentValid) return;
-    var dest = 'mask.php';
-    var form = document.getElementById('activity-form');
-    var formData = new FormData(form);
-    formData.append('method', 'updateActivity');
-    formData.append('activity_id',$activity_id);
-    
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4){
-            if(xhr.status == 200){
-                var result = JSON.parse(xhr.responseText);
-                alert(result['message']);
-            }
-        }
-    }
-    xhr.open('post', dest, true);
-    xhr.setRequestHeader('context-type','text/xml;charset=utf-8');
-    xhr.send(formData);
-});</script>"
-?>
+
 <script>
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();

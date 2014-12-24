@@ -19,11 +19,31 @@ $(document).ready(function(){
 	});
 });
 
-$(document).on("click", "#publishBtn", function(){
-    CheckContentValid();   
-    CheckTimeValid();
-}); 
 
+
+$(document).on('click', '#updateBtn', function(){
+    var timeValid = CheckTimeValid();
+    var contentValid = CheckContentValid();
+    if(!timeValid || !contentValid) return;
+    var dest = 'mask.php';
+    var form = document.getElementById('activity-form');
+    var formData = new FormData(form);
+    formData.append('method', 'updateActivity');
+    formData.append('activity_id',$('#updateBtn')[0].name);
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState == 4){
+            if(xhr.status == 200){
+                var result = JSON.parse(xhr.responseText);
+                alert(result['message']);
+            }
+        }
+    }
+    xhr.open('post', dest, true);
+    xhr.setRequestHeader('context-type','text/xml;charset=utf-8');
+    xhr.send(formData);
+});
 
 
 function ClearTimeChoosen(){
