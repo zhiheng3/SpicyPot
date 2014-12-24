@@ -5,6 +5,7 @@ require_once "dataformat.php";
 
 class Timer{  
     public function timeStatus($activityId, $mode){
+        date_default_timezone_set("Asia/Shanghai");
         $dataapi = new DataAPI();
         $activity = $dataapi->getActivityInfo($activityId);
         if($activity["state"] == "true"){
