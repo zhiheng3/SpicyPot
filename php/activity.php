@@ -10,15 +10,14 @@ class ActivityManager{
     //return: none
     public function distributeSeat(){
         $dataapi = new DataAPI();
-        $timer = new Timer();
         $activityList = $dataapi->getActivityList();
         if($activityList["state"] == "true"){
             $activityNumber = count($activityList["message"]);
             for($i = 0; $i < $activityNumber; $i++){ //get state for all activities
-                $status = $timer->timeStatus($activityList["message"][$i]);
+                $status = $this->timeStatus($activityList["message"][$i]);
                 if($status == 2){
                     $dataapi->assignSeats($activityList["message"][$i]);//distribute seats when time's up
-                    //echo "{$activityList["message"][$i]}: Seat distributed!\n";
+                    echo "{$activityList["message"][$i]}: Seat distributed!\n";
                 }
             }
         }

@@ -2,6 +2,7 @@
 require_once "dataAPI.php";
 require_once "dataformat.php";
 require_once "token.php";
+require_once "activity.php";
 
 class MenuManager{
 
@@ -11,12 +12,12 @@ class MenuManager{
     //return: none
     public function clearMenu(){
         $dataapi = new DataAPI();
-        $timer = new Timer();
+        $activityManager = new ActivityManager();
         $activityList = $dataapi->getActivityList();
         if($activityList["state"] == "true"){
             $activityNumber = count($activityList["message"]);
             for($i = 0; $i < $activityNumber; $i++){ //get state for all activities
-                $status = $timer->timeStatus($activityList["message"][$i]);
+                $status = $activityManager->timeStatus($activityList["message"][$i]);
                 if($status == 2) $this->clearActivity($activityList["message"][$i]);//clean up when expired
             }
         }
@@ -69,7 +70,7 @@ class MenuManager{
         if($finalResult["errcode"] == 0){
             $feedback["state"] = "true";
             $feedback["message"] = "succeed!";
-            //echo "$activityId: Menu updated!\n";
+            echo "$activityId: Menu updated!\n";
         }
         else{
             $feedback["state"] = "false";
