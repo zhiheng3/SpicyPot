@@ -21,6 +21,9 @@
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css"  media="screen">
+<script type="text/javascript" src="./js/jquery-1.11.1.min.js" charset="UTF-8"></script>
+<script src="./js/SeatCtrl.js"></script>
+<script src="./js/SeatEdit.js"></script>
 </head>
 
 <body>
@@ -201,7 +204,12 @@
                 </div>
             </div>
 
-
+            <div class="form-group" id="canvas" style="display:none;">
+            <?php
+                $ssa = file_get_contents("./seat/1.sst", "r");
+                echo $ssa;
+            ?>
+            </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
@@ -214,7 +222,7 @@
         </form>
     </div>
 
-<script type="text/javascript" src="./js/jquery-1.11.1.min.js" charset="UTF-8"></script>
+
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
@@ -261,11 +269,48 @@
 </script>
 
 <script>
-$(document).on("click", "#publishBtn", function(){
-    var timeValid = CheckTimeValid();
-    var contentValid = CheckContentValid();
-    if(timeValid && contentValid) createActivity();
+
+
+$(document).ready(function(){
+    $("#input-seat_status").change(function(e){
+        if ($("#input-seat_status").val() == 2){
+            $("#canvas").css("display", "block");
+        }
+        else{
+            $("#canvas").css("display", "none");
+        }
+    });
+    
+    AddMoveListener($("#svg_seat")[0]);
+    Args.clickHandler = function(e){
+        var element = $("#" + e);
+        if (element.attr("class") == "seat")
+            element.attr("class", "invalid");
+        else
+            element.attr("class", "seat");
+    }
+    Args.selectHandler = function(e){
+        var element = $("#" + e);
+        if (element.attr("class") == "seat")
+            element.attr("class", "invalid");
+        else
+            element.attr("class", "seat");
+    }
+    Args.mode = "select";
 });
+
+$(document).on("click", "#publishBtn", function(){
+    var contentValid = CheckContentValid();
+    var timeValid = CheckTimeValid();
+    if(timeValid && contentValid){
+        createActivity();
+        postSeat();
+    }
+});
+
+function postSeat(){
+    
+}
 
 function createActivity(){
     var dest = "mask.php";
@@ -278,8 +323,9 @@ function createActivity(){
         if (xhr.readyState == 4){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
-                alert(result["message"]);
-                window.location.href ="activity_list.php";
+                console.log(result);
+                //alert(result["message"]);
+                //window.location.href ="activity_list.php";
             }
         }
     }

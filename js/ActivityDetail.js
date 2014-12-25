@@ -36,8 +36,9 @@ $(document).on('click', '#updateBtn', function(){
         if (xhr.readyState == 4){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
+                console.log(result);
                 alert(result['message']);
-                window.location.href ="activity_list.php";
+                //window.location.href ="activity_list.php";
             }
         }
     }

@@ -105,16 +105,28 @@ function AddMoveListener(Dom){
 Mouse Handler
 */
 function MousedownHandler(e){
+    if (Args.mode == "select"){
+        StartSelect(e.target, e.offsetX, e.offsetY);
+        return ;
+    }
     StartMove(e.clientX, e.clientY);
     e.preventDefault();
 }
 
 function MousemoveHandler(e){
+    if (Args.mode == "select"){
+        ProcessSelect(e.target, e.offsetX, e.offsetY);
+        return ;
+    }
     ProcessMove(e.clientX, e.clientY, e.currentTarget);
     e.preventDefault();
 }
 
 function MouseupHandler(e){
+    if (Args.mode == "select"){
+        EndSelect(e.target, e.offsetX, e.offsetY);
+        return ;
+    }
     EndMove(e);
     e.preventDefault();
 }
@@ -186,10 +198,80 @@ function EndMove(e){
     }
 }
 
+/*
+Select Event
+*/
 
-
-function ViewBoxThumb(x, y, w, h){
+function StartSelect(Dom, x, y){
+    if (Args.select.start)
+        return ;
+    //alert(x + " " + y);
+    Args.select.x = x;
+    Args.select.y = y;
+    Args.select.start = true;
+    Args.select.moved = false;
     
+    var svgns = "http://www.w3.org/2000/svg";
+    var rect = document.createElementNS(svgns, "rect");
+    
+    SetSVGAttr(rect, "stroke", "#888888");
+    SetSVGAttr(rect, "stroke-width", 1);
+    SetSVGAttr(rect, "stroke-dasharray", "1,1");
+    SetSVGAttr(rect, "fill", "none");
+    SetSVGAttr(rect, "id", "select_rect");
+    
+    $(Dom).append(rect);
+}
+
+function ProcessSelect(Dom, x, y){
+    if (!Args.select.start)
+        return false;
+    var deltaX = x - Args.move.x;
+    var deltaY = y - Args.move.y;
+
+    if (Math.abs(deltaX) + Math.abs(deltaY) > 5)
+        Args.select.moved = true;
+    
+    var rect = $("#select_rect")[0];
+
+    SetSVGAttr(rect, "x", Math.min(x, Args.select.x));
+    SetSVGAttr(rect, "y", Math.min(y, Args.select.y));
+    SetSVGAttr(rect, "width", Math.abs(x - Args.select.x));
+    SetSVGAttr(rect, "height", Math.abs (y - Args.select.y));
+}
+
+function EndSelect(Dom, x, y){
+    $("#select_rect").remove();
+    Args.select.start = false;
+    if (Args.select.moved){
+        var X = Math.min(x, Args.select.x);
+        var Y = Math.min(y, Args.select.y);
+        var W = Math.abs(x - Args.select.x);
+        var H = Math.abs(y - Args.select.y);
+        var elements = $("#svg_seat").children();
+        for (var i = 0; i < elements.length; ++i){
+            var ex = parseInt($(elements[i]).attr("x"));
+            var ey = parseInt($(elements[i]).attr("y"));
+            var ew = parseInt($(elements[i]).attr("width"));
+            var eh = parseInt($(elements[i]).attr("height"));
+            if (IsInRect(X, Y, W, H, ex, ey, ew, eh))
+                Args.selectHandler(elements[i].id);
+        }
+        /*
+        for (var i in elements){
+            console.log(i);
+        }*/
+    }
+    
+    if (!Args.select.moved && Dom.tagName != "svg"){
+        Args.clickHandler(Dom.id);
+    }
+}
+
+function IsInRect(X, Y, W, H, x, y, w, h){
+    if (x >= X && x < X + W && y >= Y && y < Y + H)
+        return true;
+    return false;
 }
 
 /*
@@ -221,6 +303,13 @@ $(document).ready(function(){
     Args.zoom.minscale = 1;
     Args.zoom.maxscale = 1;
     Args.thumb = false;
+    Args.mode = "drag";
+    
+    Args.select = Object();
+    Args.select.start = false;
+    Args.select.moved = false;
+    Args.select.x = 0;
+    Args.select.y = 0;
     
     Args.timeout = 0;
 });

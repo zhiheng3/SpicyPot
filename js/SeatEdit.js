@@ -122,6 +122,7 @@ function ModifyViewRect(x, y, w, h){
     clearTimeout(Args.timeout);
     Args.timeout = setTimeout(function(){$("#canvas_thumb").css("display", "none");}, 2000);
 }
+
 /*
 Save Seats SVG
 Param: DOM
