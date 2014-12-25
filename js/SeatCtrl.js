@@ -254,7 +254,7 @@ function EndSelect(Dom, x, y){
             var ey = parseInt($(elements[i]).attr("y"));
             var ew = parseInt($(elements[i]).attr("width"));
             var eh = parseInt($(elements[i]).attr("height"));
-            if (IsInRect(X, Y, W, H, ex, ey, ew, eh))
+            if (IsInterSect(X, Y, W, H, ex, ey, ew, eh))
                 Args.selectHandler(elements[i].id);
         }
         /*
@@ -268,10 +268,27 @@ function EndSelect(Dom, x, y){
     }
 }
 
-function IsInRect(X, Y, W, H, x, y, w, h){
+function IsInterSect(X, Y, W, H, x, y, w, h){
+    var threshold = w * h / 2;
+    
+    var left = Math.max(X, x);
+    var top = Math.max(Y, y);
+    var right = Math.min(X + W, x + w);
+    var bottom = Math.min(Y + H, y + h);
+    
+    if (right < left)
+        return false;
+    if (bottom < top)
+        return false;
+    
+    if ((right -left) * (bottom - top) >= threshold)
+        return true;
+    return false;
+    /*
     if (x >= X && x < X + W && y >= Y && y < Y + H)
         return true;
     return false;
+    */
 }
 
 /*
