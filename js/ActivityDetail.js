@@ -38,7 +38,7 @@ $(document).on('click', '#updateBtn', function(){
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
                 alert(result['message']);
-                //window.location.href ="activity_list.php";
+                window.location.href ="activity_list.php";
             }
         }
     }
