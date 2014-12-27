@@ -61,7 +61,7 @@
 
 	require_once "php/dataAPI.php";
 	$test = new DataAPI();
-	$gettingList =$test->getActivityList();
+	$gettingList =$test->getActivityList(5);
 	if($gettingList["state"] == "false"){
 		echo "<div class='form-group' id = 'Title'>获取活动列表失败</div>";
 	}else{

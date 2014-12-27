@@ -45,9 +45,17 @@ else if($method == 'createActivity'){
 }
 
 else if($method == 'deleteActivity'){
+    //检测是否登录
+    session_start();
+    if(!isset($_SESSION['name'])){
+        echo json_encode(array("state"=>"false","message"=>"Please log in."));
+        exit();
+    }
+
 	$data = new DataAPI();
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
+
     
     $menuManager = new MenuManager();
     $menuManager->clearActivity($activityId, "access_token", "./log/token_log");
@@ -55,6 +63,7 @@ else if($method == 'deleteActivity'){
     if($result["state"] == "true") echo "success";
     else echo "failed";
     //echo json_encode($result);
+
 }
 
 else if($method == 'updateActivity'){

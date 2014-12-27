@@ -1,6 +1,6 @@
 <!--
   * Lanch Activity page
-  * Author: Xu Yi, Feng Zhibin
+  * Author: Xu Yi, Feng Zhibin, Chen Minghai
   * Last modified: 2014.12.16
   * method: 
   * param: 
@@ -229,44 +229,12 @@
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/ActivityDetail.js"></script>
 <script type="text/javascript" src="./js/sisyphus.min.js"></script>
-<script type="text/javascript">
-    $('.form_datetime').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-        showMeridian: 1
-    });
-	$('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
-	$('.form_time').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 1,
-		minView: 0,
-		maxView: 1,
-		forceParse: 0
-    });
-</script>
 
 <div class="modal-footer">
     <p class="text-center">共青团清华大学委员会 &copy 2014</p>
 </div>
-</script>
+
+
 
 <script>
 
@@ -299,6 +267,7 @@ $(document).ready(function(){
     Args.mode = "select";
 });
 
+/*
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
@@ -307,42 +276,14 @@ $(document).on("click", "#publishBtn", function(){
         postSeat();
     }
 });
-
-function postSeat(){
-    
-}
-
-function createActivity(){
-    var dest = "mask.php";
-    var form = document.getElementById("activity-form");
-    var formData = new FormData(form);
-    formData.append("method", "createActivity");
-    
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if (xhr.readyState == 4){
-            if(xhr.status == 200){
-                var result = JSON.parse(xhr.responseText);
-                console.log(result);
-                //alert(result["message"]);
-                window.location.href ="activity_list.php";
-            }
-        }
-    }
-    xhr.open("post", dest, true);
-    xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
-    xhr.send(formData);
-}
+*/
 
 
 
 
-function dateCorrection(date){
-    var newDate1 = date.substr(0, 10);
-    var newDate2 = date.substr(11);
-    return (newDate1.concat(" ", newDate2, ":00"));
-}
+
 </script>
+
 
 </body>
 </html>

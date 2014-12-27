@@ -351,17 +351,21 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		}	
 	}
 
-	//获得所有还未开始的活动的id列表
+	//获得活动的id列表（state < stateLimit)
+    //参数: 可选 int stateLimit  默认为3；
 	//返回: ["state", "message"]: ["true", [int activity_id]] or ["false", 错误信息]
-	public function getActivityList(){
+	public function getActivityList($stateLimit){
 		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
 		mysql_select_db("wx9_db", $con);
 		
+        if (!$stateLimit){
+            $stateLimit = 3;
+        }
 		//活动状态为0,1,2
-		if (!$result_set = mysql_query("SELECT id FROM activity WHERE state<3")){
+		if (!$result_set = mysql_query("SELECT id FROM activity WHERE state<$stateLimit")){
 			return(array("state" => "false", "message" => "查询出错"));
 		}
 		$result = array();

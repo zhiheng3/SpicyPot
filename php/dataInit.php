@@ -12,7 +12,7 @@ for ($i=1;$i<32;$i++){
 //print_r($test->createSeats(90,$list));
 
 //print_r($test->updateActivityState(87,2));
-print_r($test->updateActivityState("2015-01-01 08:00:00"));
+print_r($test->updateActivityState("2015-12-25 10:40:00"));
 
 
 //echo($test->getStudentId("openid000000000000000003")["message"]."\n");
