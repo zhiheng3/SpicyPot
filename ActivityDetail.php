@@ -300,8 +300,8 @@ $(document).ready(function(){
 });
 
 $(document).on("click", "#publishBtn", function(){
-    var contentValid = CheckContentValid();
     var timeValid = CheckTimeValid();
+    var contentValid = CheckContentValid();
     if(timeValid && contentValid){
         createActivity();
         postSeat();
