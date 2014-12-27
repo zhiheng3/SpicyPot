@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script src="./js/jquery.mobile-1.4.5.min.js"></script>
-<script src="./js/SeatCtrl.js"></script>
 <script src="./js/SeatEdit.js"></script>
+<script src="./js/SeatCtrl.js"></script>
 <script src="./js/Seat.js"></script>
 </head>
 <body>
@@ -22,7 +22,7 @@
         <h1>座位示意图</h1>
         <img src="./img/seat2.png" style="width:100%;height:auto"/>
     </div>
-    <div data-role="collapsible" data-collapsed="false">
+    <div data-role="collapsible" data-collapsed="false" id="thumbpos">
         <h1>选座</h1>
         <div id="canvas">
         <?php

@@ -20,12 +20,28 @@ $(document).ready(function(){
 });
 
 
+
+
+
+
+
+
+
+
+
 //创建活动
 $(document).on("click", "#publishBtn", function(){
-    var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
-    if(timeValid && contentValid) createActivity();
+    var timeValid = CheckTimeValid();
+    if(timeValid && contentValid){
+        createActivity();
+        postSeat();
+    }
 });
+
+function postSeat(){
+    
+}
 
 function createActivity(){
     var dest = "mask.php";
@@ -38,7 +54,8 @@ function createActivity(){
         if (xhr.readyState == 4){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
-                alert(result["message"]);
+                console.log(result);
+                //alert(result["message"]);
                 window.location.href ="activity_list.php";
             }
         }
@@ -47,6 +64,7 @@ function createActivity(){
     xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
     xhr.send(formData);
 }
+
 
 
 //修改活动
@@ -65,6 +83,7 @@ $(document).on('click', '#updateBtn', function(){
         if (xhr.readyState == 4){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
+                console.log(result);
                 alert(result['message']);
                 window.location.href ="activity_list.php";
             }

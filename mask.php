@@ -55,11 +55,15 @@ else if($method == 'deleteActivity'){
 	$data = new DataAPI();
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
-    if($result["state"] == "true") $result["message"] = "success";
-    echo json_encode($result);
 
+    
     $menuManager = new MenuManager();
-    $menuManager->clearActivity($activityId);
+    $menuManager->clearActivity($activityId, "access_token", "./log/token_log");
+    
+    if($result["state"] == "true") echo "success";
+    else echo "failed";
+    //echo json_encode($result);
+
 }
 
 else if($method == 'updateActivity'){

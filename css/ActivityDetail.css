@@ -65,3 +65,11 @@
     margin: 0 0 0 20px;
     color: #2B99E6;
 }
+
+.seat{
+    fill: #88ff88;
+}
+
+.invalid{
+    fill: #bbbbbb;
+}

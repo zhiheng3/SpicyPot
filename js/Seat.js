@@ -15,6 +15,7 @@ $(document).ready(function(){
     
     Args.clickHandler = ClickHandler;
     
+    CreateThumb($("#thumbpos")[0], $("#svg_seat")[0], $("#thumbpos")[0].offsetLeft, $("#thumbpos")[0].offsetTop - 30, $("#thumbpos").width());
     Update("请选择座位后点击确定");
     
 });
@@ -46,11 +47,15 @@ function Draw(){
 function Select(seatname){
     Args.selected = seatname;
     $("#" + Args.selected).css("fill", Args.color.selected);
+    $("#svg_thumb #" + Args.selected).css("fill", Args.color.selected);
     $("#selected_seat").text(seatname);
 }
 
 function Unselect(){
+    if (Args.selected == "")
+        return ;
     $("#" + Args.selected).css("fill", "");
+    $("#svg_thumb #" + Args.selected).css("fill", "");
     $("#selected_seat").text("");
     Args.selected = "";
 }
