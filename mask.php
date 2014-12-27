@@ -37,7 +37,6 @@ else if ($method == 'seatInfo'){
     echo json_encode($seatInfoResult);
 }
 
-//Testing
 else if($method == 'createActivity'){
     $activityCreater = new ActivityCreater();
     $createResult = $activityCreater->createActivity();

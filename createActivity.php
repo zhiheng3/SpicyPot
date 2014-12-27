@@ -2,7 +2,7 @@
 /**
   *Create an activity and get picture
   *Author: Feng Zhibin
-  *Last modified: 2014.12.10
+  *Last modified: 2014.12.27
 **/
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
@@ -100,13 +100,18 @@ class ActivityCreater{
     //params: int $activityId
     //return: Array["state", "message"], state: "true" or "false", "message": Message
     public function updateMenu($activityId){
+        //Get token from Tencent
         $tokenTaker = new AccessToken();
         $accessToken = $tokenTaker->getAccessToken("access_token", "log/token_log");
+        
+        //Get menu JSON with token
         $menu = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=$accessToken");
         $result = json_decode($menu, true);
         
+        //Activity list
         $activityList = $result["menu"]["button"][1]["sub_button"];
-
+        
+        //No activity currently, add one
         if(count($activityList) == 0){
             $newBtn = array();
             $newBtn["name"] = $result["menu"]["button"][1]["name"];
@@ -117,9 +122,10 @@ class ActivityCreater{
             $newBtn["sub_button"][0]["sub_button"] = array();
             $result["menu"]["button"][1] = $newBtn;
         }
-        else{
+        else{//One or more activity exists
             $count = count($activityList);
-
+            //If there are already 5 activities
+            //replace the oldest one with the activity we are going to insert
             for($i = $count - 1; $i >= 0; $i--){
                 if($i < 4) $activityList[$i + 1] = $activityList[$i];
             }
@@ -127,9 +133,15 @@ class ActivityCreater{
             $activityList[0]["name"] = $_POST["name"];
             $activityList[0]["key"] = "TAKE_$activityId";
             $activityList[0]["sub_button"] = array();
+            
+            //Update activity list in menu
             $result["menu"]["button"][1]["sub_button"] = $activityList;
         }
-
+        
+        //Send the latest menu to Tencent
+        //Method: POST
+        //Header: declares type and length
+        //content: the latest menu code
         $context = array(
             'http' => array(
                 'method' => 'POST',
@@ -137,13 +149,17 @@ class ActivityCreater{
 						        '\n'.'Content-length:' . (strlen(json_encode($result["menu"], JSON_UNESCAPED_UNICODE)) + 1),
                 'content' => json_encode($result["menu"], JSON_UNESCAPED_UNICODE))
             );
+            
+        //$context should be converted to stream context in order to use file_get_contents()
         $stream_context = stream_context_create($context);
+        
+        //Post everything to Tencent, get response from Tencent
         $updateResult = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$accessToken", false, $stream_context);
         $finalResult = json_decode($updateResult, true);
-        if($finalResult["errcode"] == 0){
+        if($finalResult["errcode"] == 0){//If everything is OK, errcode should be 0
             $feedback["state"] = "true";
         }
-        else{
+        else{//Fail to update menu, should check errmsg on http://mp.weixin.qq.com/wiki/10/5c7947deb9668737bab97696889cd6a2.html
             $feedback["state"] = "false";
             $feedback["message"] = $finalResult["errmsg"];
         }

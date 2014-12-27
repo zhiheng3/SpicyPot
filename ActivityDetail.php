@@ -267,17 +267,6 @@ $(document).ready(function(){
     Args.mode = "select";
 });
 
-/*
-$(document).on("click", "#publishBtn", function(){
-    var timeValid = CheckTimeValid();
-    var contentValid = CheckContentValid();
-    if(timeValid && contentValid){
-        createActivity();
-        postSeat();
-    }
-});
-*/
-
 
 
 

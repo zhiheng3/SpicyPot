@@ -2,8 +2,8 @@
 /**
   * Generate a QR Code
   * Author: Feng Zhibin
-  * Last modified: 2014.12.02
-  * Note: GD libarary for php needed
+  * Last modified: 2014.12.27
+  * Important: GD libarary for php needed
   */
 require_once "lib/phpqrcode.php";
 class QRCodeGenerator{
