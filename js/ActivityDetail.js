@@ -74,7 +74,7 @@ $(document).on('click', '#updateBtn', function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
 
-    //这里是徐毅改过的，前端交互比较友好
+    //这里是徐毅改过的，前端交互比较友好，否则会同时出现两个弹出框，time和content各一个
     if(!contentValid){
     	return;
     }

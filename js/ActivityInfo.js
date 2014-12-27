@@ -9,17 +9,14 @@
 */
 
 $(document).ready(function(){
-
-	//SetActivityPlace("综体");
-	//SetTimeInfoDivWidth();
-	//SetTimeLeftWidth();
-	//SetTimeInfoDivHeight();
     ResetAll();
     StartCountDown();
     AdjustFontSize();
 
 });
 
+
+//添加倒计时显示
 function StartCountDown(){
     
     $('#Time-Left').flipcountdown({
@@ -42,6 +39,8 @@ function StartCountDown(){
             var ActEndTime = parseDate(AE);
 
             var endDate;
+
+            //根据判断时间判断当前活动状态
             if(now < RobStartTime){
                 ResetAll();
                 endDate = RobStartTime;
@@ -86,67 +85,7 @@ function StartCountDown(){
 
 }
 
-function SetCountDown(){
-    var now = new Date(); 
-
-    var AS = $("#ActivityStartTime").text();
-    var AE = $("#ActivityEndTime").text();
-    var RS = $("#RobStartTime").text();
-    var RE = $("#RobEndTime").text();
-
-    var RobStartTime = parseDate(RS);
-    var RobEndTime = parseDate(RE);
-    var ActStartTime = parseDate(AS);
-    var ActEndTime = parseDate(AE);
-
-    var endDate;
-
-    if(now < RobStartTime){
-        ResetAll();
-        endDate = RobStartTime;
-        $("#Rob-Start").css("display","block");
-    }
-
-    else if((now >= RobStartTime) && (now < RobEndTime)){
-        ResetAll();
-        endDate = RobEndTime;
-        $("#Rob-End").css("display","block");
-    }
-
-    else if((now >= RobEndTime) && (now < ActStartTime)){
-        ResetAll();
-        endDate = ActStartTime;
-        $("#Act-Start").css("display","block");
-    }
-
-    else if((now >= ActStartTime) && (now < ActEndTime)){
-        ResetAll();
-        endDate = ActEndTime;
-        $("#Act-End").css("display","block");
-    }
-    else{
-        ResetAll();
-        $("#END").css("display","block");
-        $("#Time-Left").css("display","none");
-        $("#Time-Left").parent().css("display","none");
-        return;
-    }
-
-    //var endDate = new Date(Time.year,Time.month,Time.day,Time.hour,Time.min,Time.sec); 
-    var leftTime = endDate.getTime() - now.getTime(); 
-    var leftsecond = parseInt(leftTime / 1000); 
-    
-    var day = Math.floor(leftsecond / (60 * 60 * 24)); 
-    var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600); 
-    var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60); 
-    var second = Math.floor(leftsecond - day* 24 * 60 * 60 - hour * 3600 - minute * 60); 
-
-    $("#Day-Left").text(day);
-    $("#Hor-Left").text(hour);
-    $("#Min-Left").text(minute);
-    $("#Sec-Left").text(second);
-}
-
+//将所有用于表示活动状态的div隐藏
 function ResetAll(){
     $("#Rob-Start").css("display","none");
     $("#Rob-End").css("display","none");
@@ -156,6 +95,7 @@ function ResetAll(){
 
 }
 
+//接受一个字符串并将其解析为一个Date的对象
 function parseDate(date){
     re = /(\d+)\-(\d+)\-(\d+)\s(\d+)\:(\d+)/g;
     if(re.test(date)){
@@ -163,6 +103,7 @@ function parseDate(date){
     }
 }
 
+//调整一下字体大小
 function AdjustFontSize(){
     var width = document.body.scrollWidth;
     
@@ -171,71 +112,3 @@ function AdjustFontSize(){
     }
 }
 
-function SetActivityTime(strat,end){
-
-}
-
-function SetActivityPlace(place){
-	$("#ActivityPlace").text(place);
-}
-
-function SetTimeInfoDivWidth()
-{
-	
-    var wi = document.body.scrollWidth;
-    var js_generalTitle = $(".General-Title");
-    var js_generalBox = $(".General-Box");
-    var js_timeLeft = $("#Time-Left");
-   
-    if(wi*0.8<=400)
-    {
-    	js_generalTitle.css("width",wi*0.8);
-    	js_generalBox.css("width",wi*0.8);
-    	js_timeLeft.css("width",wi*0.78);
-    }
-    else if(wi*0.8>400&&wi*0.8<550){
-    	js_generalTitle.css("width",300);
-        js_generalBox.css("width",300);
-        js_timeLeft.css("width",300);
-    }
-    else if(wi*0.8>=550&&wi*0.8<1000){
-    	js_generalTitle.css("width",500);
-    	js_generalBox.css("width",500);
-    	js_timeLeft.css("width",320);
-    }
-    else if(wi*0.8>=1000&&wi*0.8<2000){
-    	js_generalTitle.css("width",1000);
-    	js_generalBox.css("width",1000);
-    	js_timeLeft.css("width",320);
-    }
-    else {
-    	js_generalTitle.css("width",2000);
-    	js_generalBox.css("width",2000);
-    	js_timeLeft.css("width",320);
-    }
-    
-
-}
-function SetTimeLeftWidth()
-{
-	var wi = document.body.scrollWidth;
-	var js_numberLeft = $(".Number-Left");
-    var js_textTitle = $(".Text-Title");
-    if(wi>700){
-    	js_numberLeft.css("width",40);
-    	js_numberLeft.css("margin-left",0);
-    	js_numberLeft.css("margin-right",0);
-    	js_textTitle.css("width",40);
-    }
-
-}
-
-function SetTimeInfoDivHeight()
-{
-	var he = document.body.scrollHeight;
-	var js_ImgTop = $("#ImgTop");
-	var js_timeInfo = $("#Time-Info");
-	if(he>750){
-		js_timeInfo.css("height",he-70-192-65);
-	}
-}
