@@ -1,23 +1,34 @@
 <?php
+/**
+  * Operations for activities
+  * Author: Feng Zhibin
+  * Last modified: 2014.12.27
+  */
+
 require_once "dataAPI.php";
 require_once "dataformat.php";
 
 class ActivityManager{
 
     //Author: Feng Zhibin
-    //Distribute seat randomly(?) for those who did not take a seat
+    //Distribute seat randomly(?) for those who did not take a seat on desired time
     //params: none
     //return: none
     public function distributeSeat(){
+        //Get all activity
         $dataapi = new DataAPI();
         $activityList = $dataapi->getActivityList();
+        
         if($activityList["state"] == "true"){
             $activityNumber = count($activityList["message"]);
-            for($i = 0; $i < $activityNumber; $i++){ //get state for all activities
+            //get state for all activities
+            for($i = 0; $i < $activityNumber; $i++){
                 $status = $this->timeStatus($activityList["message"][$i]);
                 if($status == 2){
-                    $dataapi->assignSeats($activityList["message"][$i]);//distribute seats when time's up
-                    echo "{$activityList["message"][$i]}: Seat distributed!\n";
+                    //distribute seats when time's up
+                    $dataapi->assignSeats($activityList["message"][$i]);
+                    
+                    //echo "{$activityList["message"][$i]}: Seat distributed!\n";
                 }
             }
         }
@@ -30,10 +41,14 @@ class ActivityManager{
     public function updateActivityState(){
         $dataapi = new DataAPI();
         $updateResult = $dataapi->updateActivityState(date("Y-m-d H:i:s"));
-        echo "State updated.\n";
+        //echo "State updated.\n";
         return $updateResult;
     }
     
+    //Author: Feng Zhibin
+    //Check status of an activity
+    //params: int $activityId
+    //return: int $activityState, ranges from 0 to 4, check dataAPI.php for meanings
     public function timeStatus($activityId){
         date_default_timezone_set("Asia/Shanghai");
         $dataapi = new DataAPI();

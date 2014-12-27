@@ -2,7 +2,7 @@
 /**
   * Process the user's request
   * Author: Zhao Zhiheng, Feng Zhibin
-  * Last modified: 2014.12.16
+  * Last modified: 2014.12.27
   */
   
 require_once "dataformat.php";
@@ -68,17 +68,21 @@ class RequestProcess{
         else if ($data->msgType == "event"){
             //Menu click
             if ($data->event == "CLICK"){
+                //Bind
                 if ($data->eventKey == "USER_BIND"){
                     $result = $this->bindlink($data);
                 }
+                //Take tickets
 				else if(substr($data->eventKey, 0, 4) == "TAKE"){
                     $ticketHandler = new ticketHandler();
 					$result = $ticketHandler->takeTicket($data);
 				}
+				//Check tickets
                 else if($data->eventKey == "CHECK_TICKET"){
                     $ticketHandler = new ticketHandler();
                     $result = $ticketHandler->getTicket($data);
                 }
+                //Check activities
                 else if($data->eventKey == "CHECK_ACTIVITY"){
                     $result = $this->checkActivity();
                 }
@@ -182,39 +186,54 @@ class RequestProcess{
         return $result;
     }
 
-    //Author: Feng Chipan
+    //Author: Feng Zhibin
     //Get all activities
     //params: none
     //return: ResponseData $result
     public function checkActivity(){
+        //Get all activities from database
         $dataapi = new DataAPI();
         $activityResult = $dataapi->getActivityList();
+        
+        //Fail to get activities, return error message in text form
         if($activityResult["state"] == "false"){
             $result->msgType = "text";
             $result->content = "查询活动失败：" . $activityResult["message"];
             return $result;
         }
-        $tickets = count($activityResult["message"]);
-        if($tickets == 0){
+        
+        $activities = count($activityResult["message"]);
+        //No activity currently, return message in text form
+        if($activities == 0){
             $result->msgType = "text";
             $result->content = "当前没有活动！";
             return $result;
         }
+        
+        //One or more activity exists, return message in news form
         $result->msgType = "news";
-        if($tickets > 10) $tickets = 10;
-        $result->articleCount = $tickets;
+        //Limited by Tencent, at most 10 articles
+        if($activities > 10) $activities = 10;
+        //Specify number of articles
+        $result->articleCount = $activities;
         $result->articles = array();
-        for($i = 0; $i < $tickets; $i++){
+        for($i = 0; $i < $activities; $i++){
             $result->articles[$i] = new Article();
             $id = $activityResult["message"][$i];
+            //Get an activity's info with it's ID
             $singleActivity = $dataapi->getActivityInfo($id);
+            //If everything goes well on database
             if($singleActivity["state"] == true){
                 $result->articles[$i]->title = $singleActivity["message"]["name"];
                 $result->articles[$i]->description = $singleActivity["message"]["information"];
-                //Testing for picUrl
+                
+                //Specify pictures of this activity, you should modify this if necessary
                 $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$id";
+                
                 $result->articles[$i]->url = "http://wx9.igeek.asia/Activity.php?id=$id";
             }
+            
+            //Failed to get activity info
             else{
                 $result->articles[$i]->title = "获取活动错误";
                 $result->articles[$i]->description = $singleActivity["message"];

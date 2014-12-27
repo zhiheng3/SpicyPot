@@ -101,6 +101,8 @@ class ActivityCreater{
     //return: Array["state", "message"], state: "true" or "false", "message": Message
     public function updateMenu($activityId){
         //Get token from Tencent
+        //You should specify the path of access_token and token_log for yourself
+        //If you call getAccessToken with no parameter, it would be "../access_token" and "../log/token_log"
         $tokenTaker = new AccessToken();
         $accessToken = $tokenTaker->getAccessToken("access_token", "log/token_log");
         
@@ -153,13 +155,17 @@ class ActivityCreater{
         //$context should be converted to stream context in order to use file_get_contents()
         $stream_context = stream_context_create($context);
         
-        //Post everything to Tencent, get response from Tencent
+        //Post everything to Tencent and get their response
         $updateResult = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$accessToken", false, $stream_context);
         $finalResult = json_decode($updateResult, true);
-        if($finalResult["errcode"] == 0){//If everything is OK, errcode should be 0
+        
+        //If everything is OK, errcode should be 0
+        if($finalResult["errcode"] == 0){
             $feedback["state"] = "true";
         }
-        else{//Fail to update menu, should check errmsg on http://mp.weixin.qq.com/wiki/10/5c7947deb9668737bab97696889cd6a2.html
+        
+        //Fail to update menu, should check errmsg on http://mp.weixin.qq.com/wiki/10/5c7947deb9668737bab97696889cd6a2.html
+        else{
             $feedback["state"] = "false";
             $feedback["message"] = $finalResult["errmsg"];
         }
