@@ -31,8 +31,8 @@ $(document).ready(function(){
 
 //创建活动
 $(document).on("click", "#publishBtn", function(){
-    var contentValid = CheckContentValid();
     var timeValid = CheckTimeValid();
+    var contentValid = CheckContentValid();
     if(timeValid && contentValid){
         createActivity();
         postSeat();
