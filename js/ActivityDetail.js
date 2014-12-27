@@ -1,7 +1,7 @@
 /**
   * Activity Detail Control page
   * Author: Xu Yi
-  * Last modified: 2014.12.17
+  * Last modified: 2014.12.27
   * method:
   * param:
 */
@@ -14,6 +14,7 @@ $(document).ready(function(){
 
 	//AutoStorage();
 
+	//点击“清空”按钮，将预览的图片一起清空
 	$("#resetBtn").click(function(e){
 		$("#Preview").empty();
 	});
@@ -69,9 +70,18 @@ function createActivity(){
 
 //修改活动
 $(document).on('click', '#updateBtn', function(){
+	
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
-    if(!timeValid || !contentValid) return;
+
+    //这里是徐毅改过的，前端交互比较友好
+    if(!contentValid){
+    	return;
+    }
+    if(!timeValid){
+    	return;
+    }
+    //if(!timeValid || !contentValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
@@ -94,7 +104,7 @@ $(document).on('click', '#updateBtn', function(){
     xhr.send(formData);
 });
 
-
+//点击时间选择器栏中的"x"按钮，将该栏清空
 function ClearTimeChoosen(){
 	$("#Remove-RS").click(function(){
 		$("#Rob-Start").val("");
@@ -110,7 +120,7 @@ function ClearTimeChoosen(){
 	});			
 }
 
-
+//当有文件修改的时候，预览该图片
 function PreviewImg(){
 	$('[type=file]').change(function(e) {
 		var file = e.target.files[0];
@@ -119,7 +129,7 @@ function PreviewImg(){
 }
 
 
-
+//显示将要预览的图片
 function PreviewPic(file) {
 	var img = new Image(), url = img.src = URL.createObjectURL(file);
 	var $img = $(img);
@@ -129,6 +139,7 @@ function PreviewPic(file) {
 	}
 }
 
+//判断所有文字的输入框是否为空
 function CheckContentValid(){
 	var TicketNumber = $("#input-total_tickets").val();
 	var ActDescription = $("#input-description").val();
@@ -160,19 +171,45 @@ function CheckContentValid(){
 		flag = false;
         return false;
 	}	
+
+	
     if(!TicketPerStudent){
-		InputFocus("#input-ticket_per_student",'“每人可选票数”不能为空！');
+		InputFocus("#input-ticket_per_student",'“每人可选票数”不能为空且必须为整数！');
 		flag = false;
         return false;
-	}			
+	}
+
+	var TicketPS = parseFloat(TicketPerStudent,10);
+	if(!isInteger(TicketPS) || (TicketPS < 1)){
+		InputFocus("#input-ticket_per_student",'“每人可选票数”必须为正整数！');
+		flag = false;
+        return false;		
+	}
+
+
+
 	if(!TicketNumber){
-		InputFocus("#input-total_tickets",'“总票数”不能为空！');
+		InputFocus("#input-total_tickets",'“总票数”不能为空且必须为整数！');
 		flag = false;
         return false;
 	}	
+
+	var TicketN = parseFloat(TicketNumber,10);
+	if(!isInteger(TicketN) || (TicketN < 1)){
+		InputFocus("#input-total_tickets",'“总票数”必须为正整数！');
+		flag = false;
+        return false;		
+	}
+
 	return flag;
 }
 
+//判断一个数是否为整数
+function isInteger(obj){
+	return Math.floor(obj) === obj
+}
+
+//判断活动时间是否合法
 function CheckTimeValid(){
 	var RS = $("#Rob-Start").val();
 	var RE = $("#Rob-End").val();
@@ -188,7 +225,7 @@ function CheckTimeValid(){
 		var now = new Date();
 
 		if(RobStartTime < now){
-			InputFocus("#Rob-Start",'“订票开始时间”应晚于“当前时间”');
+			InputFocus("#Rob-Start",'“抢票开始时间”应晚于“当前时间”');
 			/*$("#Rob-Start").popover({
                     html: true,
                     placement: 'top',
@@ -203,7 +240,7 @@ function CheckTimeValid(){
 		}
 
 		if(RobEndTime < RobStartTime){
-			InputFocus("#Rob-End",'“订票结束时间”应晚于“订票开始时间”');
+			InputFocus("#Rob-End",'“抢票结束时间”应晚于“订票开始时间”');
 			return false;
 		}
 
@@ -240,9 +277,15 @@ function CheckTimeValid(){
 	}
 }
 
+
+//在ID等于id的输入框上方显示弹出框
+//text为弹出框的内容
 function InputFocus(id,text){
-	var waring = '<span style="color:red;">' + text + '</span>'
+	var waring = '<span style="color:red;">' + text + '</span>';
+	//清除原有的弹出框
+
 	$(id).popover('destroy');
+
 	$(id).popover({
         html: true,
         placement: 'top',
@@ -255,6 +298,8 @@ function InputFocus(id,text){
     $(id).focus();	
 }
 
+
+//接受一个字符串并将其解析为一个Date的对象
 function parseDate(date){
 	re = /(\d+)\-(\d+)\-(\d+)\-(\d+)\:(\d+)/g;
 	if(re.test(date)){
@@ -262,9 +307,10 @@ function parseDate(date){
 	}
 }
 
-
+//自动保存功能
 function AutoStorage(){
 	$("#activity-form").sisyphus({
+		//每隔十秒自动保存一次
 		timeout: 10,
 		onSave: function() {
 			$('#log').html('正在自动保存...').fadeIn().delay(2000).fadeOut();
