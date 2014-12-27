@@ -1,6 +1,6 @@
 <?php
 /**
-  *Update an activity and get picture
+  *Update an activity and get new picture
   *Author: Chen Minghai
   *Last modified: 2014.12.22
 **/

@@ -45,15 +45,21 @@ else if($method == 'createActivity'){
 }
 
 else if($method == 'deleteActivity'){
+    //检测是否登录
+    session_start();
+    if(!isset($_SESSION['name'])){
+        echo json_encode(array("state"=>"false","message"=>"Please log in."));
+        exit();
+    }
+
 	$data = new DataAPI();
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
-    
-    $menuManager = new MenuManager();
-    $menuManager->clearActivity($activityId);
-    
     if($result["state"] == "true") $result["message"] = "success";
     echo json_encode($result);
+
+    $menuManager = new MenuManager();
+    $menuManager->clearActivity($activityId);
 }
 
 else if($method == 'updateActivity'){

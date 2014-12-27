@@ -16,7 +16,7 @@
 
 <?php
 /**
-    chenminghai
+    Author:chenminghai
 */
 
 //退出处理
