@@ -74,8 +74,15 @@ class RequestProcess{
                 }
                 //Take tickets
 				else if(substr($data->eventKey, 0, 4) == "TAKE"){
-                    $ticketHandler = new ticketHandler();
-					$result = $ticketHandler->takeTicket($data);
+				    //No activity is avaliable
+				    if($data->eventKey == "TAKE_TICKET"){
+				        $result->msgType = "text";
+				        $result->content = "当前没有活动可以抢票～";
+				    }
+				    else{
+                        $ticketHandler = new ticketHandler();
+					    $result = $ticketHandler->takeTicket($data);
+				    }
 				}
 				//Check tickets
                 else if($data->eventKey == "CHECK_TICKET"){
