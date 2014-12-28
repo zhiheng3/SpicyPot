@@ -1,46 +1,65 @@
 <?php
 /**
-  *Update an activity and get new picture
-  *Author: Chen Minghai
-  *Last modified: 2014.12.22
+  *Create / update an activity
+  *Author: Feng Zhibin, Chen Minghai
+  *Last modified: 2014.12.28
 **/
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
 require_once "./php/token.php";
+require_once "./php/menu.php";
 
 class ActivityUpdater{
     //Author: Feng Zhibin
-    //create an activity with a picture
-    //params: none
+    //Set an activity with picture
+    //params: String $status = "new" or "update"
     //return: Array["state", "message"], state: "true" or "false", "message": int activityID or string errorMessage
-    public function updateActivity(){
-        $activityResult = $this->updateActivityInfo();
+    public function updateActivity($status){
+        if($status != "new" && $status != "update"){
+            $result["state"] = "false";
+            $result["message"] = "未定义的操作代码";
+            return $result;
+        }
+        
+        $activityResult = $this->setActivity($status);
+        
         if($activityResult["state"] == "true"){
-            $pictureResult = $this->updatePicture();
+            $pictureResult = $this->setPicture();
             if($pictureResult["state"] == "true"){
                 $result["state"] = "true";
-                $result["message"] = "活动修改成功，图片上传成功！";
+                $result["message"] = "活动创建成功！\n图片上传成功！\n";
             }
             else{
                 $result["state"] = "true";
-                $result["message"] = "活动修改成功，图片上传失败，错误信息：" . $pictureResult["message"];
+                $result["message"] = "活动创建成功！\n图片上传失败，错误信息：" . $pictureResult["message"] . "\n";
             }
         }
         else{
             $result["state"] = "false";
-            $result["message"] = "活动修改失败，错误信息：" . $_POST["activity_id"];
+            $result["message"] = "活动创建失败，错误信息：" . $_POST["activity_id"] . "\n";
         }
-        $menuResult = $this->updateMenu($_POST["activity_id"]);
+        
+        $menuManager = new MenuManager();
+        if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "access_token", "log/token_log");
+        else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
+        
+        
         if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
         else $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
         return $result;
     }
 
     
-    //update an activity (without picture)
-    //params: none
+    //Set an activity (without picture)
+    //params: String $status = "new" or "update"
     //return: Array["state", "message"], state: "true" or "false", "message": int activityID or string errorMessage
-    public function updateActivityInfo(){
+    public function setActivity($status){
+    
+        if($status != "new" && $status != "update"){
+            $result["state"] = "false";
+            $result["message"] = "未定义的操作代码";
+            return $result;
+        }
         //Initialization
         $activity = new Activity();
         $activity->name = htmlspecialchars($_POST["name"]); //名称
@@ -60,7 +79,9 @@ class ActivityUpdater{
 
         //Connect to DB and get response
         $dataapi = new DataAPI();
-        $result = $dataapi->updateActivity($_POST["activity_id"],$activityArray);
+        
+        if($status == "update") $result = $dataapi->updateActivity($_POST["activity_id"], $activityArray);
+        else $result = $dataapi->createActivity($activityArray);
         return $result;
     }
     
@@ -68,9 +89,9 @@ class ActivityUpdater{
     //Update a picture for an activity
     //params: int $activityId
     //return: Array["state", "message"], state: "true" or "false", "message": Message
-    public function updatePicture(){
+    public function setPicture($activityId){
+    
         //Path of the file saved
-        $activityId = $_POST["activity_id"];
         $savePath = "upload/activity$activityId";
         if($_FILES["pic_upload"]["size"] == "0"){
             return(array("state" => "false", "message" => "上传图片为空"));        
@@ -97,65 +118,6 @@ class ActivityUpdater{
         else{//Invalid file
             return (array("state" => "false", "message" => "文件格式不正确！"));
         }           
-    }
-    
-    //Author: Feng Zhibin
-    //Update the menu on WeChat
-    //params: int $activityId
-    //return: Array["state", "message"], state: "true" or "false", "message": Message
-    public function updateMenu($activityId){
-        $tokenTaker = new AccessToken();
-        $accessToken = $tokenTaker->getAccessToken("access_token", "log/token_log");
-        $menu = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/get?access_token=$accessToken");
-        $result = json_decode($menu, true);
-        
-        $activityList = $result["menu"]["button"][1]["sub_button"];
-
-        if(count($activityList) == 0){
-            $newBtn = array();
-            $newBtn["name"] = $result["menu"]["button"][1]["name"];
-            $newBtn["sub_button"] = array();
-            $newBtn["sub_button"][0]["type"] = "click";
-            $newBtn["sub_button"][0]["name"] = $_POST["name"];
-            $newBtn["sub_button"][0]["key"] = "TAKE_$activityId";
-            $newBtn["sub_button"][0]["sub_button"] = array();
-            $result["menu"]["button"][1] = $newBtn;
-        }
-        else{
-            $count = count($activityList);
-            $i = 0;
-            for($i; $i < $count; $i++){
-                if($activityList[$i]["key"] == "TAKE_$activityId"){
-                    $activityList[$i]["name"] = $_POST["name"];
-                    break;
-                }
-            }
-            if($i == $count){
-                $feedback["state"] = "false";
-                $feedback["message"] = "Activity not found in menu!";
-                return $feedback;
-            }
-            $result["menu"]["button"][1]["sub_button"] = $activityList;
-        }
-
-        $context = array(
-            'http' => array(
-                'method' => 'POST',
-                'header' => 'Content-type: application/x-www-form-urlencoded'.
-						        '\n'.'Content-length:' . (strlen(json_encode($result["menu"], JSON_UNESCAPED_UNICODE)) + 1),
-                'content' => json_encode($result["menu"], JSON_UNESCAPED_UNICODE))
-            );
-        $stream_context = stream_context_create($context);
-        $updateResult = file_get_contents("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=$accessToken", false, $stream_context);
-        $finalResult = json_decode($updateResult, true);
-        if($finalResult["errcode"] == 0){
-            $feedback["state"] = "true";
-        }
-        else{
-            $feedback["state"] = "false";
-            $feedback["message"] = $finalResult["errmsg"];
-        }
-        return $feedback;
     }
 }
 ?>
