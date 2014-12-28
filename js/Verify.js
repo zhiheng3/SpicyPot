@@ -3,27 +3,30 @@
 	* Author: XuYi
 	* Last modified :2014/11/18
 */
+
+//认证成功之后页面前端显示
 function VerifySuccess(){
 	$("#Confirm-List").css("display","none");
 	$("#VerifyOKIMG").css("display","block");
-
-
 }
 
+//认证失败之后页面前端显示
 function VerifyFail(){
 	$("#Confirm-List").css("display","none");
 	$("#VerifyNOIMG").css("display","block");
 	$("#Cancel-Button").css("display","block");
 }
 
+
+//设置底栏
 function SetFooter(){
 	var height =  document.body.scrollHeight;
 
-	//$("#main-content").css("height",height);
+	
 
 	var js_main_content = $("#main-content");
 	var set = js_main_content.hasClass("Setted");
-	//debugger;
+	
 	if(!set){
 		js_main_content.addClass("Setted");
 		js_main_content.css("height",height);
@@ -31,6 +34,8 @@ function SetFooter(){
 	$("body").css("height",height);
 	
 }
+
+
 
 function SetComfirmList(){
 	var width =  document.body.scrollWidth;	
@@ -50,6 +55,7 @@ function SetComfirmList(){
 
 }
 
+//选中/取消强制绑定之后的前端显示
 function SetForceBlindText(){
 	
 	var js_ForceBlindText = $("#ForeBlindText");
@@ -66,6 +72,8 @@ function SetForceBlindText(){
                 
 }
 
+
+//背景图片自适应
 function SetBGIMG(){
 	var width =  document.body.scrollWidth;	
 	var height =  document.body.scrollHeight;
@@ -92,19 +100,13 @@ $(document).ready(function(){
 	SetComfirmList();
 	SetBGIMG();
 
-	//alert(height);
+
 	$("#Cancel-Button").click(function(){
 		$("#VerifyNOIMG").css("display","none");
 		$("#Cancel-Button").css("display","none");
 		$("#Confirm-List").css("display","block");
 		$("#Username").val("");
 		$("#Password").val("");
-
-		
-		//$("#Forcebind").removeAttr("checked");
-		//$("#ForeBlindText").attr("class","BlindDisActive");
-		//$("#ForeBlindText").css("color","black");
-
 		$("#results").text("请填写信息进行认证。");
 
 	});
