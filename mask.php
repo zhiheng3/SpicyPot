@@ -1,7 +1,6 @@
 <?php
 require_once "./php/dataAPI.php";
 require_once "./php/dataformat.php";
-require_once "createActivity.php";
 require_once "updateActivity.php";
 require_once "./php/menu.php";
 
@@ -38,8 +37,8 @@ else if ($method == 'seatInfo'){
 }
 
 else if($method == 'createActivity'){
-    $activityCreater = new ActivityCreater();
-    $createResult = $activityCreater->createActivity();
+    $activityCreater = new ActivityUpdater();
+    $createResult = $activityCreater->updateActivity("new");
     echo json_encode($createResult);
 }
 
@@ -57,10 +56,10 @@ else if($method == 'deleteActivity'){
 
     
     $menuManager = new MenuManager();
-    $menuManager->clearActivity($activityId, "access_token", "./log/token_log");
+    $menuManager->updateMenu($activityId, "drop", "access_token", "./log/token_log");
     
     if($result["state"] == "true") echo "success";
-    else echo "failed";
+    else echo "failed" . $result["message"];
     //echo json_encode($result);
 
 }
@@ -68,7 +67,7 @@ else if($method == 'deleteActivity'){
 else if($method == 'updateActivity'){
 
     $activityUpdater = new ActivityUpdater();
-    $updateResult = $activityUpdater->updateActivity();
+    $updateResult = $activityUpdater->updateActivity("update");
     echo json_encode($updateResult);
 }
 
