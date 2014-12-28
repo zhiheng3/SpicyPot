@@ -21,7 +21,7 @@ class ActivityUpdater{
             return $result;
         }
         
-        $activityResult = $this->setActivity($status);
+        $activityResult = $this->setActivity($status); 
         
         if($activityResult["state"] == "true"){
             $pictureResult = $this->setPicture();
@@ -38,7 +38,13 @@ class ActivityUpdater{
             $result["state"] = "false";
             $result["message"] = "活动创建失败，错误信息：" . $_POST["activity_id"] . "\n";
         }
-        
+/*        
+        //Create seats, have not test yet
+        if($_POST["seat_status"] == 1){
+            if($status == "new") $seatResult = $this->setSeats($activityResult["message"]);
+            else $seatResult = $this->setSeats($_POST["activity_id"]);
+        }
+*/        
         $menuManager = new MenuManager();
         if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "access_token", "log/token_log");
         else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
@@ -118,6 +124,15 @@ class ActivityUpdater{
         else{//Invalid file
             return (array("state" => "false", "message" => "文件格式不正确！"));
         }           
+    }
+    
+    //Create seat, have not test yet
+    public function setSeats($activityId){
+        $seatInfoRaw = $_POST["seatInfo"];
+        $seatInfo = json_decode($seatInfoRaw);
+        $dataapi = new DataAPI();
+        $result = $dataapi->createSeats($activityId, $seatInfo);
+        return $result;
     }
 }
 ?>
