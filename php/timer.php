@@ -9,9 +9,6 @@ require_once "dataformat.php";
 require_once "menu.php";
 require_once "activity.php";
 
-//$timer = new Timer();
-//$timer->runTimer();
-
 class Timer{
 
     //Author: Feng Zhibin
@@ -22,7 +19,6 @@ class Timer{
     //Important: 
     //You should use this really CAREFULLY! 
     //Once it is running on server, it would be VERY DIFFICULT TO STOP the timer!
-    //Sugesstion: check $interval and 
     public function runTimer(){
         ignore_user_abort();
         set_time_limit(0);
@@ -33,7 +29,7 @@ class Timer{
         $menuManager = new MenuManager();
         $activityManager = new ActivityManager();
         do{
-            //Protection, guarantees that it would stop in 10 mins, useless in pratice
+            //Protection, guarantees that it would stop in 10 mins, useless in practice
             //if(time() - $start > 60) break;
             
             $menuManager->clearMenu();
