@@ -162,7 +162,7 @@
             <div class="form-group">
                 <label for="input-description" class="col-sm-2 control-label">活动简介</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="description" rows="3" id="input-description"  placeholder = '描述，如好看的舞台剧' row="3" style="resize: none;" <?php if($dis_ticket_number =="true") echo "readonly" ?>><?php echo "$information"; ?></textarea>
+                    <textarea class="form-control" name="description" rows="3" id="input-description"  placeholder = '描述，如好看的舞台剧' row="3" style="resize: none;" <?php if($dis_information =="true") echo "readonly" ?>><?php echo "$information"; ?></textarea>
                 </div>
             </div>
 
