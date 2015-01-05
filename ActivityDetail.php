@@ -51,6 +51,21 @@
     $ticket_end_time ="";
     $image = "";
     $ticket_per_student = 1;
+
+    
+    //初始化都可编辑
+    $dis_name = "false";
+    $dis_brief_name= "false";
+    $dis_stage = "false";
+    $dis_information = "false";
+    $dis_ticket_number = "false";
+    $dis_ticket_per_student = "false";
+    $dis_start_time = "false";
+    $dis_end_time = "false";
+    $dis_ticket_start_time = "false";
+    $dis_ticket_end_time = "false";
+    $dis_image="false";
+
 /*
     $is_seat_selectable;*/
 
@@ -63,6 +78,7 @@
         }else{
         
             $activity = $get_activity["message"];
+            $state = $activity["state"];
             $name = $activity["name"];   
             $brief_name= $activity["brief_name"];
             $stage = $activity["stage"];
@@ -75,6 +91,26 @@
             $ticket_per_student = $activity["ticket_per_student"];
             //if (file_exists)
             $image="upload/activity".$activity_id;
+
+            //设置不可编辑
+            if($state>"0"){
+                $dis_ticket_number = "true";
+                $dis_ticket_start_time = "true";
+            }
+            if($state>"1"){
+                $dis_ticket_per_student = "true";
+                $dis_ticket_end_time = "true";
+            }
+            if($state>"2"){
+                $dis_name = "true";
+                $dis_brief_name= "true";
+                $dis_stage = "true";
+                $dis_information = "true";
+                $dis_start_time = "true";
+                $dis_end_time = "true";
+                $dis_image="true";
+            }
+            
         }
     }
     
@@ -101,7 +137,7 @@
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label" id="label-input-name">活动全称</label>
                 <div class="col-sm-10">
-                    <input type='text' maxlength='26' name='name' class='form-control' id='input-name' placeholder="活动全称，如马兰花开第一百场纪念演出" value='<?php echo "$name"; ?>' autofocus>
+                    <input type='text' maxlength='26' name='name' class='form-control' id='input-name' placeholder="活动全称，如马兰花开第一百场纪念演出" value='<?php echo "$name"; ?>' <?php if($dis_name =="true") echo "readonly" ?> autofocus>
                 </div>
             </div>
 
@@ -110,7 +146,7 @@
             <div class="form-group">
                 <label for="input-key" class="col-sm-2 control-label">活动简称</label>
                 <div class="col-sm-10">
-                    <input type="text" maxlength="12" name="key" class="form-control" id="input-key" placeholder="用户用于订票的活动代称，推荐使用中文(少于7个字)，如马兰花开" value='<?php echo "$brief_name"; ?>'>
+                    <input type="text" maxlength="12" name="key" class="form-control" id="input-key" placeholder="用户用于订票的活动代称，推荐使用中文(少于7个字)，如马兰花开" value='<?php echo "$brief_name"; ?>' <?php if($dis_brief_name =="true") echo "readonly" ?>>
                 </div>
             </div>
 
@@ -119,14 +155,14 @@
             <div class="form-group">
                 <label for="input-place" class="col-sm-2 control-label">活动地点</label>
                 <div class="col-sm-10">
-                    <input type="text" name="place" class="form-control" id="input-place" placeholder = '活动地点，如大礼堂' value='<?php echo "$stage"; ?>'>
+                    <input type="text" name="place" class="form-control" id="input-place" placeholder = '活动地点，如大礼堂' value='<?php echo "$stage"; ?>' <?php if($dis_stage =="true") echo "readonly" ?>>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input-description" class="col-sm-2 control-label">活动简介</label>
                 <div class="col-sm-10">
-                    <textarea class="form-control" name="description" rows="3" id="input-description"  placeholder = '描述，如好看的舞台剧' row="3" style="resize: none;"><?php echo "$information"; ?></textarea>
+                    <textarea class="form-control" name="description" rows="3" id="input-description"  placeholder = '描述，如好看的舞台剧' row="3" style="resize: none;" <?php if($dis_ticket_number =="true") echo "readonly" ?>><?php echo "$information"; ?></textarea>
                 </div>
             </div>
 
@@ -136,24 +172,27 @@
             <div class="form-group">
                 <label for="input-total_tickets" class="col-sm-2 control-label">总票数</label>
                 <div class="col-sm-10">
-                    <input type="number" name="total_tickets" class="form-control" id="input-total_tickets" placeholder = '此次活动通过“紫荆之声”的发票总数，如300' min="1" value='<?php echo "$ticket_number";?>'>
+                    <input type="number" name="total_tickets" class="form-control" id="input-total_tickets" placeholder = '此次活动通过“紫荆之声”的发票总数，如300' min="1" value='<?php echo "$ticket_number";?>' <?php if($dis_ticket_number =="true") echo "readonly" ?>>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input-ticket_per_student" class="col-sm-2 control-label">每人最大可选票数</label>
                 <div class="col-sm-10">
-                    <input type="number" name="ticket_per_student" class="form-control" id="input-ticket_per_student" min="1" placeholder = '此次活动每人最多可抢票数，如2' value='<?php echo "$ticket_per_student";?>'>
+                    <input type="number" name="ticket_per_student" class="form-control" id="input-ticket_per_student" min="1" placeholder = '此次活动每人最多可抢票数，如2' value='<?php echo "$ticket_per_student";?>' <?php if($dis_ticket_per_student =="true") echo "readonly" ?>>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">抢票开始时间</label>
                 
-                <div class="input-group date form_datetime col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" name="Rob-Start"  id = "Rob-Start"readonly value=<?php echo "$ticket_start_time";?>>
-                    <span class="input-group-addon" id = "Remove-RS"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                <div class="input-group date <?php if($dis_ticket_start_time =="false") echo "form_datetime" ?> col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" name="Rob-Start"  id = "Rob-Start"readonly value=<?php echo "$ticket_start_time";?>  >
+                    <?php if($dis_ticket_start_time =="false") echo 
+                    "<span class='input-group-addon' id = 'Remove-RS' ><span class='glyphicon glyphicon-remove'></span></span>
+                    <span class='input-group-addon' ><span class='glyphicon glyphicon-th'></span></span>"
+                    ?>
+                    
                 </div>
                 <input type="hidden" id="dtp_input1" value="" /><br/>
             </div>
@@ -161,10 +200,12 @@
             <div class="form-group">
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">抢票结束时间</label>
                 
-                <div class="input-group date form_datetime col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" name="Rob-End"  id = "Rob-End" readonly value=<?php echo "$ticket_end_time";?>>
-                    <span class="input-group-addon" id = "Remove-RE"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                <div class="input-group date <?php if($dis_ticket_end_time =="false") echo "form_datetime" ?> col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" name="Rob-End"  id = "Rob-End" readonly  value=<?php echo "$ticket_end_time";?>>                   
+                    <?php if($dis_ticket_end_time =="false") echo 
+                    "<span class='input-group-addon' id = 'Remove-RE' ><span class='glyphicon glyphicon-remove'></span></span>
+                    <span class='input-group-addon' ><span class='glyphicon glyphicon-th'></span></span>"
+                    ?>
                 </div>
                 <input type="hidden" id="dtp_input1" value="" /><br/>
             </div>     
@@ -172,10 +213,12 @@
             <div class="form-group">
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动开始时间</label>
                 
-                <div class="input-group date form_datetime col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
+                <div class="input-group date <?php if($dis_start_time =="false") echo "form_datetime" ?> col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
                     <input class="form-control" size="16" type="text" name="Act-Start"  id = "Act-Start"readonly value=<?php echo "$start_time";?>>
-                    <span class="input-group-addon" id = "Remove-AS"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                    <?php if($dis_start_time =="false") echo 
+                    "<span class='input-group-addon' id = 'Remove-AS' ><span class='glyphicon glyphicon-remove'></span></span>
+                    <span class='input-group-addon' ><span class='glyphicon glyphicon-th'></span></span>"
+                    ?>
                 </div>
                 <input type="hidden" id="dtp_input1" value="" /><br/>
             </div>
@@ -183,10 +226,12 @@
             <div class="form-group">
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动结束时间</label>
                 
-                <div class="input-group date form_datetime col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
-                    <input class="form-control" size="16" type="text" name="Act-End"  id = "Act-End"readonly value=<?php echo "$end_time";?>>
-                    <span class="input-group-addon" id = "Remove-AE"><span class="glyphicon glyphicon-remove"></span></span>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                <div class="input-group date <?php if($dis_end_time =="false") echo "form_datetime" ?>  col-md-5" data-date="2015-01-01T05:25:07Z" data-date-format="yyyy-MM-dd-HH:ii" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" name="Act-End"  id = "Act-End"readonly  value=<?php echo "$end_time";?>>
+                    <?php if($dis_end_time =="false") echo 
+                    "<span class='input-group-addon' id = 'Remove-AE' ><span class='glyphicon glyphicon-remove'></span></span>
+                    <span class='input-group-addon' ><span class='glyphicon glyphicon-th'></span></span>"
+                    ?>
                 </div>
                 <input type="hidden" id="dtp_input1" value="" /><br/>
             </div>  
@@ -194,7 +239,7 @@
             <div class="form-group">
                 <label for="input-pic_url" class="col-sm-2 control-label" min="0">活动配图</label>
                 <div class="col-sm-10">
-                    <input type="file" name="pic_upload" class="form-control" id="input-pic_upload" min="0" placeholder="请选择图片">
+                    <input type="file" name="pic_upload" class="form-control" id="input-pic_upload" min="0" placeholder="请选择图片" <?php if($dis_image =="true") echo "readonly" ?>>
                     <div id = "Preview"><?php if(file_exists($image)) {echo "<img src=$image>";} ?></div>
                 </div>
             </div>
