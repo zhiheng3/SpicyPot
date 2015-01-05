@@ -114,6 +114,13 @@
         }
     }
     
+    //Get seat template
+    $templatefiles = glob("./seat/*.sst");
+    $templatenames = array();
+    for ($i = 0; $i < count($templatefiles); ++$i){
+        $tmpname = preg_replace('/^.+[\\\\\\/]/', '', $templatefiles[$i]); 
+        $templatenames[$i] = substr($tmpname, 0, strlen($tmpname) - 4);
+    }    
 ?>
  
 <div class="container" id="detail-form">
@@ -246,22 +253,31 @@
 
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">座位分配设置</label>
+                <label class="col-sm-2 control-label">座位分配模板</label>
                 <div class="col-sm-10">
                     <select name="seat_status" id="input-seat_status" class="form-control" >
                         <option value = "0">不分配座位</option>
-                        <option value = "1">综体：分配B、C两入口</option>
-                        <option value = "2">新清华学堂</option>
+                        <?php
+                            //Show the seat templates
+                            for ($i = 0; $i < count($templatenames); ++$i){
+                                $val = $i + 1;
+                                $tmpname = $templatenames[$i];
+                                echo "<option value = '$val'>$tmpname</option>\n";
+                            }
+                        ?>
                     </select>
                 </div>
             </div>
-
-            <div class="form-group" id="canvas" style="display:none;">
+            
             <?php
-                $ssa = file_get_contents("./seat/1.sst", "r");
-                echo $ssa;
+                for ($i = 0; $i < count($templatefiles); ++$i){
+                    $val = $i + 1;
+                    echo "<div class='form-group seattemplate' id='canvas$val' style='display:none;' oncontextmenu='return false'>\n";
+                    $ssa = file_get_contents($templatefiles[$i], "r");
+                    echo $ssa;
+                    echo "</div>";
+                }
             ?>
-            </div>
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
@@ -293,21 +309,31 @@
 
 $(document).ready(function(){
     $("#input-seat_status").change(function(e){
-        if ($("#input-seat_status").val() == 2){
-            $("#canvas").css("display", "block");
+        var templates = $(".seattemplate");
+        for (var i = 0; i < templates.length; ++i)
+            DeleteMoveListener($(templates[i]).children()[0]);
+        $(".seattemplate").css("display", "none");
+        $("#input-total_tickets").attr("readonly", ""); 
+
+        var tmpval = $("#input-seat_status").val();
+        if (tmpval > 0){
+            Args.curtemplate = "#canvas" + tmpval;
+            $("#canvas" + tmpval).css("display", "block");
+            AddMoveListener($("#canvas" + tmpval).children()[0]);
+            $("#input-total_tickets").attr("readonly", ""); //Auto compute ticket number
+            $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
         }
-        else{
-            $("#canvas").css("display", "none");
-        }
+        
     });
     
-    AddMoveListener($("#svg_seat")[0]);
     Args.clickHandler = function(e){
         var element = $("#" + e);
         if (element.attr("class") == "seat")
             element.attr("class", "invalid");
         else
             element.attr("class", "seat");
+        
+        $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
     }
     Args.selectHandler = function(e){
         var element = $("#" + e);
@@ -315,6 +341,10 @@ $(document).ready(function(){
             element.attr("class", "invalid");
         else
             element.attr("class", "seat");
+        $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
+    }
+    Args.infoChangedHandler = function (e){
+        $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
     }
     Args.mode = "select";
 });

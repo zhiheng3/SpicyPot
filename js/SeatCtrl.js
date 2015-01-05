@@ -101,6 +101,10 @@ function AddMoveListener(Dom){
     $(Dom).on("touchend", TouchendHandler);
 }
 
+function DeleteMoveListener(Dom){
+    $(Dom).off();
+}
+
 /*
 Mouse Handler
 */
@@ -264,7 +268,7 @@ function EndSelect(Dom, x, y){
         var Y = Math.min(y, Args.select.y);
         var W = Math.abs(x - Args.select.x);
         var H = Math.abs(y - Args.select.y);
-        var elements = $("#svg_seat").children();
+        var elements = $(Dom).children();
         for (var i = 0; i < elements.length; ++i){
             var ex = parseInt($(elements[i]).attr("x"));
             var ey = parseInt($(elements[i]).attr("y"));
@@ -367,6 +371,7 @@ function ShowInfoBox(Dom, left, top){
         $(Dom)[0].id = name[0].value;
         $(Dom).attr("cap", capacity[0].value);
         HideInfoBox();
+        Args.infoChangedHandler($(Dom)[0].id);
     });
     
     $("body").append(info);
@@ -388,6 +393,19 @@ function SetSeatInfo(e){
     Args.infobox = Dom;
     HideInfoBox();
     ShowInfoBox(Dom, e.pageX, e.pageY);
+}
+
+function CountSeatsNumber(Dom){
+    var seats = $(Dom).find(".seat");
+    var result = 0;
+    for (var i = 0; i < seats.length; ++i){
+        if ($(seats[i]).attr("cap") != undefined)
+            result += parseInt($(seats[i]).attr("cap"));
+        else
+            result++;
+    }
+    console.log(seats);
+    return result;
 }
 
 $(document).ready(function(){

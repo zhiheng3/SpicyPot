@@ -20,16 +20,6 @@ $(document).ready(function(){
 	});
 });
 
-
-
-
-
-
-
-
-
-
-
 //创建活动
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
@@ -49,6 +39,8 @@ function createActivity(){
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
     formData.append("method", "createActivity");
+    
+    console.log(formData);
     
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
@@ -324,20 +316,11 @@ function AutoStorage(){
 	});
 }
 
-
-
-
-
-
-
-
-
 function dateCorrection(date){
     var newDate1 = date.substr(0, 10);
     var newDate2 = date.substr(11);
     return (newDate1.concat(" ", newDate2, ":00"));
 }
-
 
 $('.form_datetime').datetimepicker({
         language:  'zh-CN',
