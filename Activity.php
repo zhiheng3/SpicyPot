@@ -124,7 +124,7 @@
 	            <textarea readonly="readonly" id = "ActDescription">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $information;?>
 	            </textarea>
 	        </li>	        
-	         <li data-role="collapsible">
+	         <li data-role="collapsible" id = "ActivityPic">
 	            <h1>活动预览</h1>
 	            <?php if(!file_get_contents("http://wx9.igeek.asia/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"http://wx9.igeek.asia/upload/activity{$_GET['id']}\"></img>"?>
 	        </li>

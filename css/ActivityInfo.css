@@ -275,3 +275,10 @@ filter: alpha(opacity=0,finishopacity=50,style=3)
 }
 
 
+#ActivityPic img{
+	width: 100%;
+	height: 100%;
+	padding-left: 0;
+	padding-top: 0;
+}
+
