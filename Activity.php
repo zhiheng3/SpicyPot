@@ -40,6 +40,7 @@
             $endTime = $result['message']['end_time'];
             $remain = $result['message']['ticket_available_number'];
             $location = $result['message']['stage'];
+            $information = $result['message']['information'];
             $ticketStartTime = $result['message']['ticket_start_time'];
             $ticketEndTime = $result['message']['ticket_end_time'];
             $ticketPerStudent = $result['message']['ticket_per_student'];
@@ -120,12 +121,12 @@
 	        </li>
 	         <li data-role="collapsible">
 	            <h1>活动简述</h1>
-	            <textarea readonly="readonly" id = "ActDescription">&nbsp;&nbsp;&nbsp;&nbsp;
+	            <textarea readonly="readonly" id = "ActDescription">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $information;?>
 	            </textarea>
 	        </li>	        
 	         <li data-role="collapsible">
 	            <h1>活动预览</h1>
-	            <p>暂无图片</p>
+	            <?php if(!file_exists("/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"/upload/activity{$_GET['id']}\"></img>"?>
 	        </li>
 	    </ul>
  
