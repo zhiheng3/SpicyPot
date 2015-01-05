@@ -20,7 +20,8 @@ class MenuManager{
         //Get all activity
         $dataapi = new DataAPI();
         $activityManager = new ActivityManager();
-        $activityList = $dataapi->getActivityList();
+        //Param 5: Get all activities, expired activities included
+        $activityList = $dataapi->getActivityList(5);
         
         if($activityList["state"] == "true"){
             $activityNumber = count($activityList["message"]);
@@ -28,7 +29,7 @@ class MenuManager{
                 //get state for all activities
                 $status = $activityManager->timeStatus($activityList["message"][$i]);
                 //clean up when expired
-                if($status == 2) $this->clearActivity($activityList["message"][$i], "../access_token", "../log/token_log");
+                if($status >= 2) $this->updateMenu($activityList["message"][$i], "drop", "../access_token", "../log/token_log");
             }
         }
     }
@@ -157,7 +158,7 @@ class MenuManager{
         else{
             $feedback["state"] = "false";
             $feedback["message"] = $finalResult["errmsg"];
-        }
+        }        
         return $feedback;
     }     
 }

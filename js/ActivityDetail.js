@@ -56,7 +56,7 @@ function createActivity(){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
-                //alert(result["message"]);
+                alert(result["message"]);
                 window.location.href ="activity_list.php";
             }
         }

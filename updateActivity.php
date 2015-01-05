@@ -24,7 +24,10 @@ class ActivityUpdater{
         $activityResult = $this->setActivity($status); 
         
         if($activityResult["state"] == "true"){
-            $pictureResult = $this->setPicture();
+        
+            if($status == "update") $pictureResult = $this->setPicture($_POST["activity_id"]);
+            else if($status == "new") $pictureResult = $this->setPicture($activityResult["message"]);
+            
             if($pictureResult["state"] == "true"){
                 $result["state"] = "true";
                 $result["message"] = "活动创建成功！\n图片上传成功！\n";

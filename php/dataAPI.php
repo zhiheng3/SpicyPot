@@ -180,7 +180,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		$end_time = $activity["end_time"];
 		$ticket_start_time = $activity["ticket_start_time"];
 		$ticket_end_time = $activity["ticket_end_time"];
-		$state = 1;				#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
+		$state = 0;				#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
 		$stage = $activity["stage"];
 		$information = $activity["information"];
 		$ticket_number = $activity["ticket_number"];
@@ -354,7 +354,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//获得活动的id列表（state < stateLimit)
     //参数: 可选 int stateLimit  默认为3；
 	//返回: ["state", "message"]: ["true", [int activity_id]] or ["false", 错误信息]
-	public function getActivityList($stateLimit){
+	public function getActivityList($stateLimit = 3){
 		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
         if (!$con){
             return(array("state" => "false", "message" => "数据库连接错误"));

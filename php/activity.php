@@ -41,7 +41,6 @@ class ActivityManager{
     public function updateActivityState(){
         $dataapi = new DataAPI();
         $updateResult = $dataapi->updateActivityState(date("Y-m-d H:i:s"));
-        //echo "State updated.\n";
         return $updateResult;
     }
     
