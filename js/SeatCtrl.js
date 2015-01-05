@@ -105,35 +105,48 @@ function AddMoveListener(Dom){
 Mouse Handler
 */
 function MousedownHandler(e){
+    e.preventDefault();
+    if (e.button == 2)
+        return ;
+    HideInfoBox();
     if (Args.mode == "select"){
         StartSelect(e.target, e.offsetX, e.offsetY);
         return ;
     }
     StartMove(e.clientX, e.clientY);
-    e.preventDefault();
 }
 
 function MousemoveHandler(e){
+    e.preventDefault();
     if (Args.mode == "select"){
         ProcessSelect(e.target, e.offsetX, e.offsetY);
         return ;
     }
     ProcessMove(e.clientX, e.clientY, e.currentTarget);
-    e.preventDefault();
 }
 
 function MouseupHandler(e){
+    e.preventDefault();
+    if (e.button == 2) //Right click
+    {
+        SetSeatInfo(e);
+        return ;
+    }
+    HideInfoBox();
     if (Args.mode == "select"){
         EndSelect(e.target, e.offsetX, e.offsetY);
         return ;
     }
     EndMove(e);
-    e.preventDefault();
 }
 
 function MouseleaveHandler(e){
-    EndMove();
     e.preventDefault();
+    if (Args.mode == "select"){
+        EndSelect(e.target, e.offsetX, e.offsetY);
+        return ;
+    }
+    EndMove();
 }
 
 /*
@@ -219,7 +232,8 @@ function StartSelect(Dom, x, y){
     SetSVGAttr(rect, "stroke-dasharray", "1,1");
     SetSVGAttr(rect, "fill", "none");
     SetSVGAttr(rect, "id", "select_rect");
-    
+    if (Dom.tagName != "svg")
+        Dom = $(Dom).parent()[0];
     $(Dom).append(rect);
 }
 
@@ -242,6 +256,8 @@ function ProcessSelect(Dom, x, y){
 
 function EndSelect(Dom, x, y){
     $("#select_rect").remove();
+    if (!Args.select.start)
+        return false;
     Args.select.start = false;
     if (Args.select.moved){
         var X = Math.min(x, Args.select.x);
@@ -308,6 +324,72 @@ function UpdateThumb(SourceDom, ThumbDom, viewbox){
     $("#test").append(tmp);*/
 }
 
+function InputTemplate(label, type, id){
+    return "<div class='form-group'>" +
+           "<label class='col-sm-2 control-label'>" + label +"</label>" +
+           "<div class='col-sm-10'>" +
+           "<input type='" + type +"' class='form-control' id='" + id + "'/>" +
+           "</div>" +
+           "</div>";
+}
+
+function ShowInfoBox(Dom, left, top){
+    if ($(Dom).attr("class") != "seat")
+        return ;
+    Args.infoitem = Dom;
+    $(Args.infoitem).css("fill", "#ffaaaa");
+    
+    var info = $("<form id='infobox' class='form-horizontal'>" +
+                 InputTemplate("名称", "text", "seat_name") +
+                 InputTemplate("容量", "number", "seat_capacity") +
+                 "<input type='button' value='确定' id='seat_confirm'/>" + 
+                 "</form>");
+                 
+    var name = info.find("#seat_name");
+    name.attr("maxlength", "10");
+    name.attr("value", Dom.id);
+    
+    var capacity = info.find("#seat_capacity");
+    if ($(Dom).attr("cap") != undefined)
+        capacity.attr("value", $(Dom).attr("cap"));
+    else
+        capacity.attr("value", "1");
+    capacity.attr("min", "1");
+
+    info.css("position", "absolute");
+    info.css("left", left);
+    info.css("top", top);
+    info.css("z-index", 999);
+    
+    info.css("background-color", "white");
+    
+    info.find("#seat_confirm").click(function(e){
+        $(Dom)[0].id = name[0].value;
+        $(Dom).attr("cap", capacity[0].value);
+        HideInfoBox();
+    });
+    
+    $("body").append(info);
+}
+
+function HideInfoBox(){
+    $("#infobox").remove();
+    if (typeof(Args.infoitem) == "object"){
+        $(Args.infoitem).css("fill", "");
+        Args.infoitem = 0;
+    }
+}
+
+function SetSeatInfo(e){
+    console.log(e);
+    console.log(e.target.tagName);
+    var Dom = e.target;
+    
+    Args.infobox = Dom;
+    HideInfoBox();
+    ShowInfoBox(Dom, e.pageX, e.pageY);
+}
+
 $(document).ready(function(){
     //Init
     Args = Object();
@@ -327,6 +409,7 @@ $(document).ready(function(){
     Args.select.moved = false;
     Args.select.x = 0;
     Args.select.y = 0;
+    
     
     Args.timeout = 0;
 });
