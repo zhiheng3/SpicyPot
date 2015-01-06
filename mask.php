@@ -72,18 +72,10 @@ else if($method == 'updateActivity'){
 }
 
 else if($method == 'createSeats'){
-    $seats = array();
-    $seatNumber = $_POST['seat_number'];
-    for($i = 0; $i < $seatNumber; $i++){
-        $seat = array("location" => $_POST["seat_location$i"], "capability" => $_POST["seat_capability$i"]);
-        $seats[$i] = $seat;
-    }
-    //echo "";
-    //$activity_id = $_POST['activity_id'];
-    //$seatList = $_POST["seatList"];
-    $dataapi = new dataAPI();
-    $result = $dataapi->createSeats(125, $seats);
-    echo json_encode($result);
+    //echo json_encode($seatObj);
+    //$dataapi = new dataAPI();
+    //$result = $dataapi->createSeats(126, $seats);
+    //echo json_encode($result);
 }
 
 else if($method == 'assignSeats'){

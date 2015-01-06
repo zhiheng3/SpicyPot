@@ -33,15 +33,24 @@ function createActivity(){
     var dest = "mask.php";
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
-    //formData.append("method", "createActivity");
-    formData.append("method", "createSeats");
-    
+    formData.append("method", "createActivity");
+    //formData.append("method", "createSeats");
+    /* 
     var rawSeats = $(".seat");
     for(var i = 0; i < rawSeats.length; i++){
         formData.append(("seat_location" + i), rawSeats[i].id);
         formData.append(("seat_capability" + i), "1");
     }
     formData.append("seat_number", rawSeats.length);
+    */
+    if($("#input-seat_status").val() > 0){
+        var rawSeatsObj = GetSeatsInfo(Args.curtemplate);
+        var rawSeatStr = SaveSVG(Args.curtemplate);
+        var rawSeat = JSON.stringify(rawSeatsObj);
+        formData.append("seat_info", rawSeat);
+        formData.append("seat_info_str", rawSeatStr);
+    }
+    
     //console.log(rawSeats.length);
     //console.log(formData);
     
