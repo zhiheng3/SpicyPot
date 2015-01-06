@@ -28,26 +28,25 @@ class ActivityUpdater{
             if($status == "update") $pictureResult = $this->setPicture($_POST["activity_id"]);
             else if($status == "new") $pictureResult = $this->setPicture($activityResult["message"]);
             
+            if($status == "new" && $_POST["seat_status"] > 0) $seatResult = $this->setSeats($activityResult["message"]);
+            
+            $result["state"] = "true";
+            $result["message"] = "活动创建成功！\n";
             if($pictureResult["state"] == "true"){
-                $result["state"] = "true";
-                $result["message"] = "活动创建成功！\n图片上传成功！\n";
+                $result["message"] .= "图片上传成功！\n";
             }
             else{
-                $result["state"] = "true";
-                $result["message"] = "活动创建成功！\n图片上传失败，错误信息：" . $pictureResult["message"] . "\n";
+                $result["message"] .= "图片上传失败，错误信息：" . $pictureResult["message"] . "\n";
             }
+            if(!$seatResult) $result["message"] .= "本活动不需要创建座位！\n";
+            else if($seatResult["state"] == "true") $result["message"] .= "座位创建成功！\n";
+            else $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
         }
         else{
             $result["state"] = "false";
-            $result["message"] = "活动创建失败，错误信息：" . $_POST["activity_id"] . "\n";
+            $result["message"] = "活动创建失败，错误信息：" . $activityResult["message"] . "\n";
         }
-/*        
-        //Create seats, have not test yet
-        if($_POST["seat_status"] == 1){
-            if($status == "new") $seatResult = $this->setSeats($activityResult["message"]);
-            else $seatResult = $this->setSeats($_POST["activity_id"]);
-        }
-*/        
+
         $menuManager = new MenuManager();
         if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "access_token", "log/token_log");
         else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
@@ -131,8 +130,11 @@ class ActivityUpdater{
     
     //Create seat, have not test yet
     public function setSeats($activityId){
-        $seatInfoRaw = $_POST["seatInfo"];
-        $seatInfo = json_decode($seatInfoRaw);
+        $seatStr = trim($_POST["seat_info_str"]);
+        $ssaFile = fopen("./seat/$activityId.ssa", "w");
+        fwrite($ssaFile, $seatStr);
+        
+        $seatInfo = json_decode($_POST["seat_info"], true);
         $dataapi = new DataAPI();
         $result = $dataapi->createSeats($activityId, $seatInfo);
         return $result;

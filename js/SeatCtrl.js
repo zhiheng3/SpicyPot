@@ -408,11 +408,11 @@ function GetSeatsInfo(Dom){
     var result = Array();
     for (var i = 0; i < seats.length; ++i){
         result[i] = Object();
-        result[i].seatname = $(seats[i])[0].id;
+        result[i].location = $(seats[i])[0].id;
         if ($(seats[i]).attr("cap") != undefined)
-            result[i].capacity = parseInt($(seats[i]).attr("cap"));
+            result[i].capability = parseInt($(seats[i]).attr("cap"));
         else
-            result[i].capacity = 1;
+            result[i].capability = 1;
     }
     return result;
 }
