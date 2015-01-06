@@ -259,15 +259,15 @@ function ProcessSelect(Dom, x, y){
 }
 
 function EndSelect(Dom, x, y){
-    if (!Args.select.moved && Dom.tagName != "svg"){
-        Args.clickHandler(Dom.id);
-    }
     while (Dom.tagName != "svg" && Dom.tagName != "div")
         Dom = $(Dom).parent()[0];
     $("#select_rect").remove();
     if (!Args.select.start)
         return false;
     Args.select.start = false;
+    if (!Args.select.moved && Dom.tagName != "svg"){
+        Args.clickHandler(Dom.id);
+    }
     if (Args.select.moved){
         var X = Math.min(x, Args.select.x);
         var Y = Math.min(y, Args.select.y);
