@@ -37,8 +37,9 @@ else if ($method == 'seatInfo'){
 }
 
 else if($method == 'createActivity'){
-    $activityCreater = new ActivityUpdater();
+    $activityCreater = new ActivityUpdater(); 
     $createResult = $activityCreater->updateActivity("new");
+    
     echo json_encode($createResult);
 }
 
@@ -54,7 +55,6 @@ else if($method == 'deleteActivity'){
     $activityId = $_POST['id'];
     $result = $data->dropActivity($activityId);
 
-    
     $menuManager = new MenuManager();
     $menuManager->updateMenu($activityId, "drop", "access_token", "./log/token_log");
     
@@ -72,10 +72,17 @@ else if($method == 'updateActivity'){
 }
 
 else if($method == 'createSeats'){
-    $activity_id = $_POST['activity_id'];
-    $seatList = $_POST["seatList"];
-    $data = new dataAPI();
-    $result=$data -> createSeats($activity_id, $seatList);
+    $seats = array();
+    $seatNumber = $_POST['seat_number'];
+    for($i = 0; $i < $seatNumber; $i++){
+        $seat = array("location" => $_POST["seat_location$i"], "capability" => $_POST["seat_capability$i"]);
+        $seats[$i] = $seat;
+    }
+    //echo "";
+    //$activity_id = $_POST['activity_id'];
+    //$seatList = $_POST["seatList"];
+    $dataapi = new dataAPI();
+    $result = $dataapi->createSeats(125, $seats);
     echo json_encode($result);
 }
 

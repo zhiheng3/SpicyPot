@@ -26,21 +26,24 @@ $(document).on("click", "#publishBtn", function(){
     var contentValid = CheckContentValid();
     if(timeValid && contentValid){
         createActivity();
-        postSeat();
     }
 });
-
-function postSeat(){
-    
-}
 
 function createActivity(){
     var dest = "mask.php";
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
-    formData.append("method", "createActivity");
+    //formData.append("method", "createActivity");
+    formData.append("method", "createSeats");
     
-    console.log(formData);
+    var rawSeats = $(".seat");
+    for(var i = 0; i < rawSeats.length; i++){
+        formData.append(("seat_location" + i), rawSeats[i].id);
+        formData.append(("seat_capability" + i), "1");
+    }
+    formData.append("seat_number", rawSeats.length);
+    //console.log(rawSeats.length);
+    //console.log(formData);
     
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
@@ -56,6 +59,7 @@ function createActivity(){
     xhr.open("post", dest, true);
     xhr.setRequestHeader("context-type","text/xml;charset=utf-8");
     xhr.send(formData);
+
 }
 
 
