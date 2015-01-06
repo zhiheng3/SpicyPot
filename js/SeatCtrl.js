@@ -386,8 +386,6 @@ function HideInfoBox(){
 }
 
 function SetSeatInfo(e){
-    console.log(e);
-    console.log(e.target.tagName);
     var Dom = e.target;
     
     Args.infobox = Dom;
@@ -404,7 +402,20 @@ function CountSeatsNumber(Dom){
         else
             result++;
     }
-    console.log(seats);
+    return result;
+}
+
+function GetSeatsInfo(Dom){
+    var seats = $(Dom).find(".seat");
+    var result = Array();
+    for (var i = 0; i < seats.length; ++i){
+        result[i] = Object();
+        result[i].seatname = $(seats[i])[0].id;
+        if ($(seats[i]).attr("cap") != undefined)
+            result[i].capacity = parseInt($(seats[i]).attr("cap"));
+        else
+            result[i].capacity = 1;
+    }
     return result;
 }
 

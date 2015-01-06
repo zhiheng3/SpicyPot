@@ -129,7 +129,7 @@ Param: DOM
 Return: string
 */
 function SaveSVG(Dom){
-    return $(Dom).parent().html();
+    return $(Dom).find("svg").parent().html();
 }
 
 /*

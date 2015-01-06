@@ -306,7 +306,6 @@
 
 <script>
 
-
 $(document).ready(function(){
     $("#input-seat_status").change(function(e){
         var templates = $(".seattemplate");
