@@ -93,6 +93,14 @@ $(document).on('click', '#updateBtn', function(){
     formData.append('method', 'updateActivity');
     formData.append('activity_id',$('#updateBtn')[0].name);
     
+    if($("#input-seat_status").val() > 0){
+        var rawSeatsObj = GetSeatsInfo(Args.curtemplate);
+        var rawSeatStr = SaveSVG(Args.curtemplate);
+        var rawSeat = JSON.stringify(rawSeatsObj);
+        formData.append("seat_info", rawSeat);
+        formData.append("seat_info_str", rawSeatStr);
+    }
+    
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         if (xhr.readyState == 4){

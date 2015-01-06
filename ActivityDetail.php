@@ -117,10 +117,16 @@
     //Get seat template
     $templatefiles = glob("./seat/*.sst");
     $templatenames = array();
+    $defaultssa = 0;
     for ($i = 0; $i < count($templatefiles); ++$i){
         $tmpname = preg_replace('/^.+[\\\\\\/]/', '', $templatefiles[$i]); 
         $templatenames[$i] = substr($tmpname, 0, strlen($tmpname) - 4);
-    }    
+    }
+    if ($activity_id != '' && file_exists("./seat/$activity_id.ssa")){
+        $defaultssa = count($templatefiles) + 1;
+        array_push($templatenames, "当前使用的座位图");
+        array_push($templatefiles, "./seat/$activity_id.ssa");
+    }
 ?>
  
 <div class="container" id="detail-form">
@@ -255,7 +261,9 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">座位分配模板</label>
                 <div class="col-sm-10">
-                    <select name="seat_status" id="input-seat_status" class="form-control" >
+                <?php
+                    echo "<select name='seat_status' id='input-seat_status' class='form-control' default='$defaultssa'>\n";
+                ?>
                         <option value = "0">不分配座位</option>
                         <?php
                             //Show the seat templates
@@ -306,24 +314,27 @@
 
 <script>
 
-$(document).ready(function(){
-    $("#input-seat_status").change(function(e){
-        var templates = $(".seattemplate");
-        for (var i = 0; i < templates.length; ++i)
-            DeleteMoveListener($(templates[i]).children()[0]);
-        $(".seattemplate").css("display", "none");
-        $("#input-total_tickets").attr("readonly", ""); 
+function selectChangeHandler(e){
+    var templates = $(".seattemplate");
+    for (var i = 0; i < templates.length; ++i)
+        DeleteMoveListener($(templates[i]).children()[0]);
+    $(".seattemplate").css("display", "none");
+    $("#input-total_tickets").attr("readonly", ""); 
 
-        var tmpval = $("#input-seat_status").val();
-        if (tmpval > 0){
-            Args.curtemplate = "#canvas" + tmpval;
-            $("#canvas" + tmpval).css("display", "block");
-            AddMoveListener($("#canvas" + tmpval).children()[0]);
-            $("#input-total_tickets").attr("readonly", ""); //Auto compute ticket number
-            $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
-        }
-        
-    });
+    var tmpval = $("#input-seat_status").val();
+    if (tmpval > 0){
+        Args.curtemplate = "#canvas" + tmpval;
+        $("#canvas" + tmpval).css("display", "block");
+        AddMoveListener($("#canvas" + tmpval).children()[0]);
+        $("#input-total_tickets").attr("readonly", ""); //Auto compute ticket number
+        $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
+    }
+}
+
+$(document).ready(function(){
+    $("#input-seat_status").val($("#input-seat_status").attr("default"));
+    selectChangeHandler();
+    $("#input-seat_status").change(selectChangeHandler);
     
     Args.clickHandler = function(e){
         var element = $("#" + e);
