@@ -33,7 +33,7 @@ function ClickHandler(seatname){
 }
 
 function Draw(){
-    var seats = $(".seat");
+    var seats = $(".seat,.invalid");
     for (var i = 0; i < seats.length; ++i){
         if (Args.remain[seats[i].id] > 0){
             SetSVGAttr(seats[i], "fill", Args.color.valid);
