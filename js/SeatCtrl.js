@@ -259,6 +259,9 @@ function ProcessSelect(Dom, x, y){
 }
 
 function EndSelect(Dom, x, y){
+    if (!Args.select.moved && Dom.tagName != "svg"){
+        Args.clickHandler(Dom.id);
+    }
     while (Dom.tagName != "svg" && Dom.tagName != "div")
         Dom = $(Dom).parent()[0];
     $("#select_rect").remove();
@@ -279,10 +282,6 @@ function EndSelect(Dom, x, y){
             if (IsInterSect(X, Y, W, H, ex, ey, ew, eh))
                 Args.selectHandler(elements[i].id);
         }
-    }
-    
-    if (!Args.select.moved && Dom.tagName != "svg"){
-        Args.clickHandler(Dom.id);
     }
 }
 
