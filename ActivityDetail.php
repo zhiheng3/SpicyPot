@@ -337,7 +337,7 @@ $(document).ready(function(){
     $("#input-seat_status").change(selectChangeHandler);
     
     Args.clickHandler = function(e){
-        var element = $("#" + e);
+        var element = $(Args.curtemplate).find("#" + e);
         if (element.attr("class") == "seat")
             element.attr("class", "invalid");
         else
@@ -346,7 +346,7 @@ $(document).ready(function(){
         $("#input-total_tickets").val(CountSeatsNumber(Args.curtemplate));
     }
     Args.selectHandler = function(e){
-        var element = $("#" + e);
+        var element = $(Args.curtemplate).find("#" + e);
         if (element.attr("class") == "seat")
             element.attr("class", "invalid");
         else
