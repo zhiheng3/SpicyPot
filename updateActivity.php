@@ -24,7 +24,6 @@ class ActivityUpdater{
         $activityResult = $this->setActivity($status); 
         
         if($activityResult["state"] == "true"){
-        
             if($status == "update") $pictureResult = $this->setPicture($_POST["activity_id"]);
             else if($status == "new") $pictureResult = $this->setPicture($activityResult["message"]);
             
@@ -36,17 +35,13 @@ class ActivityUpdater{
             }
             
             $result["state"] = "true";
-            //$result["message"] = "活动创建成功！\n";
             $result["message"] = "";
             if($pictureResult["state"] == "true"){
-                //$result["message"] .= "图片上传成功！\n";
             }
             else{
                 $result["message"] .= "图片上传失败，错误信息：" . $pictureResult["message"] . "\n";
             }
-            //if(!$seatResult) $result["message"] .= "本活动不需要创建座位！\n";
-            //else if($seatResult["state"] == "true") $result["message"] .= "座位创建成功！\n";
-            //else $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
+
             if($seatResult && $seatResult["state"] != "true") $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
         }
         else{
@@ -77,19 +72,20 @@ class ActivityUpdater{
             $result["message"] = "未定义的操作代码";
             return $result;
         }
+        
         //Initialization
         $activity = new Activity();
-        $activity->name = htmlspecialchars($_POST["name"]); //名称
-        $activity->brief_name = htmlspecialchars($_POST["key"]); //简称
-        $activity->start_time = htmlspecialchars($_POST["Act-Start"]);  //活动开始时间
-        $activity->end_time = htmlspecialchars($_POST["Act-End"]);  //活动结束时间
-        $activity->ticket_start_time = htmlspecialchars($_POST["Rob-Start"]);  //抢票开始时间
-        $activity->ticket_end_time = htmlspecialchars($_POST["Rob-End"]);  //抢票结束时间
-        $activity->stage = htmlspecialchars($_POST["place"]);  //活动地点
-        $activity->information = htmlspecialchars($_POST["description"]);  //详细信息
-        $activity->ticket_number = htmlspecialchars($_POST["total_tickets"]);  //总票数
-        $activity->ticket_per_student = htmlspecialchars($_POST["ticket_per_student"]);   //每人最大抢票数
-        $activity->is_seat_selectable = htmlspecialchars($_POST["seat_status"]);  //是否可选座：0不可选，1可选
+        $activity->name = htmlspecialchars($_POST["name"]);
+        $activity->brief_name = htmlspecialchars($_POST["key"]);
+        $activity->start_time = htmlspecialchars($_POST["Act-Start"]);
+        $activity->end_time = htmlspecialchars($_POST["Act-End"]);
+        $activity->ticket_start_time = htmlspecialchars($_POST["Rob-Start"]);
+        $activity->ticket_end_time = htmlspecialchars($_POST["Rob-End"]);
+        $activity->stage = htmlspecialchars($_POST["place"]);
+        $activity->information = htmlspecialchars($_POST["description"]);
+        $activity->ticket_number = htmlspecialchars($_POST["total_tickets"]);
+        $activity->ticket_per_student = htmlspecialchars($_POST["ticket_per_student"]);
+        $activity->is_seat_selectable = htmlspecialchars($_POST["seat_status"]);
 
         //Convert to an array
         $activityArray = (array)$activity;
@@ -140,7 +136,6 @@ class ActivityUpdater{
         }           
     }
     
-    //Create seat, have not test yet
     public function setSeats($activityId){
         $seatStr = trim($_POST["seat_info_str"]);
         $ssaFile = fopen("./seat/$activityId.ssa", "w");
