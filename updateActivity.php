@@ -36,16 +36,18 @@ class ActivityUpdater{
             }
             
             $result["state"] = "true";
-            $result["message"] = "活动创建成功！\n";
+            //$result["message"] = "活动创建成功！\n";
+            $result["message"] = "";
             if($pictureResult["state"] == "true"){
-                $result["message"] .= "图片上传成功！\n";
+                //$result["message"] .= "图片上传成功！\n";
             }
             else{
                 $result["message"] .= "图片上传失败，错误信息：" . $pictureResult["message"] . "\n";
             }
-            if(!$seatResult) $result["message"] .= "本活动不需要创建座位！\n";
-            else if($seatResult["state"] == "true") $result["message"] .= "座位创建成功！\n";
-            else $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
+            //if(!$seatResult) $result["message"] .= "本活动不需要创建座位！\n";
+            //else if($seatResult["state"] == "true") $result["message"] .= "座位创建成功！\n";
+            //else $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
+            if($seatResult && $seatResult["state"] != "true") $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
         }
         else{
             $result["state"] = "false";
@@ -57,8 +59,10 @@ class ActivityUpdater{
         else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
         
         
-        if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
-        else $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
+        //if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
+        //else $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
+        if($menuResult["state"] != "true") $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
+        
         return $result;
     }
 
@@ -107,7 +111,10 @@ class ActivityUpdater{
         //Path of the file saved
         $savePath = "upload/activity$activityId";
         if($_FILES["pic_upload"]["size"] == "0"){
-            return(array("state" => "false", "message" => "上传图片为空"));        
+            if (file_exists($savePath))
+                return (array("state" => "true", "message" => "图片已经上传"));
+            else
+                return(array("state" => "true", "message" => "上传图片为空"));        
         }
         //Check for format
         if ((($_FILES["pic_upload"]["type"] == "image/gif")
