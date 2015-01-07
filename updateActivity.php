@@ -47,7 +47,7 @@ class ActivityUpdater{
             //if(!$seatResult) $result["message"] .= "本活动不需要创建座位！\n";
             //else if($seatResult["state"] == "true") $result["message"] .= "座位创建成功！\n";
             //else $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
-            if($seatResult && $seatResult["message"] != "true") $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
+            if($seatResult && $seatResult["state"] != "true") $result["message"] .= "座位创建失败，错误信息：" . $seatResult["message"] . "\n";
         }
         else{
             $result["state"] = "false";
