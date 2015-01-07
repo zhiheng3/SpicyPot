@@ -290,9 +290,11 @@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="button" class="btn btn-primary" name ='<?php echo $activity_id ?>' <?php if ($activity_id != '') {echo "id='updateBtn'>修改";}else{echo "id='publishBtn'>发布";} ?></button>
+                    <!--
                     <button type="submit" class="btn btn-default" id="saveBtn">暂存</button>
                     <button type="reset" class="btn btn-warning" id="resetBtn">重置</button>
                     <span id="log"></span>
+                    -->
                 </div>
             </div>
         </form>
