@@ -22,6 +22,8 @@ function ViewBox(Dom, x, y, w, h){
 
 function InitViewBox(Dom){
     var svg = $(Dom)[0];
+    if ($(svg).attr("part") == "false")
+        InitViewBox(svg);
     ViewBox(svg, 0, 0, parseInt($(svg).width()), parseInt($(svg).height()));
 }
 
@@ -81,7 +83,7 @@ function Zoom(Dom, rate, centerX, centerY){
         height = viewH / Args.zoom.maxscale;
         width = height * aspect;
     }
-    else if (centerX == undefined || centerY == undefined){
+    if (centerX == undefined || centerY == undefined){
         ViewBox(Dom, viewbox.x, viewbox.y, width, height);
     }
     else{

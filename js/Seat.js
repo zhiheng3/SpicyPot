@@ -1,7 +1,6 @@
 $(document).ready(function(){
     var svg = $("#svg_seat")[0];
     SetSVGAttr(svg, "width", "100%");
-    InitViewBox(svg);
     
     AddMoveListener(svg);
     Args.remain = Array();
@@ -14,8 +13,12 @@ $(document).ready(function(){
     Args.zoom.minscale = 1;
     
     Args.clickHandler = ClickHandler;
-    
-    CreateThumb($("#thumbpos")[0], $("#svg_seat")[0], $("#thumbpos")[0].offsetLeft, $("#thumbpos")[0].offsetTop - 30, $("#thumbpos").width());
+    if ($(svg).attr("part") != "false"){
+        CreateThumb($("#thumbpos")[0], $("#svg_seat")[0], $("#thumbpos")[0].offsetLeft, $("#thumbpos")[0].offsetTop - 30, $("#thumbpos").width());
+    }
+    else{
+        $("#zoomctrl").remove();
+    }
     Update("请选择座位后点击确定");
     
 });

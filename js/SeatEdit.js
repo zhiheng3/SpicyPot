@@ -81,7 +81,7 @@ function CreateThumb(CanvasDom, SourceDom, x, y, width){
     var h = $(SourceDom).attr("maxh");
     
     canvas.css("width", width);
-    canvas.css("height", parseInt(h * width / w));
+    canvas.css("height", Math.min(100, parseInt(h * width / w)));
     canvas.css("background-color", "white");
     canvas.css("z-index", 100);
     canvas.css("overflow", "hidden");

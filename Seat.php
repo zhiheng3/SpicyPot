@@ -24,13 +24,13 @@
     </div>
     <div data-role="collapsible" data-collapsed="false" id="thumbpos">
         <h1>选座</h1>
-        <div id="canvas">
+        <div id="canvas" style="height:200px;">
         <?php
             $ssa = file_get_contents("./seat/" . $_GET['activityid'] . ".ssa", "r");
             echo $ssa;
         ?>
         </div>
-        <div data-role="controlgroup" data-type="horizontal">
+        <div data-role="controlgroup" data-type="horizontal" id="zoomctrl">
             <a href="javascript:Zoom($('#svg_seat')[0], -0.25);" data-role="button" id="zoomin">放大</a>
             <a href="javascript:Zoom($('#svg_seat')[0], 0.25);" data-role="button" id="zoomout">缩小</a>
             <a href="javascript:InitViewBox($('#svg_seat')[0]);" data-role="button" id="reset">恢复</a>
