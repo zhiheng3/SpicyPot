@@ -24,7 +24,7 @@ class Timer{
         set_time_limit(0);
         //$start = time();
         //Run every $interval seconds
-        $interval = 30;
+        $interval = 10;
 
         $menuManager = new MenuManager();
         $activityManager = new ActivityManager();
