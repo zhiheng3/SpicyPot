@@ -322,7 +322,6 @@ function selectChangeHandler(e){
         DeleteMoveListener($(templates[i]).children()[0]);
     $(".seattemplate").css("display", "none");
     $("#input-total_tickets").removeAttr("readonly");
-    $("#input-total_tickets").val(0);
 
     var tmpval = $("#input-seat_status").val();
     if (tmpval > 0){
