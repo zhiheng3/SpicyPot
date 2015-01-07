@@ -114,7 +114,8 @@ function MousedownHandler(e){
         return ;
     HideInfoBox();
     if (Args.mode == "select"){
-        StartSelect(e.target, e.offsetX, e.offsetY);
+        var result = CoorCorrect(e);
+        StartSelect(e.target, result.x, result.y);
         return ;
     }
     StartMove(e.clientX, e.clientY);
@@ -123,7 +124,8 @@ function MousedownHandler(e){
 function MousemoveHandler(e){
     e.preventDefault();
     if (Args.mode == "select"){
-        ProcessSelect(e.target, e.offsetX, e.offsetY);
+        var result = CoorCorrect(e);
+        ProcessSelect(e.target, result.x, result.y);
         return ;
     }
     ProcessMove(e.clientX, e.clientY, e.currentTarget);
@@ -138,7 +140,8 @@ function MouseupHandler(e){
     }
     HideInfoBox();
     if (Args.mode == "select"){
-        EndSelect(e.target, e.offsetX, e.offsetY);
+        var result = CoorCorrect(e);
+        EndSelect(e.target, result.x, result.y);
         return ;
     }
     EndMove(e);
@@ -416,6 +419,28 @@ function GetSeatsInfo(Dom){
         else
             result[i].capability = 1;
     }
+    return result;
+}
+
+function CoorCorrect(e){
+    var Dom = e.target;
+    while (Dom.tagName != "svg" && Dom.tagName != "div"){
+        Dom = $(Dom).parent()[0];
+    }
+    var width = $(Dom).width();
+    var height = $(Dom).height();
+    var maxW = parseInt($(Dom).attr("maxw"));
+    var maxH = parseInt($(Dom).attr("maxh"));
+    var scale = Math.min(width / maxW, height / maxH);
+    
+    var w = maxW * scale;
+    var h = maxH * scale;
+    var x = e.offsetX;
+    var y = e.offsetY;
+    
+    var result = Object();
+    result.x = (x - (width - w) / 2) / scale;
+    result.y = (y - (height - h) / 2) / scale;
     return result;
 }
 
