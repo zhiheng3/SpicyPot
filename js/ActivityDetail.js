@@ -238,7 +238,7 @@ function CheckTimeValid(){
 		var jqRemoveRS = $("#Remove-RS").length;
 		var now = new Date();
 
-		if((RobStartTime < now) && (jqRemoveRS > 0){
+		if((RobStartTime < now) && (jqRemoveRS > 0)){
 			InputFocus("#Rob-Start",'“抢票开始时间”应晚于“当前时间”');
 			/*$("#Rob-Start").popover({
                     html: true,
