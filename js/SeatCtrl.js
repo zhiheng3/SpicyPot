@@ -343,8 +343,10 @@ function InputTemplate(label, type, id){
 function ShowInfoBox(Dom, left, top){
     if ($(Dom).attr("class") != "seat")
         return ;
+    left += 2;
+    top += 2;
     Args.infoitem = Dom;
-    $(Args.infoitem).css("fill", "#ffaaaa");
+    $(Args.infoitem).css("opacity", "0.5");
     
     var info = $("<form id='infobox' class='form-horizontal'>" +
                  InputTemplate("名称", "text", "seat_name") +
@@ -383,7 +385,7 @@ function ShowInfoBox(Dom, left, top){
 function HideInfoBox(){
     $("#infobox").remove();
     if (typeof(Args.infoitem) == "object"){
-        $(Args.infoitem).css("fill", "");
+        $(Args.infoitem).css("opacity", "1");
         Args.infoitem = 0;
     }
 }
