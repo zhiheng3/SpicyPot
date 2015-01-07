@@ -16,7 +16,7 @@ $(document).ready(function(){
 });
 
 
-//添加倒计时显示
+//add a count down 
 function StartCountDown(){
     
     $('#Time-Left').flipcountdown({
@@ -40,7 +40,7 @@ function StartCountDown(){
 
             var endDate;
 
-            //根据判断时间判断当前活动状态
+            //judge activity state accordng to current time
             if(now < RobStartTime){
                 ResetAll();
                 endDate = RobStartTime;
@@ -85,7 +85,7 @@ function StartCountDown(){
 
 }
 
-//将所有用于表示活动状态的div隐藏
+//hide all div which show activity state
 function ResetAll(){
     $("#Rob-Start").css("display","none");
     $("#Rob-End").css("display","none");
@@ -95,7 +95,7 @@ function ResetAll(){
 
 }
 
-//接受一个字符串并将其解析为一个Date的对象
+//accept a string and parse it as a Date object
 function parseDate(date){
     re = /(\d+)\-(\d+)\-(\d+)\s(\d+)\:(\d+)/g;
     if(re.test(date)){
@@ -103,7 +103,7 @@ function parseDate(date){
     }
 }
 
-//调整一下字体大小
+//adjust font size
 function AdjustFontSize(){
     var width = document.body.scrollWidth;
     

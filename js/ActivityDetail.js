@@ -14,13 +14,13 @@ $(document).ready(function(){
 
 	//AutoStorage();
 
-	//点击“清空”按钮，将预览的图片一起清空
+	//clear the pic preview when click resetBtn
 	$("#resetBtn").click(function(e){
 		$("#Preview").empty();
 	});
 });
 
-//创建活动
+//create activity
 $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
@@ -73,13 +73,15 @@ function createActivity(){
 
 
 
-//修改活动
+//change activity
 $(document).on('click', '#updateBtn', function(){
 	
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
 
-    //这里是徐毅改过的，前端交互比较友好，否则会同时出现两个弹出框，time和content各一个
+    
+    //Here is modified By Xu Yi
+    //to make Web-Font Friendly,otherwise there will be two popover
     if(!contentValid){
     	return;
     }
@@ -117,7 +119,7 @@ $(document).on('click', '#updateBtn', function(){
     xhr.send(formData);
 });
 
-//点击时间选择器栏中的"x"按钮，将该栏清空
+//click "X" in datetimepicker and it will clear the data you choose
 function ClearTimeChoosen(){
 	$("#Remove-RS").click(function(){
 		$("#Rob-Start").val("");
@@ -133,7 +135,7 @@ function ClearTimeChoosen(){
 	});			
 }
 
-//当有文件修改的时候，预览该图片
+//when change picture, perview it
 function PreviewImg(){
 	$('[type=file]').change(function(e) {
 		var file = e.target.files[0];
@@ -142,7 +144,7 @@ function PreviewImg(){
 }
 
 
-//显示将要预览的图片
+//show picture
 function PreviewPic(file) {
 	var img = new Image(), url = img.src = URL.createObjectURL(file);
 	var $img = $(img);
@@ -152,7 +154,7 @@ function PreviewPic(file) {
 	}
 }
 
-//判断所有文字的输入框是否为空
+//judge whether input content is empty
 function CheckContentValid(){
 	var TicketNumber = $("#input-total_tickets").val();
 	var ActDescription = $("#input-description").val();
@@ -217,12 +219,12 @@ function CheckContentValid(){
 	return flag;
 }
 
-//判断一个数是否为整数
+//judge whether a number is a int
 function isInteger(obj){
 	return Math.floor(obj) === obj
 }
 
-//判断活动时间是否合法
+//judge whether time is vaild
 function CheckTimeValid(){
 	var RS = $("#Rob-Start").val();
 	var RE = $("#Rob-End").val();
@@ -235,9 +237,11 @@ function CheckTimeValid(){
 		var ActStartTime = parseDate(AS);
 		var ActEndTime = parseDate(AE);
 
+		var jqRemoveRS = $("#Remove-RS").length;
 		var now = new Date();
 
-		if(RobStartTime < now){
+		//make sure RobStart can be edited
+		if((RobStartTime < now) && (jqRemoveRS > 0)){
 			InputFocus("#Rob-Start",'“抢票开始时间”应晚于“当前时间”');
 			/*$("#Rob-Start").popover({
                     html: true,
@@ -291,11 +295,11 @@ function CheckTimeValid(){
 }
 
 
-//在ID等于id的输入框上方显示弹出框
-//text为弹出框的内容
+//show popover above the 'id' lable
+//text:the content 
 function InputFocus(id,text){
 	var waring = '<span style="color:red;">' + text + '</span>';
-	//清除原有的弹出框
+	//clear all the popover
 
 	$(id).popover('destroy');
 
@@ -312,7 +316,7 @@ function InputFocus(id,text){
 }
 
 
-//接受一个字符串并将其解析为一个Date的对象
+//accept a string and parse it as a Date object
 function parseDate(date){
 	re = /(\d+)\-(\d+)\-(\d+)\-(\d+)\:(\d+)/g;
 	if(re.test(date)){
@@ -320,10 +324,10 @@ function parseDate(date){
 	}
 }
 
-//自动保存功能
+//Auto-Save
 function AutoStorage(){
 	$("#activity-form").sisyphus({
-		//每隔十秒自动保存一次
+		//Auto-Save every 10s
 		timeout: 10,
 		onSave: function() {
 			$('#log').html('正在自动保存...').fadeIn().delay(2000).fadeOut();
@@ -337,41 +341,42 @@ function AutoStorage(){
 	});
 }
 
+//change format of Date from the Web-Front to the format that can be accepted by DataBase
 function dateCorrection(date){
     var newDate1 = date.substr(0, 10);
     var newDate2 = date.substr(11);
     return (newDate1.concat(" ", newDate2, ":00"));
 }
 
-$('.form_datetime').datetimepicker({
-        language:  'zh-CN',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		forceParse: 0,
-        showMeridian: 1
-    });
-	$('.form_date').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 2,
-		minView: 2,
-		forceParse: 0
-    });
-	$('.form_time').datetimepicker({
-        language:  'fr',
-        weekStart: 1,
-        todayBtn:  1,
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 1,
-		minView: 0,
-		maxView: 1,
-		forceParse: 0
-    });
 
+$('.form_datetime').datetimepicker({
+    language:  'zh-CN',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	forceParse: 0,
+    showMeridian: 1
+});
+$('.form_date').datetimepicker({
+    language:  'fr',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 2,
+	minView: 2,
+	forceParse: 0
+});
+$('.form_time').datetimepicker({
+    language:  'fr',
+    weekStart: 1,
+    todayBtn:  1,
+	autoclose: 1,
+	todayHighlight: 1,
+	startView: 1,
+	minView: 0,
+	maxView: 1,
+	forceParse: 0
+});

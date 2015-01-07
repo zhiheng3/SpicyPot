@@ -251,7 +251,6 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		$end_time = $activity["end_time"];
 		$ticket_start_time = $activity["ticket_start_time"];
 		$ticket_end_time = $activity["ticket_end_time"];
-		$state = 1;				#五个状态：抢票前、中、结束，活动已经开始，活动结束 分别是0,1,2,3,4 
 		$stage = $activity["stage"];
 		$information = $activity["information"];
 		$ticket_number = $activity["ticket_number"];
@@ -260,7 +259,7 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		$is_seat_selectable = $activity["is_seat_selectable"];
        
         //更新活动    
-        if (!mysql_query("UPDATE activity SET name='".$name."',brief_name='".$brief_name."',start_time='".$start_time."',end_time='".$end_time."',ticket_start_time='".$ticket_start_time."',ticket_end_time='".$ticket_end_time."',state=$state,stage='".$stage."',information='".$information."',ticket_number=$ticket_number,ticket_available_number=$ticket_available_number,ticket_per_student=$ticket_per_student,is_seat_selectable=$is_seat_selectable where id = $activity_id")){
+        if (!mysql_query("UPDATE activity SET name='".$name."',brief_name='".$brief_name."',start_time='".$start_time."',end_time='".$end_time."',ticket_start_time='".$ticket_start_time."',ticket_end_time='".$ticket_end_time."',stage='".$stage."',information='".$information."',ticket_number=$ticket_number,ticket_available_number=$ticket_available_number,ticket_per_student=$ticket_per_student,is_seat_selectable=$is_seat_selectable where id = $activity_id")){
              return(array("state" =>"false", "message" => "更新活动出错"));           
         }
 

@@ -134,12 +134,12 @@
         <form class="form-horizontal"  id="activity-form">
             <div class="form-group " id = "Title">
                     “紫荆之声”活动管理系统&nbsp&nbsp
-                <a href='activity_list.php'>
+                <a href='activity_list.php' style="text-decoration:none;">
                      <button type='button' class='btn btn-default btn-sm' title="返回">
 			            <span class='glyphicon glyphicon-arrow-left'> </span> 
 			        </button>
                 </a>
-                <a href='login.php?action=logout'>
+                <a href='login.php?action=logout' style="text-decoration:none;">
 
                     <button type='button' class='btn btn-default btn-sm' id='aa' title="注销">
 			            <span class='glyphicon glyphicon-log-out'> </span> 
@@ -303,7 +303,6 @@
 
 <script type="text/javascript" src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.en.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/ActivityDetail.js"></script>
 <script type="text/javascript" src="./js/sisyphus.min.js"></script>
@@ -322,7 +321,6 @@ function selectChangeHandler(e){
         DeleteMoveListener($(templates[i]).children()[0]);
     $(".seattemplate").css("display", "none");
     $("#input-total_tickets").removeAttr("readonly");
-    $("#input-total_tickets").val(0);
 
     var tmpval = $("#input-seat_status").val();
     if (tmpval > 0){

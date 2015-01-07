@@ -4,13 +4,13 @@
 	* Last modified :2014/11/18
 */
 
-//认证成功之后页面前端显示
+//if verify is successful,web-front will show hint
 function VerifySuccess(){
 	$("#Confirm-List").css("display","none");
 	$("#VerifyOKIMG").css("display","block");
 }
 
-//认证失败之后页面前端显示
+//if verify is fail,web-front will show hint
 function VerifyFail(){
 	$("#Confirm-List").css("display","none");
 	$("#VerifyNOIMG").css("display","block");
@@ -18,7 +18,7 @@ function VerifyFail(){
 }
 
 
-//设置底栏
+//set footer
 function SetFooter(){
 	var height =  document.body.scrollHeight;
 
@@ -55,7 +55,7 @@ function SetComfirmList(){
 
 }
 
-//选中/取消强制绑定之后的前端显示
+//choose/canncel force blind,show it in the web-front
 function SetForceBlindText(){
 	
 	var js_ForceBlindText = $("#ForeBlindText");
@@ -73,7 +73,7 @@ function SetForceBlindText(){
 }
 
 
-//背景图片自适应
+//background image auto fit 
 function SetBGIMG(){
 	var width =  document.body.scrollWidth;	
 	var height =  document.body.scrollHeight;
