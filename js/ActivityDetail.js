@@ -235,10 +235,10 @@ function CheckTimeValid(){
 		var ActStartTime = parseDate(AS);
 		var ActEndTime = parseDate(AE);
 
-		var jqRemoveRS = $("#Remove-RS");
+		var jqRemoveRS = $("#Remove-RS").length;
 		var now = new Date();
 
-		if((RobStartTime < now) && jqRemoveRS){
+		if((RobStartTime < now) && (jqRemoveRS > 0){
 			InputFocus("#Rob-Start",'“抢票开始时间”应晚于“当前时间”');
 			/*$("#Rob-Start").popover({
                     html: true,
