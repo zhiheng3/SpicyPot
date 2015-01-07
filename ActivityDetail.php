@@ -134,12 +134,12 @@
         <form class="form-horizontal"  id="activity-form">
             <div class="form-group " id = "Title">
                     “紫荆之声”活动管理系统&nbsp&nbsp
-                <a href='activity_list.php'>
+                <a href='activity_list.php' style="text-decoration:none;">
                      <button type='button' class='btn btn-default btn-sm' title="返回">
 			            <span class='glyphicon glyphicon-arrow-left'> </span> 
 			        </button>
                 </a>
-                <a href='login.php?action=logout'>
+                <a href='login.php?action=logout' style="text-decoration:none;">
 
                     <button type='button' class='btn btn-default btn-sm' id='aa' title="注销">
 			            <span class='glyphicon glyphicon-log-out'> </span> 
