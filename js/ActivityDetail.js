@@ -78,7 +78,6 @@ $(document).on('click', '#updateBtn', function(){
     	return;
     }
     ShowHintBox("正在修改活动，请稍候......");
-    //if(!timeValid || !contentValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
@@ -234,16 +233,6 @@ function CheckTimeValid(){
 		//make sure RobStart can be edited
 		if((RobStartTime < now) && (jqRemoveRS > 0)){
 			InputFocus("#Rob-Start",'“抢票开始时间”应晚于“当前时间”');
-			/*$("#Rob-Start").popover({
-                    html: true,
-                    placement: 'top',
-                    title:'',
-                    content: '<span style="color:red;">“订票开始时间”应晚于“当前时间”</span>',
-                    trigger: 'focus',
-                    container: 'body'
-            });
-            $("#Rob-Start").focus();*/
-
 			return false;
 		}
 
