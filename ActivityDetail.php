@@ -24,6 +24,7 @@
 <script type="text/javascript" src="./js/jquery-1.11.1.min.js" charset="UTF-8"></script>
 <script src="./js/SeatCtrl.js"></script>
 <script src="./js/SeatEdit.js"></script>
+<script src="./js/hint.js"></script>
 </head>
 
 <body>

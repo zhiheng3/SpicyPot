@@ -58,7 +58,7 @@ else if($method == 'deleteActivity'){
     $menuManager = new MenuManager();
     $menuManager->updateMenu($activityId, "drop", "access_token", "./log/token_log");
     
-    if($result["state"] == "true") echo "success";
+    if($result["state"] == "true") echo "删除活动成功";
     else echo "failed" . $result["message"];
     //echo json_encode($result);
 

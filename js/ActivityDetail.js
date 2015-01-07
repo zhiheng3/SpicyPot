@@ -25,6 +25,7 @@ $(document).on("click", "#publishBtn", function(){
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
     if(timeValid && contentValid){
+        ShowHintBox("正在创建活动，请稍候......");
         createActivity();
     }
 });
@@ -34,15 +35,7 @@ function createActivity(){
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
     formData.append("method", "createActivity");
-    //formData.append("method", "createSeats");
-    /* 
-    var rawSeats = $(".seat");
-    for(var i = 0; i < rawSeats.length; i++){
-        formData.append(("seat_location" + i), rawSeats[i].id);
-        formData.append(("seat_capability" + i), "1");
-    }
-    formData.append("seat_number", rawSeats.length);
-    */
+
     if($("#input-seat_status").val() > 0){
         var rawSeatsObj = GetSeatsInfo(Args.curtemplate);
         var rawSeatStr = SaveSVG(Args.curtemplate);
@@ -51,17 +44,15 @@ function createActivity(){
         formData.append("seat_info_str", rawSeatStr);
     }
     
-    //console.log(rawSeats.length);
-    //console.log(formData);
-    
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
         if (xhr.readyState == 4){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
-                if(result["message"] != "") alert(result["message"]);
-                window.location.href ="activity_list.php";
+                if(result["message"] != "") HideHintBox(result["message"], 3);
+                //Path may change
+                else HideHintBox("活动创建成功", 3, "activity_list.php");
             }
         }
     }
@@ -70,8 +61,6 @@ function createActivity(){
     xhr.send(formData);
 
 }
-
-
 
 //change activity
 $(document).on('click', '#updateBtn', function(){
@@ -88,6 +77,7 @@ $(document).on('click', '#updateBtn', function(){
     if(!timeValid){
     	return;
     }
+    ShowHintBox("正在修改活动，请稍候......");
     //if(!timeValid || !contentValid) return;
     var dest = 'mask.php';
     var form = document.getElementById('activity-form');
@@ -109,8 +99,9 @@ $(document).on('click', '#updateBtn', function(){
             if(xhr.status == 200){
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
-                if(result["message"] != "") alert(result["message"]);
-                window.location.href ="activity_list.php";
+                if(result["message"] != "") HideHintBox(result["message"], 3);
+                //Path may change
+                else HideHintBox("活动修改成功", 3, "activity_list.php");
             }
         }
     }

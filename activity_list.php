@@ -22,6 +22,7 @@
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css"  media="screen">
+<script src="./js/hint.js"></script>
 </head>
 
 <body>
@@ -113,7 +114,7 @@
         ?>
     */
         <?php
-            echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){alert(data); location.reload(true);});";
+            echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){ShowHintBox(data); setTimeout(function(){location.reload(true);}, 1500)});";
         ?>
     }
 
