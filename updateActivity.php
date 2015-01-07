@@ -111,7 +111,10 @@ class ActivityUpdater{
         //Path of the file saved
         $savePath = "upload/activity$activityId";
         if($_FILES["pic_upload"]["size"] == "0"){
-            return(array("state" => "false", "message" => "上传图片为空"));        
+            if (file_exists($savePath))
+                return (array("state" => "true", "message" => "图片已经上传"));
+            else
+                return(array("state" => "true", "message" => "上传图片为空"));        
         }
         //Check for format
         if ((($_FILES["pic_upload"]["type"] == "image/gif")
