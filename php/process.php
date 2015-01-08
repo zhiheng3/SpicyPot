@@ -34,6 +34,12 @@ class RequestProcess{
                 if ($data->eventKey == "USER_BIND"){
                     $result = $this->bindlink($data);
                 }
+                //Help
+                else if($data->eventKey == "HELP"){
+                    $url = $_SERVER['SERVER_NAME'];
+                    $result->msgType = "text";
+                    $result->content = "<a href=\"$url/page/wechat/help.html\">请点击我查看帮助</a>";
+                }
                 //Take tickets
 				else if(substr($data->eventKey, 0, 4) == "TAKE"){
 				    //No activity is avaliable
@@ -152,7 +158,7 @@ class RequestProcess{
                 $result->articles[$i]->description = $singleActivity["message"]["information"];
                 
                 //Specify pictures of this activity, you should modify this if necessary
-                $result->articles[$i]->picUrl = "http://$url/static/resource/upload/activity$id";
+                $result->articles[$i]->picUrl = "http://$url/page/wechat/resource/upload/activity$id";
                 
                 $result->articles[$i]->url = "http://$url/page/wechat/Activity.php?id=$id";
             }
