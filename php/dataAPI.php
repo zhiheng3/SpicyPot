@@ -6,12 +6,22 @@
   */
 class DataAPI{
 
+    
     public function connectToDB(){
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if($con){
+            return true;
+        }
+        $xml = simplexml_load_file($_SERVER["DOCUMENT_ROOT"]."/config/wx_config.xml");
+        $server=$xml->database->server;
+        $user=$xml->database->user;
+        $pwd=$xml->database->pwd;
+        $dbName=$xml->database->name;
+
+        $con = mysql_connect($server,$user,$pwd);
         if (!$con){
             return false;
         }
-        mysql_select_db("wx9_db", $con);
+        mysql_select_db($dbName, $con);
         mysql_query("SET NAMES UTF8");
         return true;
     }
@@ -129,7 +139,18 @@ class DataAPI{
 
 
 
+    //管理员登录验证
+	//参数：string name, string password
+	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
+	public function managerLogin($name, $password){
+        //连接数据库
+        if (!$this->connectToDB()){
+            return(array("state" => "false", "message" => "数据库连接错误"));
+        }
 
+		$check_query = mysql_query("select * from admin where name='$name' and password='$password' limit 1");
+		return (array("state" => "true", "message" => ""));
+	}
 
 
 
