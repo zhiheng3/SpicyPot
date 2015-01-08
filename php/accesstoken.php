@@ -19,37 +19,3 @@ function getToken()
 getToken();
 
 ?>
-
-hBefYibifc3KlkWld0-wsfVSLH_gdW636bxVUFESrBc37o1IEIjqzlGv9tt_kuTd3vZA4C7kSiLXQ9t9MldUuwjLkAQjvw68mJkhQt3D2Hg
-
-{
-    "button":[
-    {
-        "name":"用户管理",
-        "sub_button":[
-        {
-            "type":"click",
-            "name":"绑定/解绑",
-            "key":"USER_BIND"
-        }
-    },
-      {
-           "name":"菜单",
-           "sub_button":[
-           {	
-               "type":"view",
-               "name":"搜索",
-               "url":"http://www.soso.com/"
-            },
-            {
-               "type":"view",
-               "name":"视频",
-               "url":"http://v.qq.com/"
-            },
-            {
-               "type":"click",
-               "name":"赞一下我们",
-               "key":"V1001_GOOD"
-            }]
-       }]
- }

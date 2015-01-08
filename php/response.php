@@ -2,7 +2,7 @@
 /**
   * Response the user's request
   * Author: Zhao Zhiheng; Feng Zhibin
-  * Last modified: 2014.11.9
+  * Last modified: 2015.1.8
   */
 
 require_once "dataformat.php";
@@ -12,7 +12,6 @@ class RequestResponse{
     //Generate a response xml string
     //params: ResponseData $data
     //return: string
-    //Test: No
     public function response($data){
         $toUserName = $data->toUserName;
         $fromUserName = $data->fromUserName;
@@ -34,7 +33,6 @@ class RequestResponse{
     //Generate the specific part of response string
     //params: ResponseData $data
     //return： string
-    //Test: No
     private function getTypeXML($data){
         if ($data->msgType == "text"){
             $content = $data->content;

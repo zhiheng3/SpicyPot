@@ -2,7 +2,7 @@
 /**
   * Parse the user's messages
   * Author: Zhao Zhiheng; Feng Zhibin
-  * Last modified: 2014.11.9
+  * Last modified: 2015.1.8
   */
 
 require_once "dataformat.php";
