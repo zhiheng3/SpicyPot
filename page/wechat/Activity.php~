@@ -14,17 +14,18 @@
 <head>  
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
 <meta name="viewport" content="width=device-width"/>
-<link rel="stylesheet" type="text/css" href="./css/ActivityInfo.css">
+
+<!--lib-->
 <link rel="stylesheet" type="text/css" href="./lib/css/jquery.mobile-1.4.5.min.css" />
 <link rel="stylesheet" type="text/css" href="./lib/css/jquery.flipcountdown.css" />
 <link rel="stylesheet" href="./lib/css/v1.3.css" />
 <link rel="stylesheet" href="./lib/css/v1.3.min.css" />
-
-<script type="text/javascript" src = "./js/ActivityInfo.js"></script>
-<script type="text/javascript" src = "./lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src = "./lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src = "./lib/js/jquery.mobile-1.4.5.min.js"></script>
 <script type="text/javascript" src = "./lib/js/jquery.flipcountdown.js"></script>
+
+<link rel="stylesheet" type="text/css" href="./css/ActivityInfo.css">
+<script type="text/javascript" src = "./js/ActivityInfo.js"></script>
 <title>活动详情</title>
 </head>
 <body>

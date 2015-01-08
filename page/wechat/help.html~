@@ -8,7 +8,7 @@
 
     <title>紫荆之声帮助页面</title>
 
-    <!-- Le styles -->
+    <!--Lib-->
     <script src="./lib/js/jquery-1.11.1.min.js"></script>
     <script src="./lib/js/jquery.mobile-1.4.5.min.js"></script>
     <link rel="shortcut icon" href="./Bootstrap_files/favicon.png">
