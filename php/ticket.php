@@ -105,7 +105,7 @@ class ticketHandler{
 			    $result->articles[$i]->description = "活动地点：" . $activityResult['message']['stage'] . "\n" . "活动开始时间：" .         $activityResult['message']['start_time'] . "\n" . "活动结束时间：" . $activityResult['message']['end_time'];
 			    
 			    //Specify pictures of this activity, you should modify this if necessary
-			    $result->articles[$i]->picUrl = "http://$url/static/resource/upload/activity$activityId";
+			    $result->articles[$i]->picUrl = "http://$url/page/wechat/resource/upload/activity$activityId";
 			    
 			    $result->articles[$i]->url = "http://$url/page/wechat/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
 			    //End
