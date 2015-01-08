@@ -4,6 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="./lib/css/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="./lib/css/v1.3.css" />
+<link rel="stylesheet" href="./lib/css/v1.3.min.css" />
 <script src="./lib/js/jquery-1.11.1.min.js"></script>
 <script src="./lib/js/jquery.mobile-1.4.5.min.js"></script>
 </head>

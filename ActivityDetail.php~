@@ -21,7 +21,7 @@
 <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="./css/bootstrap-datetimepicker.min.css"  media="screen">
-<script type="text/javascript" src="./js/jquery-1.11.1.min.js" charset="UTF-8"></script>
+<script src="./lib/js/jquery-1.11.1.min.js" charset="UTF-8"></script>
 <script src="./js/SeatCtrl.js"></script>
 <script src="./js/SeatEdit.js"></script>
 <script src="./js/hint.js"></script>
