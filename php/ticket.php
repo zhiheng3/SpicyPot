@@ -9,26 +9,6 @@ require_once "dataformat.php";
 require_once "dataAPI.php";
 
 class ticketHandler{
-    //Author: Feng Zhibin
-    //Handle requests for tickets
-    //params: RequestData $data
-    //return: ResponseData $result
-/*
-    public function ticketHandle($data){
-        $content = trim($data->content);
-        if(substr($content, 0, 6) == "退票"){
-            $result = $this->refundTicket($data);
-        }
-        else if(substr($content, 0, 6) == "查票"){
-            $result = $this->getTicket($data);        
-        }
-        else{
-            $result->msgType = "text";
-            $result->content = "请输入帮助查看应用说明";
-        }
-        return $result;
-    }
-*/
 
     //Author: Feng Zhibin
     //Get ticket operation
@@ -144,13 +124,6 @@ class ticketHandler{
 			    $result->articles[$i]->picUrl = "http://wx9.igeek.asia/upload/activity$activityId";
 			    
 			    $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
-			    //End
-			    /*
-                $result->articles[$i]->title = $ticketResult['message'][$i]['activity_name'];
-                $result->articles[$i]->description = "您的第" . $j . "张票";
-                $result->articles[$i]->picUrl = "http://wx9.igeek.asia/img/qrcode_test.png";
-                $result->articles[$i]->url = "http://wx9.igeek.asia/Ticket.php?openid=$openId&id={$ticketResult['message'][$i]['id']}";
-                */
             }
         }
         //Error from database

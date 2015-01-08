@@ -108,11 +108,6 @@
     });
     
     function doDelete(id){
-    /*
-        <?php
-           echo"$.post('delete_activity.php',{id:id},function(data){alert(data);location.reload(true);});";
-        ?>
-    */
         <?php
             echo"$.post('mask.php',{id:id, method: \"deleteActivity\"},function(data){ShowHintBox(data); setTimeout(function(){location.reload(true);}, 1500)});";
         ?>

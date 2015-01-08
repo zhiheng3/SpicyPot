@@ -60,8 +60,6 @@ else if($method == 'deleteActivity'){
     
     if($result["state"] == "true") echo "删除活动成功";
     else echo "failed" . $result["message"];
-    //echo json_encode($result);
-
 }
 
 else if($method == 'updateActivity'){
@@ -72,10 +70,6 @@ else if($method == 'updateActivity'){
 }
 
 else if($method == 'createSeats'){
-    //echo json_encode($seatObj);
-    //$dataapi = new dataAPI();
-    //$result = $dataapi->createSeats(126, $seats);
-    //echo json_encode($result);
 }
 
 else if($method == 'assignSeats'){

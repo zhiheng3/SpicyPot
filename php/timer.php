@@ -22,16 +22,11 @@ class Timer{
     public function runTimer(){
         ignore_user_abort();
         set_time_limit(0);
-        //$start = time();
-        //Run every $interval seconds
         $interval = 10;
 
         $menuManager = new MenuManager();
         $activityManager = new ActivityManager();
-        do{
-            //Protection, guarantees that it would stop in 10 mins, useless in practice
-            //if(time() - $start > 60) break;
-            
+        do{        
             $menuManager->clearMenu();
             $activityManager->updateActivityState();
             $activityManager->distributeSeat();

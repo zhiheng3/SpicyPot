@@ -26,9 +26,7 @@ class ActivityManager{
                 $status = $this->timeStatus($activityList["message"][$i]);
                 if($status == 2){
                     //distribute seats when time's up
-                    $dataapi->assignSeats($activityList["message"][$i]);
-                    
-                    //echo "{$activityList["message"][$i]}: Seat distributed!\n";
+                    $dataapi->assignSeats($activityList["message"][$i]);   
                 }
             }
         }

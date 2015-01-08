@@ -74,7 +74,6 @@ echo <<< EOT
             <h1>二维码电子票</h1>
 EOT;
            echo "<img src=\"qrcode/$ticketId.png\" style=\"width:100%;height:auto\"/>";
-            //echo "<img src=\"qrcode/2.png\" style=\"width:100%;height:auto\"/>";
 echo <<< EOT
         </li>
         <li data-icon="false"> 

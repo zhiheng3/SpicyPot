@@ -21,7 +21,7 @@ class ActivityUpdater{
             return $result;
         }
         
-        $activityResult = $this->setActivity($status); 
+        $activityResult = $this->setActivity($status);
         
         if($activityResult["state"] == "true"){
             if($status == "update") $pictureResult = $this->setPicture($_POST["activity_id"]);
@@ -53,9 +53,6 @@ class ActivityUpdater{
         if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "access_token", "log/token_log");
         else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
         
-        
-        //if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
-        //else $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
         if($menuResult["state"] != "true") $result["message"] .= "微信菜单更新失败！" . $menuResult["message"];
         
         return $result;
@@ -97,8 +94,7 @@ class ActivityUpdater{
         else $result = $dataapi->createActivity($activityArray);
         return $result;
     }
-    
-    
+      
     //Update a picture for an activity
     //params: int $activityId
     //return: Array["state", "message"], state: "true" or "false", "message": Message
@@ -116,22 +112,22 @@ class ActivityUpdater{
         if ((($_FILES["pic_upload"]["type"] == "image/gif")
         || ($_FILES["pic_upload"]["type"] == "image/jpeg")
         || ($_FILES["pic_upload"]["type"] == "image/pjpeg"))){
-            if ($_FILES["pic_upload"]["error"] > 0){//Upload failed
+            if ($_FILES["pic_upload"]["error"] > 0){
+                //Upload failed
                 return (array("state" => "false", "message" => $_FILES["pic_upload"]["error"]));
             }
             else{
                 //File already exists
                 if (file_exists($savePath)){
-
-                   unlink($savePath);
-                    
+                   unlink($savePath);                    
                 }
                 
                 move_uploaded_file($_FILES["pic_upload"]["tmp_name"], $savePath);
                 return (array("state" => "true", "message" => "上传的图片已经被储存到 $savePath."));
             }
         }
-        else{//Invalid file
+        else{
+            //Invalid file
             return (array("state" => "false", "message" => "文件格式不正确！"));
         }           
     }
