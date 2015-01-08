@@ -6,19 +6,29 @@
   */
 class DataAPI{
 
+    public function connectToDB(){
+        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
+        if (!$con){
+            return false;
+        }
+        mysql_select_db("wx9_db", $con);
+        mysql_query("SET NAMES UTF8");
+        return true;
+    }
+
+
 	//test!!
 	//抢票
 	//参数：int openId, int activity_id
 	//返回: ["state", "message"]: ["true", int ticket_id] or ["false", 错误信息] 
 	public function takeTicketTest($openId){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
+		
 
-if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
+        if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from ticket WHERE seat_location ='". $openId."' LIMIT 1")))){
 			return(array("state" =>"false", "message" => "您已经抢过票了!"));
 		}
 
@@ -70,11 +80,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]   
 	public function refundTicketTest($openId){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
 
 		//查询符合的票
@@ -131,11 +139,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function initTicket($ticket_num, $activity_id){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
 		//获得活动名称
 		$activity_name = mysql_fetch_row(mysql_query("SELECT name FROM activity WHERE id = $activity_id LIMIT 1"))[0];
@@ -168,12 +174,11 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", int activity_id] or ["false", 错误信息] 
 	public function createActivity($activity){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        //连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_query("SET NAMES UTF8");
-		mysql_select_db("wx9_db", $con);
+
         $name = $activity["name"];
         $brief_name = $activity["brief_name"];
 		$start_time = $activity["start_time"];
@@ -232,12 +237,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function updateActivity($activity_id, $activity){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_query("SET NAMES UTF8");
-		mysql_select_db("wx9_db", $con);
 		
 		if(!$item=mysql_fetch_row(mysql_query("select ticket_number from activity where id=$activity_id"))){
 			return(array("state" => "false", "message" => "没有这个活动"));
@@ -279,12 +281,10 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//参数： string time 格式如"2014-11-11 08:00:00"
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function updateActivityState($time){
-		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+		//连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 		
         $activity_set = mysql_query("select id, start_time, end_time, ticket_start_time, ticket_end_time, state from activity");
 		while($activity=mysql_fetch_assoc($activity_set)){
@@ -312,12 +312,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function dropActivity($activity_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 
 		if(!mysql_fetch_row(mysql_query("select id from activity where id=$activity_id"))){
 			return(array("state" => "false", "message" => "没有这个活动"));
@@ -336,12 +333,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", 关联数组（见活动表）] or ["false", 错误信息] 
 	public function getActivityInfo($activity_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 		
 		if (!$result = mysql_fetch_assoc(mysql_query("SELECT * FROM activity WHERE id=$activity_id"))){
 			return(array("state" => "false", "message" => "没有找到此活动"));
@@ -354,11 +348,10 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
     //参数: 可选 int stateLimit  默认为3；
 	//返回: ["state", "message"]: ["true", [int activity_id]] or ["false", 错误信息]
 	public function getActivityList($stateLimit = 3){
-		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+		//连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 		
         if (!$stateLimit){
             $stateLimit = 3;
@@ -388,13 +381,10 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 		student_id int(4)		#学号
 	*/
 	public function getTicketInfo($ticket_id){
-		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        //连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 		
 		if (!$result = mysql_fetch_assoc(mysql_query("SELECT * FROM ticket WHERE id=$ticket_id"))){
 			return(array("state" => "false", "message" => "没有找到此活动"));
@@ -408,12 +398,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function createSeats($activity_id, $seatList){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
         
         //清空已有的座位
         if (!mysql_query("delete from seat where activity_id = $activity_id")){
@@ -436,11 +423,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
     public function bind($openId, $studentId){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
         $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."'");
 		if (!empty(mysql_fetch_array($result))){
@@ -460,11 +445,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
     public function forceBinding($openId, $studentId){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
         $result = mysql_query("SELECT * FROM user_information WHERE openid='".$openId ."'");
 		if (!empty(mysql_fetch_array($result))){
@@ -483,11 +466,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]
     public function unbind($openId, $studentId){
         //连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
 		$result = mysql_query("SELECT id FROM user_information WHERE student_id=".$studentId ." AND openid='".$openId."'");
 		if (empty(mysql_fetch_array($result))){
@@ -503,11 +484,11 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//参数：int openId
 	//返回: ["state", "message"]: ["true", int student_id] or ["false", 错误信息] 
 	public function getStudentId($openId){
-		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+		//连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
+
 		$result = mysql_fetch_array(mysql_query("SELECT student_id FROM user_information WHERE openid='".$openId ."'"));
 		if (empty($result)){
 			return(array("state" =>"false", "message" => "没有对应的学生"));
@@ -521,11 +502,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", int ticket_id] or ["false", 错误信息] 
 	public function takeTicket($openId, $activity_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
 		//获得student_id
 		$get_student_id = $this->getStudentId($openId);
@@ -587,11 +566,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息]   
 	public function refundTicket($openId, $ticket_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
 
 		//获得student_id
 		$get_student_id = $this->getStudentId($openId);
@@ -648,12 +625,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//!!尚未考虑票是否已使用;未返回活动不存在的信息
 	public function getTicketList($openId, $activity_id = -1){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 
 		//获得student_id
 		$get_student_id = $this->getStudentId($openId);
@@ -692,12 +666,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//!!尚未考虑活动状态;未考虑openid;未验证活动
 	public function takeSeat($ticket_id, $seat_location){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-        mysql_query("SET NAMES UTF8");
 
         //验证票是否存在
         $result_set = mysql_query("SELECT seat_id FROM ticket WHERE id=$ticket_id LIMIT 1");
@@ -759,12 +730,10 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//参数: int activity_id
 	//返回: ["state", "message"]: ["true", ""] or ["false", 错误信息] 
 	public function assignSeats($activity_id){
-		$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+		//连接数据库
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
 
 		//查找未选座的票
 		if (!$result_set = mysql_query("select id from ticket where activity_id =$activity_id and student_id is not null and seat_id is null")){
@@ -797,11 +766,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
     //尚未考虑票是否已使用、取消等
 	public function getSingleSeatInfo($activity_id, $seat_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
         
         //获取座位容量
         $result_set = mysql_query("SELECT capability FROM seat WHERE id=".$seat_id);
@@ -830,12 +797,9 @@ if (!empty($ticket=mysql_fetch_row(mysql_query("SELECT activity_id, seat_id from
 	//返回: ["state", "message"]: ["true", [[String location, int resitual_capability]]] or ["false", 错误信息] 
 	public function getSeatInfo($activity_id){
 		//连接数据库
-        $con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-        if (!$con){
+        if (!$this->connectToDB()){
             return(array("state" => "false", "message" => "数据库连接错误"));
         }
-		mysql_select_db("wx9_db", $con);
-		mysql_query("SET NAMES UTF8");
     
         //取出seat列表
         $result_set = mysql_query("SELECT location, resitual_capability FROM seat WHERE activity_id= $activity_id");
