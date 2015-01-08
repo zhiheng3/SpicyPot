@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <database>
+        <server>db.igeek.asia</server>
+        <user>wx9</user>
+        <pwd>1mnd35mD050HWqOa</pwd>
+    </database>
+    <wxapi>
+    </wxapi>
+    <server>
+    </server>
+</root>
