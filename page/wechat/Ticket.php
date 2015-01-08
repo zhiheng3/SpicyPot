@@ -48,7 +48,7 @@ EOT;
         else{
             $status = "已使用";
         }
-        $qrfile = "qrcode/$ticketId.png";
+        $qrfile = "./resource/qrcode/$ticketId.png";
         if(!file_exists($qrfile)){
             //Generate a QR Code if file doesn't exist
             $qrcode = new QRCodeGenerator();
