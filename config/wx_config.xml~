@@ -9,7 +9,4 @@
         <appid>wx31f3308295716fd1</appid>
         <secret>1eeac4dc44d5e2ae0141d3675dbeef7b</secret>
     </wxapi>
-    <server>
-        <timer>10</timer>
-    </server>
 </root>
