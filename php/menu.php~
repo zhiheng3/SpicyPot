@@ -29,7 +29,7 @@ class MenuManager{
                 //get state for all activities
                 $status = $activityManager->timeStatus($activityList["message"][$i]);
                 //clean up when expired
-                if($status >= 2) $this->updateMenu($activityList["message"][$i], "drop", "../log/access_token", "../log/token_log");
+                if($status >= 2) $this->updateMenu($activityList["message"][$i], "drop", "../access_token", "../log/token_log");
             }
         }
     }
