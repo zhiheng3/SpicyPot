@@ -64,7 +64,7 @@
 	    	</li>
 	       <li data-icon="false" >
 	       		<a>
-	       			<img src="./img/RobTime.png">
+	       			<img src="./resource/img/RobTime.png">
 	       			<span>抢票开始时间：</span>
 	       			<p id = "RobStartTime" ><?php echo $ticketStartTime;?></p>
 
@@ -72,14 +72,14 @@
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
-	       			<img src="./img/RobTime.png">
+	       			<img src="./resource/img/RobTime.png">
 	       			<span>抢票结束时间：</span>
 	       			<p id = "RobEndTime"><?php echo $ticketEndTime;?></p>
 	       		</a>
 	       	</li>
 	       	<li data-icon="false">
 	       		<a>
-	       			<img src="./img/Ticket.png">
+	       			<img src="./resource/img/Ticket.png">
 	       			<p id = "TicketLeftNumber">
 	       				<span>当前余票: </span>
 	       				<span id = "TicketLeft"><?php echo $remain;?></span> 张
@@ -89,7 +89,7 @@
 
             <li data-icon="false">
 	       		<a>
-	       			<img src="./img/Ticket.png">
+	       			<img src="./resource/img/Ticket.png">
 	       			<p id = "Ticket_PerStudent">
 	       				<span>每人可选: </span>
 	       				<span id = "TicketPerStudent"><?php echo $ticketPerStudent;?></span> 张
@@ -99,7 +99,7 @@
 
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/Place.png">
+	        		<img src="./resource/img/Place.png">
 	        		<p id = "ActivityPlace">
 	        			<span>活动地点：</span><?php echo $location;?>
 	        		</p>
@@ -107,14 +107,14 @@
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/ActivityTime.png">
+	        		<img src="./resource/img/ActivityTime.png">
 	        		<span>活动开始时间：</span>
 	        		<p id = "ActivityStartTime"><?php echo $startTime;?></p>
 	        	</a>
 	        </li>
 	        <li data-icon="false">
 	        	<a>
-	        		<img src="./img/ActivityTime.png">
+	        		<img src="./resource/img/ActivityTime.png">
 	        		<span>活动结束时间：</span>
 	        		<p id = "ActivityEndTime"><?php echo $endTime;?></p>
 	        	</a>
@@ -126,7 +126,9 @@
 	        </li>	        
 	         <li data-role="collapsible" id = "ActivityPic">
 	            <h1>活动预览</h1>
-	            <?php if(!file_get_contents("http://wx9.igeek.asia/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"http://wx9.igeek.asia/upload/activity{$_GET['id']}\"></img>"?>
+	            <?php
+	            $url = $_SERVER['SERVER_NAME'];
+	            if(!file_get_contents("http://$url/static/resource/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"http://$url/static/resource/upload/activity{$_GET['id']}\"></img>"?>
 	        </li>
 	    </ul>
  

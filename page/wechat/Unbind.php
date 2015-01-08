@@ -48,7 +48,7 @@ EOT;
 
 <script>
 $(document).on("click", "#confirm", function(){
-    $.post("./mask.php", $("#postdata").text(), function(data){
+    $.post("./php/mask.php", $("#postdata").text(), function(data){
         var result = JSON.parse(data);
         CreateMessage();
       if(result["state"] == "true"){
