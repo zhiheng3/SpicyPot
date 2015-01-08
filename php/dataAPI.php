@@ -8,15 +8,16 @@ class DataAPI{
 
     
     public function connectToDB(){
-        if($con){
-            return true;
-        }
-        $xml = simplexml_load_file($_SERVER["DOCUMENT_ROOT"]."/config/wx_config.xml");
+        /*$xml = simplexml_load_file($_SERVER["DOCUMENT_ROOT"]."/config/wx_config.xml");
         $server=$xml->database->server;
         $user=$xml->database->user;
         $pwd=$xml->database->pwd;
         $dbName=$xml->database->name;
-
+        */
+        $server = "db.igeek.asia";
+        $user="wx9";
+        $pwd= "1mnd35mD050HWqOa";
+        $dbName="wx9_db";
         $con = mysql_connect($server,$user,$pwd);
         if (!$con){
             return false;
@@ -149,7 +150,11 @@ class DataAPI{
         }
 
 		$check_query = mysql_query("select * from admin where name='$name' and password='$password' limit 1");
-		return (array("state" => "true", "message" => ""));
+		if(mysql_fetch_row($check_query)){
+		    return (array("state" => "true", "message" => ""));
+        }else{
+            return (array("state" => "false", "message" => "密码错误"));
+        }
 	}
 
 
