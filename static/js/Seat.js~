@@ -69,7 +69,7 @@ function Update(successMsg) {
     $.ajax({
         type: 'POST',
         async: false,
-        url: "./php/mask.php",
+        url: "./mask.php",
         data: {
             "method": "seatInfo",
             "activityid": $("#activityid").text()
@@ -105,7 +105,7 @@ function Confirm() {
     $.ajax({
         type: 'POST',
         async: false,
-        url: "./php/mask.php",
+        url: "./mask.php",
         data: {
             "method": "takeSeat",
             "ticketid": $("#ticketid").text(),

@@ -26,7 +26,7 @@ $(document).on("click", "#publishBtn", function() {
 });
 
 function createActivity() {
-    var dest = "mask.php";
+    var dest = "./php/mask.php";
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
     formData.append("method", "createActivity");
@@ -69,7 +69,7 @@ $(document).on('click', '#updateBtn', function() {
         return;
     }
     ShowHintBox("正在修改活动，请稍候......");
-    var dest = 'mask.php';
+    var dest = './php/mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
     formData.append('method', 'updateActivity');
