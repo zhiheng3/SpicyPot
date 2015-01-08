@@ -110,7 +110,7 @@
     function doDelete(id){
         ShowHintBox("正在删除活动，请稍候......");
         <?php
-            echo"$.post('./php/mask.php',{id:id, method: \"deleteActivity\"},function(data){HideHintBox(data, 1.5); });";
+            echo"$.post('./php/mask.php',{id:id, method: \"deleteActivity\"},function(data){HideHintBox(data, 1.5); setTimeout(function(){location.reload(true);}, 1500)});";
         ?>
     }
 
