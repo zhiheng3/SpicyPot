@@ -6,9 +6,8 @@
   */
 class AccessToken{
 	public function getAccessToken($tokenPath = "../log/access_token", $logPath = "../log/token_log"){
-	    $xml = simplexml_load_file("../config/wx_config.xml");
-		$appid = $xml->wxapi->appid;
-		$secret = $xml->wxapi->secret;
+		$appid = "wx31f3308295716fd1";
+		$secret = "1eeac4dc44d5e2ae0141d3675dbeef7b";
 		$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
 
         //Get the expire time of the latest token
