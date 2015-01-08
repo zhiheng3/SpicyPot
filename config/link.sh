@@ -9,4 +9,3 @@ ln -s ../../php ../page/wechat/php
 ln -s ../../php ../page/admin/php
 ln -s ../../static/resource ../page/wechat/resource
 ln -s ../../static/resource ../page/admin/resource
-ln -s ../config ../page/config

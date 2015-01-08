@@ -11,11 +11,12 @@ class DataAPI{
         if($con){
             return true;
         }
+        //Wrong in server
         $xml = simplexml_load_file("../config/wx_config.xml");
-        $server=$xml->database->server;
-        $user=$xml->database->user;
-        $pwd=$xml->database->pwd;
-        $dbName=$xml->database->name;
+        $server="db.igeek.asia";
+        $user=$xml->"wx9";
+        $pwd=$xml->"1mnd35mD050HWqOa";
+        $dbName=$xml->"wx9_db";
 
         $con = mysql_connect($server,$user,$pwd);
         if (!$con){
