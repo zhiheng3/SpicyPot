@@ -1,24 +1,22 @@
 /**
-  * Activity Detail Control page
-  * Author: Xu Yi
-  * Last modified: 2014.12.27
-  * method:
-  * param:
-*/
-$(document).ready(function () 
-{
+ * Activity Detail Control page
+ * Author: Xu Yi
+ * Last modified: 2014.12.27
+ * method:
+ * param:
+ */
+$(document).ready(function() {
     ClearTimeChoosen();
     PreviewImg();
     //AutoStorage();
     //clear the pic preview when click resetBtn
-    $("#resetBtn").click(function (e) 
-    {
+    $("#resetBtn").click(function(e) {
         $("#Preview").empty();
     });
 });
+
 //create activity
-$(document).on("click", "#publishBtn", function () 
-{
+$(document).on("click", "#publishBtn", function() {
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
     if (timeValid && contentValid) {
@@ -26,14 +24,13 @@ $(document).on("click", "#publishBtn", function ()
         createActivity();
     }
 });
-function createActivity() 
-{
-    var dest = "mask.php";
+
+function createActivity() {
+    var dest = "./php/mask.php";
     var form = document.getElementById("activity-form");
     var formData = new FormData(form);
     formData.append("method", "createActivity");
-    if ($("#input-seat_status").val() > 0) 
-    {
+    if ($("#input-seat_status").val() > 0) {
         var rawSeatsObj = GetSeatsInfo(Args.curtemplate);
         var rawSeatStr = SaveSVG(Args.curtemplate);
         var rawSeat = JSON.stringify(rawSeatsObj);
@@ -41,12 +38,9 @@ function createActivity()
         formData.append("seat_info_str", rawSeatStr);
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () 
-    {
-        if (xhr.readyState == 4) 
-        {
-            if (xhr.status == 200) 
-            {
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
                 if (result["message"] != "") {
@@ -61,9 +55,9 @@ function createActivity()
     xhr.setRequestHeader("context-type", "text/xml;charset=utf-8");
     xhr.send(formData);
 }
+
 //change activity
-$(document).on('click', '#updateBtn', function () 
-{
+$(document).on('click', '#updateBtn', function() {
     var timeValid = CheckTimeValid();
     var contentValid = CheckContentValid();
     //Here is modified By Xu Yi
@@ -75,13 +69,12 @@ $(document).on('click', '#updateBtn', function ()
         return;
     }
     ShowHintBox("正在修改活动，请稍候......");
-    var dest = 'mask.php';
+    var dest = './php/mask.php';
     var form = document.getElementById('activity-form');
     var formData = new FormData(form);
     formData.append('method', 'updateActivity');
     formData.append('activity_id', $('#updateBtn')[0].name);
-    if ($("#input-seat_status").val() > 0) 
-    {
+    if ($("#input-seat_status").val() > 0) {
         var rawSeatsObj = GetSeatsInfo(Args.curtemplate);
         var rawSeatStr = SaveSVG(Args.curtemplate);
         var rawSeat = JSON.stringify(rawSeatsObj);
@@ -89,12 +82,9 @@ $(document).on('click', '#updateBtn', function ()
         formData.append("seat_info_str", rawSeatStr);
     }
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () 
-    {
-        if (xhr.readyState == 4) 
-        {
-            if (xhr.status == 200) 
-            {
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
                 var result = JSON.parse(xhr.responseText);
                 console.log(result);
                 if (result["message"] != "") {
@@ -109,49 +99,44 @@ $(document).on('click', '#updateBtn', function ()
     xhr.setRequestHeader('context-type', 'text/xml;charset=utf-8');
     xhr.send(formData);
 });
+
 //click "X" in datetimepicker and it will clear the data you choose
-function ClearTimeChoosen() 
-{
-    $("#Remove-RS").click(function () 
-    {
+function ClearTimeChoosen() {
+    $("#Remove-RS").click(function() {
         $("#Rob-Start").val("");
     });
-    $("#Remove-RE").click(function () 
-    {
+    $("#Remove-RE").click(function() {
         $("#Rob-End").val("");
     });
-    $("#Remove-AS").click(function () 
-    {
+    $("#Remove-AS").click(function() {
         $("#Act-Start").val("");
     });
-    $("#Remove-AE").click(function () 
-    {
+    $("#Remove-AE").click(function() {
         $("#Act-End").val("");
     });
 }
+
 //when change picture, perview it
-function PreviewImg() 
-{
-    $('[type=file]').change(function (e) 
-    {
+function PreviewImg() {
+    $('[type=file]').change(function(e) {
         var file = e.target.files[0];
         PreviewPic(file);
     });
 }
+
 //show picture
-function PreviewPic(file) 
-{
-    var img = new Image(), url = img.src = URL.createObjectURL(file);
+function PreviewPic(file) {
+    var img = new Image(),
+        url = img.src = URL.createObjectURL(file);
     var $img = $(img);
-    img.onload = function () 
-    {
+    img.onload = function() {
         URL.revokeObjectURL(url);
         $('#Preview').empty().append($img);
     }
 }
+
 //judge whether input content is empty
-function CheckContentValid() 
-{
+function CheckContentValid() {
     var TicketNumber = $("#input-total_tickets").val();
     var ActDescription = $("#input-description").val();
     var ActPlace = $("#input-place").val();
@@ -179,15 +164,13 @@ function CheckContentValid()
         flag = false;
         return false;
     }
-    if (!TicketPerStudent) 
-    {
+    if (!TicketPerStudent) {
         InputFocus("#input-ticket_per_student", '“每人可选票数”不能为空且必须为整数！');
         flag = false;
         return false;
     }
     var TicketPS = parseFloat(TicketPerStudent, 10);
-    if (!isInteger(TicketPS) || (TicketPS < 1)) 
-    {
+    if (!isInteger(TicketPS) || (TicketPS < 1)) {
         InputFocus("#input-ticket_per_student", '“每人可选票数”必须为正整数！');
         flag = false;
         return false;
@@ -205,20 +188,19 @@ function CheckContentValid()
     }
     return flag;
 }
+
 //judge whether a number is a int
-function isInteger(obj) 
-{
+function isInteger(obj) {
     return Math.floor(obj) === obj
 }
+
 //judge whether time is vaild
-function CheckTimeValid() 
-{
+function CheckTimeValid() {
     var RS = $("#Rob-Start").val();
     var RE = $("#Rob-End").val();
     var AS = $("#Act-Start").val();
     var AE = $("#Act-End").val();
-    if (RS && RE && AS && AE) 
-    {
+    if (RS && RE && AS && AE) {
         var RobStartTime = parseDate(RS);
         var RobEndTime = parseDate(RE);
         var ActStartTime = parseDate(AS);
@@ -243,9 +225,7 @@ function CheckTimeValid()
             return false;
         }
         return true;
-    }
-    else 
-    {
+    } else {
         if (!AE) {
             InputFocus("#Act-End", '“活动结束时间”不能为空！');
             return false;
@@ -265,69 +245,84 @@ function CheckTimeValid()
         return false;
     }
 }
+
 //show popover above the 'id' lable
 //text:the content 
-function InputFocus(id, text) 
-{
+function InputFocus(id, text) {
     var waring = '<span style="color:red;">' + text + '</span>';
     //clear all the popover
     $(id).popover('destroy');
-    $(id).popover(
-    {
-        html : true, placement : 'top', title : '', content : waring, trigger : 'focus', container : 'body' 
+    $(id).popover({
+        html: true,
+        placement: 'top',
+        title: '',
+        content: waring,
+        trigger: 'focus',
+        container: 'body'
     });
     $(id).popover('show');
     $(id).focus();
 }
+
 //accept a string and parse it as a Date object
-function parseDate(date) 
-{
+function parseDate(date) {
     re = /(\d+)\-(\d+)\-(\d+)\-(\d+)\:(\d+)/g;
     if (re.test(date)) {
         return (new Date(RegExp.$1, (RegExp.$2 - 1), RegExp.$3, RegExp.$4, RegExp.$5));
     }
 }
+
 //Auto-Save
-function AutoStorage() 
-{
-    $("#activity-form").sisyphus(
-    {
+function AutoStorage() {
+    $("#activity-form").sisyphus({
         //Auto-Save every 10s
-        timeout : 10,
-        onSave : function () 
-        {
+        timeout: 10,
+        onSave: function() {
             $('#log').html('正在自动保存...').fadeIn().delay(2000).fadeOut();
         },
-        onRestore : function () 
-        {
+        onRestore: function() {
             $('#log').html('已从本地恢复...').fadeIn().delay(2000).fadeOut();
         },
-        onRelease : function () 
-        {
+        onRelease: function() {
             $('#log').html('内容已经清除...').fadeIn().delay(2000).fadeOut();
         }
     });
 }
+
 //change format of Date from the Web-Front to the format that can be accepted by DataBase
-function dateCorrection(date) 
-{
+function dateCorrection(date) {
     var newDate1 = date.substr(0, 10);
     var newDate2 = date.substr(11);
     return (newDate1.concat(" ", newDate2, ":00"));
 }
-$('.form_datetime').datetimepicker(
-{
-    language : 'zh-CN', weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, 
-    forceParse : 0, showMeridian : 1
+$('.form_datetime').datetimepicker({
+    language: 'zh-CN',
+    weekStart: 1,
+    todayBtn: 1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    forceParse: 0,
+    showMeridian: 1
 });
-$('.form_date').datetimepicker(
-{
-    language : 'fr', weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 2, minView : 2, 
-    forceParse : 0
+$('.form_date').datetimepicker({
+    language: 'fr',
+    weekStart: 1,
+    todayBtn: 1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    minView: 2,
+    forceParse: 0
 });
-$('.form_time').datetimepicker(
-{
-    language : 'fr', weekStart : 1, todayBtn : 1, autoclose : 1, todayHighlight : 1, startView : 1, minView : 0, 
-    maxView : 1, forceParse : 0
+$('.form_time').datetimepicker({
+    language: 'fr',
+    weekStart: 1,
+    todayBtn: 1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 1,
+    minView: 0,
+    maxView: 1,
+    forceParse: 0
 });
-

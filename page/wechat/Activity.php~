@@ -129,7 +129,7 @@
 	            <h1>活动预览</h1>
 	            <?php
 	            $url = $_SERVER['SERVER_NAME'];
-	            if(!file_get_contents("http://$url/static/resource/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"http://$url/static/resource/upload/activity{$_GET['id']}\"></img>"?>
+	            if(!file_get_contents("./resource/upload/activity{$_GET['id']}")) echo "<p>暂无图片</p>"; else echo "<img src=\"./resource/upload/activity{$_GET['id']}\"></img>"?>
 	        </li>
 	    </ul>
  
