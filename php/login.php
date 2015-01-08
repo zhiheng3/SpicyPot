@@ -40,14 +40,10 @@ $password = MD5($_POST['password']);
 
 
 //检测用户名及密码是否正确
-$con = mysql_connect("db.igeek.asia","wx9","1mnd35mD050HWqOa");
-if (!$con){
-    return(array("state" => "false", "message" => "数据库连接错误"));
-}
-mysql_select_db("wx9_db", $con);
-$check_query = mysql_query("select * from admin where name='$name' and password='$password' limit 1");
-
-if($result = mysql_fetch_array($check_query)){
+require_once "./dataAPI.php";
+$dataapi = new dataAPI();
+$result = $dataapi->managerLogin($name, $password);
+if($result["state"]=="true"){
     //登录成功
     session_start();
     $_SESSION['name'] = $name;
