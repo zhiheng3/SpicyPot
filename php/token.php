@@ -6,7 +6,7 @@
   */
 class AccessToken{
 	public function getAccessToken($tokenPath = "../log/access_token", $logPath = "../log/token_log"){
-	    $xml = simplexml_load_file($_SERVER["DOCUMENT_ROOT"]."/config/wx_config.xml");
+	    $xml = simplexml_load_file("../config/wx_config.xml");
 		$appid = $xml->wxapi->appid;
 		$secret = $xml->wxapi->secret;
 		$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$secret";
