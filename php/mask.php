@@ -38,8 +38,7 @@ else if ($method == 'seatInfo'){
 
 else if($method == 'createActivity'){
     $activityCreater = new ActivityUpdater(); 
-    $createResult = $activityCreater->updateActivity("new");
-    
+    $createResult = $activityCreater->updateActivity("new");    
     echo json_encode($createResult);
 }
 
@@ -56,26 +55,20 @@ else if($method == 'deleteActivity'){
     $result = $data->dropActivity($activityId);
 
     $menuManager = new MenuManager();
-    $menuManager->updateMenu($activityId, "drop", "access_token", "./log/token_log");
+    $menuManager->updateMenu($activityId, "drop", "../log/access_token", "../log/token_log");
     
     if($result["state"] == "true") echo "删除活动成功";
     else echo "failed" . $result["message"];
-    //echo json_encode($result);
 
 }
 
 else if($method == 'updateActivity'){
-
     $activityUpdater = new ActivityUpdater();
     $updateResult = $activityUpdater->updateActivity("update");
     echo json_encode($updateResult);
 }
 
 else if($method == 'createSeats'){
-    //echo json_encode($seatObj);
-    //$dataapi = new dataAPI();
-    //$result = $dataapi->createSeats(126, $seats);
-    //echo json_encode($result);
 }
 
 else if($method == 'assignSeats'){

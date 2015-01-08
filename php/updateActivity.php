@@ -50,8 +50,8 @@ class ActivityUpdater{
         }
 
         $menuManager = new MenuManager();
-        if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "access_token", "log/token_log");
-        else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "access_token", "log/token_log");
+        if($status == "new") $menuResult = $menuManager->updateMenu($activityResult["message"], "add", "../log/access_token", "../log/token_log");
+        else $menuResult = $menuManager->updateMenu($_POST["activity_id"], "update", "../log/access_token", "../log/token_log");
         
         
         //if($menuResult["state"] == "true") $result["message"] .= "微信菜单更新成功！";
@@ -105,7 +105,7 @@ class ActivityUpdater{
     public function setPicture($activityId){
     
         //Path of the file saved
-        $savePath = "upload/activity$activityId";
+        $savePath = "../static/resource/upload/activity$activityId";
         if($_FILES["pic_upload"]["size"] == "0"){
             if (file_exists($savePath))
                 return (array("state" => "true", "message" => "图片已经上传"));
@@ -116,29 +116,28 @@ class ActivityUpdater{
         if ((($_FILES["pic_upload"]["type"] == "image/gif")
         || ($_FILES["pic_upload"]["type"] == "image/jpeg")
         || ($_FILES["pic_upload"]["type"] == "image/pjpeg"))){
-            if ($_FILES["pic_upload"]["error"] > 0){//Upload failed
+            if ($_FILES["pic_upload"]["error"] > 0){
+                //Upload failed
                 return (array("state" => "false", "message" => $_FILES["pic_upload"]["error"]));
             }
             else{
                 //File already exists
                 if (file_exists($savePath)){
-
-                   unlink($savePath);
-                    
+                   unlink($savePath);   
                 }
-                
                 move_uploaded_file($_FILES["pic_upload"]["tmp_name"], $savePath);
                 return (array("state" => "true", "message" => "上传的图片已经被储存到 $savePath."));
             }
         }
-        else{//Invalid file
+        else{
+            //Invalid file
             return (array("state" => "false", "message" => "文件格式不正确！"));
         }           
     }
     
     public function setSeats($activityId){
         $seatStr = trim($_POST["seat_info_str"]);
-        $ssaFile = fopen("./seat/$activityId.ssa", "w");
+        $ssaFile = fopen("../static/resource/seat/$activityId.ssa", "w");
         fwrite($ssaFile, $seatStr);
         fclose($ssaFile);
         
