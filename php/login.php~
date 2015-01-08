@@ -26,7 +26,7 @@
 if($_GET['action'] == "logout"){
     session_start();
     unset($_SESSION['name']);
-    header("Location: login.html"); 
+    header("Location: ../login.html"); 
     exit;
 }
 
@@ -51,7 +51,7 @@ if($result = mysql_fetch_array($check_query)){
     //登录成功
     session_start();
     $_SESSION['name'] = $name;
-    header("Location: activity_list.php"); 
+    header("Location: ../activity_list.php"); 
     //确保重定向后，后续代码不会被执行 
     exit;
 } else {
