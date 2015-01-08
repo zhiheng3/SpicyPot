@@ -11,7 +11,7 @@ class QRCodeGenerator{
         //Information in QR Code
         $qrcodeInfo = $studentId . "\n" . $ticketId;
         //Path of the QR Code generated
-        $qrcodePath = "./resourse/qrcode/$ticketId.png";
+        $qrcodePath = "./resource/qrcode/$ticketId.png";
         //"L", "M", "Q", "H"
         $errorCorrectionLevel = "L";
         //1 to 10
